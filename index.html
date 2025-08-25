@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EconomEnergo - Подбор светильников</title>
+  
+  <!-- Стили темы ocStore/OpenCart -->
+  <link rel="stylesheet" href="https://economenergo.ru/catalog/view/theme/ocstore/stylesheet/stylesheet.css">
+  <link rel="stylesheet" href="https://economenergo.ru/catalog/view/theme/default/stylesheet/stylesheet.css">
+  <link rel="stylesheet" href="https://economenergo.ru/catalog/view/theme/sberenergo/stylesheet/stylesheet.css">
+  <link rel="stylesheet" href="https://economenergo.ru/catalog/view/theme/economenergo/stylesheet/stylesheet.css">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <meta name="theme-color" content="#1a9f29">
+  <meta name="color-scheme" content="light">
+  
+  <style>
+    .ee-landing {
+      font-family: Arial, sans-serif;
+    }
+    
+    .ee-landing .btn-success {
+      background: #1a9f29 !important;
+      border-color: #178e24 !important;
+    }
+    
+    .ee-landing .btn-success:hover {
+      background: #178e24 !important;
+      border-color: #147a1f !important;
+    }
+    
+    .ee-landing .navbar {
+      background: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+      padding: 0.5rem 0;
+    }
+    
+    .ee-landing .hero-section {
+      background: #f7f7f7;
+      padding: 4rem 0;
+    }
+    
+    .ee-landing .hero-title {
+      color: #222;
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+    }
+    
+    .ee-landing .hero-subtitle {
+      color: #666;
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+    }
+    
+    .ee-landing .form-control {
+      border: 1px solid #ced4da;
+      border-radius: 0.375rem;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    .ee-landing .form-control:focus {
+      border-color: #1a9f29;
+      box-shadow: 0 0 0 0.2rem rgba(26, 159, 41, 0.25);
+    }
+    
+    .ee-landing .steps-section {
+      padding: 4rem 0;
+    }
+    
+    .ee-landing .steps-title {
+      color: #222;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .ee-landing .why-section {
+      padding: 4rem 0;
+      background: #f8f9fa;
+    }
+    
+    .ee-landing .why-title {
+      color: #222;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .ee-landing .card {
+      border: none;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+      transition: box-shadow 0.15s ease-in-out;
+      height: 100%;
+    }
+    
+    .ee-landing .card:hover {
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    
+    .ee-landing .card-body {
+      padding: 2rem;
+      text-align: center;
+    }
+    
+    .ee-landing .card-title {
+      color: #222;
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+    
+    .ee-landing .card-text {
+      color: #666;
+    }
+    
+    .ee-landing .footer {
+      background: #6c757d;
+      color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 0.875rem;
+    }
+    
+    .ee-landing .modal {
+      display: none;
+      position: fixed;
+      z-index: 1050;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .ee-landing .modal.show {
+      display: block;
+    }
+    
+    .ee-landing .modal-dialog {
+      margin: 1.75rem auto;
+      max-width: 500px;
+    }
+    
+    .ee-landing .modal-content {
+      background: #fff;
+      border-radius: 0.5rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    
+    .ee-landing .modal-header {
+      border-bottom: 1px solid #dee2e6;
+      padding: 1rem 1.5rem;
+    }
+    
+    .ee-landing .modal-title {
+      color: #222;
+      font-weight: bold;
+      margin: 0;
+    }
+    
+    .ee-landing .modal-body {
+      padding: 1.5rem;
+    }
+    
+    .ee-landing .modal-footer {
+      border-top: 1px solid #dee2e6;
+      padding: 1rem 1.5rem;
+    }
+    
+    .ee-landing .close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #000;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+    
+    .ee-landing .close:hover {
+      opacity: 1;
+    }
+    
+    @media (max-width: 991px) {
+      .ee-landing .hero-title {
+        font-size: 2rem;
+      }
+      
+      .ee-landing .hero-section,
+      .ee-landing .steps-section,
+      .ee-landing .why-section {
+        padding: 2rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ee-landing">
+    <!-- Шапка-превью -->
+    <nav class="navbar">
+      <div class="container">
+        <div class="row w-100 align-items-center">
+          <div class="col-6">
+            <span class="text-muted">EconomEnergo (превью)</span>
+          </div>
+          <div class="col-6 text-end">
+            <a href="tel:+74951234567" class="text-decoration-none text-dark">+7 (495) 123-45-67</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Экран 1: Hero -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-sm-7">
+            <h1 class="hero-title">Подберите идеальный светильник для вашего пространства</h1>
+            <p class="hero-subtitle">Получите персональное предложение от экспертов по освещению</p>
+            
+            <form id="heroForm" class="mb-4">
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="text" class="form-control" placeholder="Ваше имя" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="tel" class="form-control" placeholder="Телефон" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <input type="email" class="form-control" placeholder="Email" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success btn-lg w-100">Получить предложение</button>
+            </form>
+          </div>
+          <div class="col-sm-5">
+            <div class="text-center">
+              <div style="width: 300px; height: 300px; background: #e9ecef; border-radius: 1rem; display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                <span class="text-muted">Изображение светильника</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран 2: 3 простых шага -->
+    <section class="steps-section">
+      <div class="container">
+        <h2 class="steps-title">Подберите светильник за 3 простых шага</h2>
+        <div class="row justify-content-center">
+          <div class="col-md-8 text-center">
+            <p class="text-muted mb-4">Наш алгоритм подбора учитывает все особенности вашего помещения и потребности</p>
+            <button type="button" class="btn btn-success btn-lg" onclick="openModal()">Подобрать светильник</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Экран 3: Почему EconomEnergo -->
+    <section class="why-section">
+      <div class="container">
+        <h2 class="why-title">Почему EconomEnergo</h2>
+        <div class="row">
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Экспертность</h5>
+                <p class="card-text">Более 10 лет опыта в сфере освещения. Наши специалисты помогут подобрать оптимальное решение для любого помещения.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Качество</h5>
+                <p class="card-text">Работаем только с проверенными производителями. Гарантируем долговечность и надежность каждого светильника.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Сервис</h5>
+                <p class="card-text">Полный цикл обслуживания: от консультации до установки. Поддержка на всех этапах проекта.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <p class="mb-0">&copy; 2024 EconomEnergo. Все права защищены. Превью-версия лендинга.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Модальное окно подбора светильника -->
+    <div id="lightingModal" class="modal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Подбор светильника</h5>
+            <button type="button" class="close" onclick="closeModal()">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p>Здесь будет форма подбора светильника с вопросами о:</p>
+            <ul>
+              <li>Типе помещения</li>
+              <li>Площади и высоте потолков</li>
+              <li>Стиле интерьера</li>
+              <li>Бюджете</li>
+            </ul>
+            <p class="text-muted">Функционал в разработке (демо-версия)</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Закрыть</button>
+            <button type="button" class="btn btn-success">Начать подбор</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Обработка формы hero
+    document.getElementById('heroForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Заявка отправлена (демо)');
+    });
+
+    // Модальное окно
+    function openModal() {
+      document.getElementById('lightingModal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('lightingModal').classList.remove('show');
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.addEventListener('click', function(e) {
+      const modal = document.getElementById('lightingModal');
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

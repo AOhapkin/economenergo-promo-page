@@ -63,8 +63,11 @@
         background: #fff;
         border: 1px solid #eee;
         border-radius: 12px;
-        padding: 16px;
+        padding: 20px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
       }
 
       .ee-landing .ee-result-card .result-title1 {
@@ -93,17 +96,21 @@
       }
 
       .ee-landing .ee-result-card .result-photo {
-        width: 80px;
-        height: 80px;
-        background: #f0f2f4;
+        flex-shrink: 0;
+        width: 120px;
+        text-align: center;
+      }
+
+      .ee-landing .ee-result-card .result-photo img {
+        max-width: 100%;
+        height: auto;
         border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #9aa3ab;
-        font-size: 12px;
-        margin-left: auto;
-        float: right;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .ee-landing .ee-result-card .result-content {
+        flex: 1;
+        min-width: 0;
       }
 
       /* Inline валидация */
@@ -366,7 +373,7 @@
             <div class="col-sm-6">
               <div class="ee-hero-image">
                 <img
-                  src="https://economenergo.ru/image/cache/catalog/SBBoa06/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg"
+                  src="https://github.com/AOhapkin/economenergo-promo-page/blob/main/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg?raw=true"
                   alt="Светодиодный антивандальный светильник СББ 06-06 с акустическим датчиком"
                   class="img-fluid"
                 />
@@ -923,11 +930,11 @@
             "с оптико-акустическим датчиком (максимальное энергосбережение)"
         ) {
           return {
-            title1: "Светодиодный антивандальный светильник",
-            title2: "с оптико-акустическим датчиком СББ 06-06",
+            title1: "Светильник с оптико-акустическим датчиком",
+            title2: "светодиодный антивандальный СББ 06-06",
             power: "Потребление: 6 Вт",
             size: "Размеры: диаметр 190 мм, высота 22 мм",
-            price: "Цена 599 р/шт",
+            price: "Цена 599 руб",
           };
         } else if (
           lampType === "светодиоды (максимальное энергосбережение)" &&
@@ -938,7 +945,7 @@
             title2: "СБП 05-06",
             power: "Потребление: 6 Вт",
             size: "Размеры: диаметр 190 мм, высота 22 мм",
-            price: "Цена 559 р/шт",
+            price: "Цена 559 руб",
           };
         } else if (
           lampType === "лампа" &&
@@ -950,7 +957,7 @@
             title2: "с оптико-акустическим датчиком НББ 03-75",
             power: "Потребление: до 75 Вт",
             size: "Размеры: диаметр 190 мм, высота 88 мм",
-            price: "Цена 299 р/шт",
+            price: "Цена 299 руб",
           };
         } else if (lampType === "лампа" && complect === "без датчика") {
           return {
@@ -958,7 +965,7 @@
             title2: "",
             power: "Потребление: до 75 Вт",
             size: "Размеры: диаметр 190 мм, высота 88 мм",
-            price: "Цена 199 р/шт",
+            price: "Цена 199 руб",
           };
         }
 
@@ -972,18 +979,24 @@
 
         const resultCard = document.getElementById("resultCard");
         resultCard.innerHTML = `
-          <div class="result-photo">Фото прибора</div>
-          <div class="result-title1">${result.title1}</div>
-          ${
-            result.title2
-              ? `<div class="result-title2">${result.title2}</div>`
-              : ""
-          }
-          <div class="result-details">
-            <div>${result.power}</div>
-            <div>${result.size}</div>
+          <div class="result-photo">
+            <img src="https://github.com/AOhapkin/economenergo-promo-page/blob/main/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg?raw=true" 
+                 alt="Светодиодный антивандальный светильник СББ 06-06" 
+                 class="img-fluid rounded">
           </div>
-          <div class="result-price">${result.price}</div>
+          <div class="result-content">
+            <div class="result-title1">${result.title1}</div>
+            ${
+              result.title2
+                ? `<div class="result-title2">${result.title2}</div>`
+                : ""
+            }
+            <div class="result-details">
+              <div>${result.power}</div>
+              <div>${result.size}</div>
+            </div>
+            <div class="result-price">${result.price}</div>
+          </div>
         `;
       }
 

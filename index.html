@@ -60,39 +60,40 @@
       }
 
       .ee-landing .ee-result-card {
-        background: #fff;
-        border: 1px solid #eee;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        display: flex;
-        align-items: flex-start;
-        gap: 20px;
+        background: #fff !important;
+        border: 1px solid #eee !important;
+        border-radius: 12px !important;
+        padding: 12px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 12px !important;
       }
 
       .ee-landing .ee-result-card .result-title1 {
-        font-weight: bold;
-        color: #222;
-        margin-bottom: 4px;
+        font-weight: bold !important;
+        color: #222 !important;
+        margin-bottom: 1px !important;
       }
 
       .ee-landing .ee-result-card .result-title2 {
-        font-weight: bold;
-        color: #222;
-        margin-bottom: 8px;
+        font-weight: bold !important;
+        color: #222 !important;
+        margin-bottom: 2px !important;
       }
 
       .ee-landing .ee-result-card .result-details {
-        color: #666;
-        font-size: 14px;
-        line-height: 1.4;
+        color: #666 !important;
+        font-size: 14px !important;
+        line-height: 1.3 !important;
+        margin-bottom: 2px !important;
       }
 
       .ee-landing .ee-result-card .result-price {
-        font-weight: bold;
-        color: #1a9f29;
-        font-size: 16px;
-        margin-top: 8px;
+        font-weight: bold !important;
+        color: #1a9f29 !important;
+        font-size: 16px !important;
+        margin-top: 2px !important;
       }
 
       .ee-landing .ee-result-card .result-photo {
@@ -196,8 +197,8 @@
       .ee-landing .form-control {
         border: 1px solid #ced4da;
         border-radius: 0.375rem;
-        padding: 0.75rem;
-        margin-bottom: 1rem;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
       }
 
       .ee-landing .form-control:focus {
@@ -256,6 +257,8 @@
       .ee-landing .modal-dialog {
         max-width: 500px;
         width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
       }
 
       .ee-landing .modal-content {
@@ -266,7 +269,7 @@
 
       .ee-landing .modal-header {
         border-bottom: 1px solid #dee2e6;
-        padding: 1rem 1.5rem;
+        padding: 0.33rem 1.5rem;
       }
 
       .ee-landing .modal-title {
@@ -275,12 +278,14 @@
       }
 
       .ee-landing .modal-body {
-        padding: 1.5rem;
+        padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+        max-height: 70vh;
+        overflow-y: auto;
       }
 
       .ee-landing .modal-footer {
         border-top: 1px solid #dee2e6;
-        padding: 1rem 1.5rem;
+        padding: 0.33rem 1.5rem;
       }
 
       .ee-landing .close {
@@ -312,10 +317,11 @@
 
       /* Подсказки в квизе */
       .ee-landing .quiz-hint {
-        color: #6c757d;
-        font-size: 0.875rem;
-        margin-top: 0.5rem;
-        font-style: italic;
+        color: #6c757d !important;
+        font-size: 0.875rem !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        font-style: italic !important;
       }
 
       .ee-landing .quiz-hint.error {
@@ -545,7 +551,7 @@
             <!-- Мини-резюме выбранного -->
             <div
               id="quizSummary"
-              class="mt-4 p-3 bg-light rounded"
+              class="p-2 bg-light rounded"
               style="display: none"
             >
               <h6 class="mb-2">Выбрано:</h6>
@@ -741,6 +747,9 @@
                 power: "Потребление: 6 Вт",
                 size: "Размеры: диаметр 190 мм, высота 22 мм",
                 price: "Цена 599 р/шт",
+                image:
+                  "/image/cache/catalog/SBBoa06/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg",
+                product_id: "sbb-06-06",
               },
             "внутреннее освещение|светодиоды (максимальное энергосбережение)|без датчика":
               {
@@ -852,7 +861,11 @@
         document.getElementById("quizSectionTitle").textContent =
           QUIZ.ui.sectionTitle;
 
-        document.getElementById("modalTitle").textContent = QUIZ.ui.modalTitle;
+        document.getElementById(
+          "modalTitle"
+        ).textContent = `Подбор светильника ${
+          state.step === 4 ? "" : `Шаг ${state.step}`
+        }`;
 
         const button = document.getElementById("quizButton");
         if (QUIZ.ui.button.variant === "red") {
@@ -885,9 +898,8 @@
 
         modalBody.innerHTML = `
           <div class="quiz-step">
-            <h6 class="mb-3">${step.title}</h6>
-            <p class="mb-3">${getStepDescription(step.id)}</p>
-            <div class="mb-3">
+
+            <div class="mb-2">
               ${options
                 .map(
                   (option, index) => `
@@ -959,6 +971,16 @@
 
         renderStep();
         renderSummary();
+
+        // Обновляем заголовок модалки
+        const modalTitle = document.getElementById("modalTitle");
+        if (modalTitle) {
+          if (step === 4) {
+            modalTitle.textContent = "Вы выбрали:";
+          } else {
+            modalTitle.textContent = `Подбор светильника Шаг ${step}`;
+          }
+        }
       }
 
       // Получить описание шага
@@ -1118,11 +1140,14 @@
 
         modalBody.innerHTML = `
           <div class="quiz-step">
-            <h6 class="mb-3">Вы подобрали:</h6>
-            <div class="ee-result-card mb-4">
+    
+            <div class="ee-result-card mb-2">
               <div class="result-photo">
-                <img src="https://github.com/AOhapkin/economenergo-promo-page/blob/main/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg?raw=true" 
-                     alt="Светодиодный антивандальный светильник" 
+                <img src="${
+                  result.image ||
+                  "https://github.com/AOhapkin/economenergo-promo-page/blob/main/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg?raw=true"
+                }" 
+                     alt="${result.title1} ${result.title2}" 
                      class="img-fluid rounded">
               </div>
               <div class="result-content">
@@ -1145,14 +1170,14 @@
                 .map((field) => {
                   if (field.type === "checkbox") {
                     return `
-                    <div class="form-check mb-3">
+                    <div class="form-check mb-2">
                       <input class="form-check-input" type="checkbox" id="${field.id}" required>
                       <label class="form-check-label" for="${field.id}">${field.label}</label>
                     </div>
                   `;
                   } else {
                     return `
-                    <div class="mb-3">
+                    <div class="mb-2">
                       <label for="${field.id}" class="form-label">${field.label}</label>
                       <input type="${field.type}" class="form-control" id="${field.id}" required>
                     </div>

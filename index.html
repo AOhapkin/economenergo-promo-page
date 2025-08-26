@@ -47,6 +47,65 @@
         border-color: #147a1f !important;
       }
 
+      .ee-landing .btn-quiz-red {
+        background: #e11919 !important;
+        border-color: #c91515 !important;
+        color: #fff !important;
+      }
+
+          .ee-landing .btn-quiz-green {
+      background: #1a9f29 !important;
+      border-color: #178e24 !important;
+      color: #fff !important;
+    }
+
+    .ee-landing .ee-result-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .ee-landing .ee-result-card .result-title1 {
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 4px;
+    }
+
+    .ee-landing .ee-result-card .result-title2 {
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 8px;
+    }
+
+    .ee-landing .ee-result-card .result-details {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .ee-landing .ee-result-card .result-price {
+      font-weight: bold;
+      color: #1a9f29;
+      font-size: 16px;
+      margin-top: 8px;
+    }
+
+    .ee-landing .ee-result-card .result-photo {
+      width: 80px;
+      height: 80px;
+      background: #f0f2f4;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #9aa3ab;
+      font-size: 12px;
+      margin-left: auto;
+      float: right;
+    }
+
       .ee-landing .navbar {
         background: #f8f9fa;
         border-bottom: 1px solid #dee2e6;
@@ -58,23 +117,31 @@
         padding: 4rem 0;
       }
 
-          .ee-landing h1,
-    .ee-landing h2 {
-      color: #222222;
-    }
+      .ee-landing h1,
+      .ee-landing h2 {
+        color: #222222;
+      }
 
-    .ee-landing .ee-landing-title {
-      color: #222;
-      margin: 0 0 24px;
-      font-weight: 700;
-      text-align: center;
-    }
+      .ee-landing .ee-landing-title {
+        color: #222;
+        margin: 0 0 24px;
+        font-weight: 700;
+        text-align: center;
+      }
 
-    .ee-landing .hero-title {
-      font-size: 2.5rem;
-      font-weight: bold;
-      margin-bottom: 1.5rem;
-    }
+      .ee-landing .ee-landing-subtitle {
+        color: #222;
+        font-size: 16px;
+        margin: 0 0 16px;
+        line-height: 1.4;
+        text-align: center;
+      }
+
+      .ee-landing .hero-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+      }
 
       .ee-landing .ee-hero-mock {
         background: #f0f2f4;
@@ -240,6 +307,10 @@
               <div class="ee-hero-mock">Картинка светильника (50%)</div>
             </div>
             <div class="col-sm-6">
+              <p class="ee-landing-subtitle">
+                Получите коммерческое предложение с самыми выгодными ценами,
+                оставив заявку на сайте
+              </p>
               <form id="heroForm" class="mb-4">
                 <div class="row">
                   <div class="col-md-6">
@@ -277,34 +348,21 @@
         </div>
       </section>
 
-      <!-- Экран 2: 3 простых шага -->
+      <!-- Экран 2: квиз -->
       <section class="steps-section">
         <div class="container">
-          <h2 class="steps-title">Подберите светильник за 3 простых шага</h2>
+          <h2 class="steps-title">
+            Рассчитайте стоимость светильников, ответив на 3 вопроса
+          </h2>
           <div class="row justify-content-center">
             <div class="col-md-8 text-center">
               <button
                 type="button"
-                class="btn btn-success btn-lg"
+                class="btn btn-quiz-red btn-lg"
                 onclick="openModal()"
               >
-                Подобрать светильник
+                Рассчитать стоимость
               </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Экран 3: Почему EconomEnergo -->
-      <section class="why-section">
-        <div class="container">
-          <h2 class="why-title">Почему EconomEnergo</h2>
-          <div class="row">
-            <div class="col-12">
-              <div class="ee-benefits-placeholder">
-                В продакшене здесь будет блок преимуществ из сайта (без
-                изменений).
-              </div>
             </div>
           </div>
         </div>
@@ -324,36 +382,172 @@
         </div>
       </footer>
 
-      <!-- Модальное окно подбора светильника -->
+      <!-- Модальное окно квиза -->
       <div id="lightingModal" class="modal">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Подбор светильника</h5>
+              <h5 class="modal-title">Расчёт стоимости светильников</h5>
               <button type="button" class="close" onclick="closeModal()">
                 &times;
               </button>
             </div>
             <div class="modal-body">
-              <p>Здесь будет форма подбора светильника с вопросами о:</p>
-              <ul>
-                <li>Типе помещения</li>
-                <li>Площади и высоте потолков</li>
-                <li>Стиле интерьера</li>
-                <li>Бюджете</li>
-              </ul>
-              <p class="text-muted">Функционал в разработке (демо-версия)</p>
+              <!-- Шаг 1: Вариант применения -->
+              <div id="step1" class="quiz-step">
+                <h6 class="mb-3">Выберите вариант применения:</h6>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="apply"
+                      id="apply1"
+                      value="внутреннее освещение"
+                    />
+                    <label class="form-check-label" for="apply1"
+                      >внутреннее освещение</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="apply"
+                      id="apply2"
+                      value="наружное освещение"
+                    />
+                    <label class="form-check-label" for="apply2"
+                      >наружное освещение</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Шаг 2: Вид осветительного элемента -->
+              <div id="step2" class="quiz-step" style="display: none">
+                <h6 class="mb-3">Выберите вид осветительного элемента:</h6>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="lampType"
+                      id="lampType1"
+                      value="светодиоды (максимальное энергосбережение)"
+                    />
+                    <label class="form-check-label" for="lampType1"
+                      >светодиоды (максимальное энергосбережение)</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="lampType"
+                      id="lampType2"
+                      value="лампа"
+                    />
+                    <label class="form-check-label" for="lampType2"
+                      >лампа</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Шаг 3: Вариант комплектации -->
+              <div id="step3" class="quiz-step" style="display: none">
+                <h6 class="mb-3">Выберите вариант комплектации:</h6>
+                <div class="mb-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="complect"
+                      id="complect1"
+                      value="с оптико-акустическим датчиком (максимальное энергосбережение)"
+                    />
+                    <label class="form-check-label" for="complect1"
+                      >с оптико-акустическим датчиком (максимальное энергосбережение)</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="complect"
+                      id="complect2"
+                      value="без датчика"
+                    />
+                    <label class="form-check-label" for="complect2"
+                      >без датчика</label
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Результат подбора -->
+              <div id="step4" class="quiz-step" style="display: none">
+                <h6 class="mb-3">Вы подобрали:</h6>
+                <div id="resultCard" class="ee-result-card mb-4">
+                  <!-- Результат будет вставлен через JavaScript -->
+                </div>
+                
+                <!-- Поля для заказа -->
+                <div class="ee-order-fields">
+                  <div class="mb-3">
+                    <label for="qty" class="form-label">Напишите нужное Вам количество светильников</label>
+                    <input type="number" class="form-control" id="qty" required min="1">
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Напишите электронный адрес для выставления счёта</label>
+                    <input type="email" class="form-control" id="email" required>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="agree" required>
+                    <label class="form-check-label" for="agree">
+                      Нажимая на кнопку Отправить, я даю согласие на обработку данных.
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Мини-резюме выбранного -->
+              <div
+                id="quizSummary"
+                class="mt-4 p-3 bg-light rounded"
+                style="display: none"
+              >
+                <h6 class="mb-2">Выбрано:</h6>
+                <div id="summaryContent" class="small text-muted"></div>
+              </div>
             </div>
             <div class="modal-footer">
               <button
                 type="button"
                 class="btn btn-secondary"
-                onclick="closeModal()"
+                id="btnBack"
+                onclick="showStep(currentStep - 1)"
+                style="display: none"
               >
-                Закрыть
+                ←назад
               </button>
-              <button type="button" class="btn btn-success">
-                Начать подбор
+              <button
+                type="button"
+                class="btn btn-success"
+                id="btnNext"
+                onclick="showStep(currentStep + 1)"
+              >
+                Далее…
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                id="btnSubmit"
+                onclick="submitQuiz()"
+                style="display: none"
+              >
+                Отправить!
               </button>
             </div>
           </div>
@@ -365,6 +559,21 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+      // Константа для варианта кнопки квиза
+      const QUIZ_BUTTON_VARIANT = 'red'; // 'red' | 'green'
+
+      // Состояние квиза
+      let quizState = {
+        apply: null,        // шаг 1
+        lampType: null,     // шаг 2
+        complect: null,     // шаг 3
+        qty: "",
+        email: "",
+        agree: false
+      };
+
+      let currentStep = 1;
+
       // Обработка формы hero
       document
         .getElementById("heroForm")
@@ -375,20 +584,219 @@
           alert("Заявка отправлена (демо)");
         });
 
-      // Модальное окно
+      // Модальное окно квиза
       function openModal() {
-        // TODO: заменить шаги и ветвления по логике из quiz.xls
-        // TODO: по завершении отправлять ответы на info@economenergo.ru
+        // TODO: отправка на info@economenergo.ru через контроллер OpenCart (POST JSON {quizState, result})
+        // TODO: цель Метрики на успешную отправку
         document.getElementById("lightingModal").classList.add("show");
+        showStep(1);
+        updateButtonVariant();
       }
 
       function closeModal() {
         document.getElementById("lightingModal").classList.remove("show");
+        currentStep = 1;
+        quizState = { apply: null, lampType: null, complect: null, qty: "", email: "", agree: false };
+        showStep(1);
+        resetForm();
       }
 
+      // Показать шаг квиза
+      function showStep(step) {
+        if (step < 1 || step > 4) return;
+
+        // Скрыть все шаги
+        document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
+
+        // Показать нужный шаг
+        document.getElementById(`step${step}`).style.display = 'block';
+
+        // Обновить кнопки
+        document.getElementById('btnBack').style.display = step > 1 ? 'inline-block' : 'none';
+        document.getElementById('btnNext').style.display = step < 4 ? 'inline-block' : 'none';
+        document.getElementById('btnSubmit').style.display = step === 4 ? 'inline-block' : 'none';
+
+        currentStep = step;
+        renderSummary();
+        
+        // Если это шаг 4, показать результат
+        if (step === 4) {
+          showResult();
+        }
+      }
+
+      // Валидация шага
+      function validateStep(step) {
+        if (step === 1) {
+          return quizState.apply !== null;
+        } else if (step === 2) {
+          return quizState.lampType !== null;
+        } else if (step === 3) {
+          return quizState.complect !== null;
+        } else if (step === 4) {
+          return quizState.qty.trim() !== '' && quizState.email.trim() !== '' && quizState.agree;
+        }
+        return false;
+      }
+
+      // Вычислить результат на основе выбора
+      function computeResult(quizState) {
+        const { lampType, complect } = quizState;
+        
+        if (lampType === "светодиоды (максимальное энергосбережение)" && complect === "с оптико-акустическим датчиком (максимальное энергосбережение)") {
+          return {
+            title1: "Светодиодный антивандальный светильник",
+            title2: "с оптико-акустическим датчиком СББ 06-06",
+            power: "Потребление: 6 Вт",
+            size: "Размеры: диаметр 190 мм, высота 22 мм",
+            price: "Цена 599 р/шт"
+          };
+        } else if (lampType === "светодиоды (максимальное энергосбережение)" && complect === "без датчика") {
+          return {
+            title1: "Светодиодный антивандальный светильник",
+            title2: "СБП 05-06",
+            power: "Потребление: 6 Вт",
+            size: "Размеры: диаметр 190 мм, высота 22 мм",
+            price: "Цена 559 р/шт"
+          };
+        } else if (lampType === "лампа" && complect === "с оптико-акустическим датчиком (максимальное энергосбережение)") {
+          return {
+            title1: "Антивандальный светильник",
+            title2: "с оптико-акустическим датчиком НББ 03-75",
+            power: "Потребление: до 75 Вт",
+            size: "Размеры: диаметр 190 мм, высота 88 мм",
+            price: "Цена 299 р/шт"
+          };
+        } else if (lampType === "лампа" && complect === "без датчика") {
+          return {
+            title1: "Антивандальный светильник НБП 02-75",
+            title2: "",
+            power: "Потребление: до 75 Вт",
+            size: "Размеры: диаметр 190 мм, высота 88 мм",
+            price: "Цена 199 р/шт"
+          };
+        }
+        
+        return null;
+      }
+
+      // Показать результат подбора
+      function showResult() {
+        const result = computeResult(quizState);
+        if (!result) return;
+
+        const resultCard = document.getElementById('resultCard');
+        resultCard.innerHTML = `
+          <div class="result-photo">Фото прибора</div>
+          <div class="result-title1">${result.title1}</div>
+          ${result.title2 ? `<div class="result-title2">${result.title2}</div>` : ''}
+          <div class="result-details">
+            <div>${result.power}</div>
+            <div>${result.size}</div>
+          </div>
+          <div class="result-price">${result.price}</div>
+        `;
+      }
+
+      // Обновить сводку выбранного
+      function renderSummary() {
+        const summary = document.getElementById('quizSummary');
+        const content = document.getElementById('summaryContent');
+        
+        if (currentStep > 1) {
+          let summaryText = '';
+          if (quizState.apply) summaryText += `Применение: ${quizState.apply}<br>`;
+          if (quizState.lampType) summaryText += `Тип: ${quizState.lampType}<br>`;
+          if (quizState.complect) summaryText += `Комплектация: ${quizState.complect}`;
+          
+          content.innerHTML = summaryText;
+          summary.style.display = 'block';
+        } else {
+          summary.style.display = 'none';
+        }
+      }
+
+      // Отправить квиз
+      function submitQuiz() {
+        if (!validateStep(4)) {
+          alert('Пожалуйста, заполните все обязательные поля и подтвердите согласие');
+          return;
+        }
+        
+        const result = computeResult(quizState);
+        console.log({quizState, result});
+        
+        alert('Заявка отправлена (демо)');
+        setTimeout(() => {
+          closeModal();
+        }, 1000);
+      }
+
+      // Обновить вариант кнопки
+      function updateButtonVariant() {
+        const button = document.querySelector('.btn-quiz-red');
+        if (QUIZ_BUTTON_VARIANT === 'red') {
+          button.className = 'btn btn-quiz-red btn-lg';
+          button.textContent = 'Рассчитать стоимость';
+        } else {
+          button.className = 'btn btn-quiz-green btn-lg';
+          button.textContent = 'Подобрать светильник';
+        }
+      }
+
+      // Сбросить форму заказа
+      function resetForm() {
+        document.getElementById('qty').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('agree').checked = false;
+        quizState.qty = '';
+        quizState.email = '';
+        quizState.agree = false;
+      }
+
+      // Обработчики событий для квиза
+      document.addEventListener('DOMContentLoaded', function() {
+        // Обработчики для radio кнопок
+        document.querySelectorAll('input[name="apply"]').forEach(radio => {
+          radio.addEventListener('change', function() {
+            quizState.apply = this.value;
+            renderSummary();
+          });
+        });
+
+        document.querySelectorAll('input[name="lampType"]').forEach(radio => {
+          radio.addEventListener('change', function() {
+            quizState.lampType = this.value;
+            renderSummary();
+          });
+        });
+
+        document.querySelectorAll('input[name="complect"]').forEach(radio => {
+          radio.addEventListener('change', function() {
+            quizState.complect = this.value;
+            renderSummary();
+          });
+        });
+
+        // Обработчики для полей заказа
+        document.getElementById('qty').addEventListener('input', function() {
+          quizState.qty = this.value;
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+          quizState.email = this.value;
+        });
+
+        document.getElementById('agree').addEventListener('change', function() {
+          quizState.agree = this.checked;
+        });
+
+        updateButtonVariant();
+      });
+
       // Закрытие модального окна при клике вне его
-      window.addEventListener("click", function (e) {
-        const modal = document.getElementById("lightingModal");
+      window.addEventListener('click', function(e) {
+        const modal = document.getElementById('lightingModal');
         if (e.target === modal) {
           closeModal();
         }

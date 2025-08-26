@@ -53,61 +53,72 @@
         color: #fff !important;
       }
 
-          .ee-landing .btn-quiz-green {
-      background: #1a9f29 !important;
-      border-color: #178e24 !important;
-      color: #fff !important;
-    }
+      .ee-landing .btn-quiz-green {
+        background: #1a9f29 !important;
+        border-color: #178e24 !important;
+        color: #fff !important;
+      }
 
-    .ee-landing .ee-result-card {
-      background: #fff;
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 16px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
+      .ee-landing .ee-result-card {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 12px;
+        padding: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
 
-    .ee-landing .ee-result-card .result-title1 {
-      font-weight: bold;
-      color: #222;
-      margin-bottom: 4px;
-    }
+      .ee-landing .ee-result-card .result-title1 {
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 4px;
+      }
 
-    .ee-landing .ee-result-card .result-title2 {
-      font-weight: bold;
-      color: #222;
-      margin-bottom: 8px;
-    }
+      .ee-landing .ee-result-card .result-title2 {
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 8px;
+      }
 
-    .ee-landing .ee-result-card .result-details {
-      color: #666;
-      font-size: 14px;
-      line-height: 1.4;
-    }
+      .ee-landing .ee-result-card .result-details {
+        color: #666;
+        font-size: 14px;
+        line-height: 1.4;
+      }
 
-    .ee-landing .ee-result-card .result-price {
-      font-weight: bold;
-      color: #1a9f29;
-      font-size: 16px;
-      margin-top: 8px;
-    }
+      .ee-landing .ee-result-card .result-price {
+        font-weight: bold;
+        color: #1a9f29;
+        font-size: 16px;
+        margin-top: 8px;
+      }
 
-    .ee-landing .ee-result-card .result-photo {
-      width: 80px;
-      height: 80px;
-      background: #f0f2f4;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #9aa3ab;
-      font-size: 12px;
-      margin-left: auto;
-      float: right;
-    }
+      .ee-landing .ee-result-card .result-photo {
+        width: 80px;
+        height: 80px;
+        background: #f0f2f4;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9aa3ab;
+        font-size: 12px;
+        margin-left: auto;
+        float: right;
+      }
+
+      /* Inline валидация */
+      .ee-landing .form-control.is-invalid {
+        border-color: #e11919;
+        box-shadow: 0 0 0 0.2rem rgba(225, 25, 25, 0.25);
+      }
+
+      .ee-landing .form-control.is-valid {
+        border-color: #1a9f29;
+        box-shadow: 0 0 0 0.2rem rgba(26, 159, 41, 0.25);
+      }
 
       .ee-landing .navbar {
-        background: #f8f9fa;
+        background: #ffffff;
         border-bottom: 1px solid #dee2e6;
         padding: 0.5rem 0;
       }
@@ -143,14 +154,21 @@
         margin-bottom: 1.5rem;
       }
 
-      .ee-landing .ee-hero-mock {
+      .ee-landing .ee-hero-image {
         background: #f0f2f4;
         border-radius: 12px;
         min-height: 260px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #9aa3ab;
+        overflow: hidden;
+      }
+
+      .ee-landing .ee-hero-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 12px;
       }
 
       .ee-landing .ee-benefits-placeholder {
@@ -218,12 +236,14 @@
       }
 
       .ee-landing .modal.show {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       .ee-landing .modal-dialog {
-        margin: 1.75rem auto;
         max-width: 500px;
+        width: 90%;
       }
 
       .ee-landing .modal-content {
@@ -265,6 +285,32 @@
         opacity: 1;
       }
 
+      /* Индикация ошибок в квизе */
+      .ee-landing .quiz-step .form-control.is-invalid,
+      .ee-landing .quiz-step .form-check-input.is-invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+
+      .ee-landing .quiz-step .form-control.is-valid,
+      .ee-landing .quiz-step .form-check-input.is-valid {
+        border-color: #198754;
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+      }
+
+      /* Подсказки в квизе */
+      .ee-landing .quiz-hint {
+        color: #6c757d;
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        font-style: italic;
+      }
+
+      .ee-landing .quiz-hint.error {
+        color: #dc3545;
+        font-weight: 500;
+      }
+
       @media (max-width: 991px) {
         .ee-landing .hero-title {
           font-size: 2rem;
@@ -285,12 +331,26 @@
         <div class="container">
           <div class="row w-100 align-items-center">
             <div class="col-6">
-              <span class="text-muted">EconomEnergo (превью)</span>
+              <a
+                href="https://economenergo.ru"
+                target="_blank"
+                class="text-decoration-none"
+              >
+                <img
+                  src="https://economenergo.ru/image/catalog/Novijtochechnijrisunok.jpg"
+                  alt="EconomEnergo"
+                  style="height: 40px; width: auto"
+                />
+              </a>
             </div>
             <div class="col-6 text-end">
-              <a href="tel:+74951234567" class="text-decoration-none text-dark"
-                >+7 (495) 123-45-67</a
+              <a
+                href="https://economenergo.ru/"
+                target="_blank"
+                class="btn btn-success"
               >
+                Посмотреть каталог
+              </a>
             </div>
           </div>
         </div>
@@ -304,7 +364,13 @@
           </h1>
           <div class="row align-items-center">
             <div class="col-sm-6">
-              <div class="ee-hero-mock">Картинка светильника (50%)</div>
+              <div class="ee-hero-image">
+                <img
+                  src="https://economenergo.ru/image/cache/catalog/SBBoa06/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg"
+                  alt="Светодиодный антивандальный светильник СББ 06-06 с акустическим датчиком"
+                  class="img-fluid"
+                />
+              </div>
             </div>
             <div class="col-sm-6">
               <p class="ee-landing-subtitle">
@@ -336,13 +402,26 @@
                       type="email"
                       class="form-control"
                       placeholder="Email"
+                      required
                     />
                   </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-lg w-100">
+                <button
+                  type="submit"
+                  class="btn btn-success btn-lg w-100"
+                  id="heroSubmitBtn"
+                >
                   Получить предложение
                 </button>
               </form>
+              <div
+                id="heroSuccess"
+                class="alert alert-success mt-3"
+                style="display: none"
+              >
+                <strong>Заявка отправлена!</strong> Мы свяжемся с вами в
+                ближайшее время.
+              </div>
             </div>
           </div>
         </div>
@@ -358,10 +437,10 @@
             <div class="col-md-8 text-center">
               <button
                 type="button"
-                class="btn btn-quiz-red btn-lg"
+                class="btn btn-quiz-green btn-lg"
                 onclick="openModal()"
               >
-                Рассчитать стоимость
+                Подобрать светильник
               </button>
             </div>
           </div>
@@ -422,6 +501,9 @@
                     >
                   </div>
                 </div>
+                <div class="quiz-hint" id="hint1">
+                  Выберите один из вариантов для продолжения
+                </div>
               </div>
 
               <!-- Шаг 2: Вид осветительного элемента -->
@@ -453,6 +535,9 @@
                     >
                   </div>
                 </div>
+                <div class="quiz-hint" id="hint2">
+                  Выберите один из вариантов для продолжения
+                </div>
               </div>
 
               <!-- Шаг 3: Вариант комплектации -->
@@ -468,7 +553,8 @@
                       value="с оптико-акустическим датчиком (максимальное энергосбережение)"
                     />
                     <label class="form-check-label" for="complect1"
-                      >с оптико-акустическим датчиком (максимальное энергосбережение)</label
+                      >с оптико-акустическим датчиком (максимальное
+                      энергосбережение)</label
                     >
                   </div>
                   <div class="form-check">
@@ -484,6 +570,9 @@
                     >
                   </div>
                 </div>
+                <div class="quiz-hint" id="hint3">
+                  Выберите один из вариантов для продолжения
+                </div>
               </div>
 
               <!-- Результат подбора -->
@@ -492,23 +581,47 @@
                 <div id="resultCard" class="ee-result-card mb-4">
                   <!-- Результат будет вставлен через JavaScript -->
                 </div>
-                
+
                 <!-- Поля для заказа -->
                 <div class="ee-order-fields">
                   <div class="mb-3">
-                    <label for="qty" class="form-label">Напишите нужное Вам количество светильников</label>
-                    <input type="number" class="form-control" id="qty" required min="1">
+                    <label for="qty" class="form-label"
+                      >Напишите нужное Вам количество светильников</label
+                    >
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="qty"
+                      required
+                      min="1"
+                    />
                   </div>
                   <div class="mb-3">
-                    <label for="email" class="form-label">Напишите электронный адрес для выставления счёта</label>
-                    <input type="email" class="form-control" id="email" required>
+                    <label for="email" class="form-label"
+                      >Напишите электронный адрес для выставления счёта</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="email"
+                      required
+                    />
                   </div>
                   <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="agree" required>
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="agree"
+                      required
+                    />
                     <label class="form-check-label" for="agree">
-                      Нажимая на кнопку Отправить, я даю согласие на обработку данных.
+                      Нажимая на кнопку Отправить, я даю согласие на обработку
+                      данных.
                     </label>
                   </div>
+                </div>
+                <div class="quiz-hint" id="hint4">
+                  Заполните все поля для отправки заявки
                 </div>
               </div>
 
@@ -560,16 +673,16 @@
 
     <script>
       // Константа для варианта кнопки квиза
-      const QUIZ_BUTTON_VARIANT = 'red'; // 'red' | 'green'
+      const QUIZ_BUTTON_VARIANT = "green"; // 'red' | 'green'
 
       // Состояние квиза
       let quizState = {
-        apply: null,        // шаг 1
-        lampType: null,     // шаг 2
-        complect: null,     // шаг 3
+        apply: null, // шаг 1
+        lampType: null, // шаг 2
+        complect: null, // шаг 3
         qty: "",
         email: "",
-        agree: false
+        agree: false,
       };
 
       let currentStep = 1;
@@ -579,9 +692,64 @@
         .getElementById("heroForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
+
+          // Валидация формы
+          const name = document
+            .querySelector('input[placeholder="Ваше имя"]')
+            .value.trim();
+          const phone = document
+            .querySelector('input[placeholder="Телефон"]')
+            .value.trim();
+          const email = document
+            .querySelector('input[placeholder="Email"]')
+            .value.trim();
+
+          if (!name || !phone) {
+            // Подсвечиваем незаполненные поля
+            if (!name) {
+              document
+                .querySelector('input[placeholder="Ваше имя"]')
+                .classList.add("is-invalid");
+            }
+            if (!phone) {
+              document
+                .querySelector('input[placeholder="Телефон"]')
+                .classList.add("is-invalid");
+            }
+            return;
+          }
+
+          // Проверка email если заполнен
+          if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            document
+              .querySelector('input[placeholder="Email"]')
+              .classList.add("is-invalid");
+            return;
+          }
+
+          // Проверка что email заполнен (сделаем его обязательным)
+          if (!email) {
+            document
+              .querySelector('input[placeholder="Email"]')
+              .classList.add("is-invalid");
+            return;
+          }
+
           // TODO: при интеграции отправлять на info@economenergo.ru через контроллер OpenCart
           // TODO: повесить цель Метрики на успешную отправку формы
-          alert("Заявка отправлена (демо)");
+
+          // Показываем сообщение об успехе
+          document.getElementById("heroSuccess").style.display = "block";
+
+          // Блокируем форму от повторной отправки
+          document.getElementById("heroSubmitBtn").disabled = true;
+          document.getElementById("heroSubmitBtn").textContent =
+            "Заявка отправлена";
+
+          // Очищаем поля формы
+          document.querySelector('input[placeholder="Ваше имя"]').value = "";
+          document.querySelector('input[placeholder="Телефон"]').value = "";
+          document.querySelector('input[placeholder="Email"]').value = "";
         });
 
       // Модальное окно квиза
@@ -589,14 +757,23 @@
         // TODO: отправка на info@economenergo.ru через контроллер OpenCart (POST JSON {quizState, result})
         // TODO: цель Метрики на успешную отправку
         document.getElementById("lightingModal").classList.add("show");
+        currentStep = 1;
         showStep(1);
         updateButtonVariant();
+        clearAllHighlights();
       }
 
       function closeModal() {
         document.getElementById("lightingModal").classList.remove("show");
         currentStep = 1;
-        quizState = { apply: null, lampType: null, complect: null, qty: "", email: "", agree: false };
+        quizState = {
+          apply: null,
+          lampType: null,
+          complect: null,
+          qty: "",
+          email: "",
+          agree: false,
+        };
         showStep(1);
         resetForm();
       }
@@ -605,20 +782,31 @@
       function showStep(step) {
         if (step < 1 || step > 4) return;
 
+        // Проверяем валидацию при переходе вперед
+        if (step > currentStep && !validateStep(currentStep)) {
+          highlightInvalidFields(currentStep);
+          return;
+        }
+
         // Скрыть все шаги
-        document.querySelectorAll('.quiz-step').forEach(s => s.style.display = 'none');
+        document
+          .querySelectorAll(".quiz-step")
+          .forEach((s) => (s.style.display = "none"));
 
         // Показать нужный шаг
-        document.getElementById(`step${step}`).style.display = 'block';
+        document.getElementById(`step${step}`).style.display = "block";
 
         // Обновить кнопки
-        document.getElementById('btnBack').style.display = step > 1 ? 'inline-block' : 'none';
-        document.getElementById('btnNext').style.display = step < 4 ? 'inline-block' : 'none';
-        document.getElementById('btnSubmit').style.display = step === 4 ? 'inline-block' : 'none';
+        document.getElementById("btnBack").style.display =
+          step > 1 ? "inline-block" : "none";
+        document.getElementById("btnNext").style.display =
+          step < 4 ? "inline-block" : "none";
+        document.getElementById("btnSubmit").style.display =
+          step === 4 ? "inline-block" : "none";
 
         currentStep = step;
         renderSummary();
-        
+
         // Если это шаг 4, показать результат
         if (step === 4) {
           showResult();
@@ -634,38 +822,135 @@
         } else if (step === 3) {
           return quizState.complect !== null;
         } else if (step === 4) {
-          return quizState.qty.trim() !== '' && quizState.email.trim() !== '' && quizState.agree;
+          return (
+            quizState.qty.trim() !== "" &&
+            quizState.email.trim() !== "" &&
+            quizState.agree
+          );
         }
         return false;
+      }
+
+      // Подсветить незаполненные поля
+      function highlightInvalidFields(step) {
+        // Сначала очищаем все подсветки
+        clearAllHighlights();
+
+        switch (step) {
+          case 1:
+            if (!quizState.apply) {
+              document
+                .querySelectorAll('input[name="apply"]')
+                .forEach((radio) => {
+                  radio.closest(".form-check").classList.add("is-invalid");
+                });
+              document.getElementById("hint1").classList.add("error");
+              document.getElementById("hint1").textContent =
+                "Выберите один из вариантов для продолжения";
+            }
+            break;
+          case 2:
+            if (!quizState.lampType) {
+              document
+                .querySelectorAll('input[name="lampType"]')
+                .forEach((radio) => {
+                  radio.closest(".form-check").classList.add("is-invalid");
+                });
+              document.getElementById("hint2").classList.add("error");
+              document.getElementById("hint2").textContent =
+                "Выберите один из вариантов для продолжения";
+            }
+            break;
+          case 3:
+            if (!quizState.complect) {
+              document
+                .querySelectorAll('input[name="complect"]')
+                .forEach((radio) => {
+                  radio.closest(".form-check").classList.add("is-invalid");
+                });
+              document.getElementById("hint3").classList.add("error");
+              document.getElementById("hint3").textContent =
+                "Выберите один из вариантов для продолжения";
+            }
+            break;
+          case 4:
+            if (!quizState.qty.trim()) {
+              document.getElementById("qty").classList.add("is-invalid");
+            }
+            if (!quizState.email.trim()) {
+              document.getElementById("email").classList.add("is-invalid");
+            }
+            if (!quizState.agree) {
+              document
+                .getElementById("agree")
+                .closest(".form-check")
+                .classList.add("is-invalid");
+            }
+            document.getElementById("hint4").classList.add("error");
+            document.getElementById("hint4").textContent =
+              "Заполните все поля для отправки заявки";
+            break;
+        }
+      }
+
+      // Очистить все подсветки
+      function clearAllHighlights() {
+        document.querySelectorAll(".is-invalid, .is-valid").forEach((el) => {
+          el.classList.remove("is-invalid", "is-valid");
+        });
+
+        // Очищаем подсказки
+        for (let i = 1; i <= 4; i++) {
+          const hint = document.getElementById(`hint${i}`);
+          if (hint) {
+            hint.classList.remove("error");
+            if (i === 4) {
+              hint.textContent = "Заполните все поля для отправки заявки";
+            } else {
+              hint.textContent = "Выберите один из вариантов для продолжения";
+            }
+          }
+        }
       }
 
       // Вычислить результат на основе выбора
       function computeResult(quizState) {
         const { lampType, complect } = quizState;
-        
-        if (lampType === "светодиоды (максимальное энергосбережение)" && complect === "с оптико-акустическим датчиком (максимальное энергосбережение)") {
+
+        if (
+          lampType === "светодиоды (максимальное энергосбережение)" &&
+          complect ===
+            "с оптико-акустическим датчиком (максимальное энергосбережение)"
+        ) {
           return {
             title1: "Светодиодный антивандальный светильник",
             title2: "с оптико-акустическим датчиком СББ 06-06",
             power: "Потребление: 6 Вт",
             size: "Размеры: диаметр 190 мм, высота 22 мм",
-            price: "Цена 599 р/шт"
+            price: "Цена 599 р/шт",
           };
-        } else if (lampType === "светодиоды (максимальное энергосбережение)" && complect === "без датчика") {
+        } else if (
+          lampType === "светодиоды (максимальное энергосбережение)" &&
+          complect === "без датчика"
+        ) {
           return {
             title1: "Светодиодный антивандальный светильник",
             title2: "СБП 05-06",
             power: "Потребление: 6 Вт",
             size: "Размеры: диаметр 190 мм, высота 22 мм",
-            price: "Цена 559 р/шт"
+            price: "Цена 559 р/шт",
           };
-        } else if (lampType === "лампа" && complect === "с оптико-акустическим датчиком (максимальное энергосбережение)") {
+        } else if (
+          lampType === "лампа" &&
+          complect ===
+            "с оптико-акустическим датчиком (максимальное энергосбережение)"
+        ) {
           return {
             title1: "Антивандальный светильник",
             title2: "с оптико-акустическим датчиком НББ 03-75",
             power: "Потребление: до 75 Вт",
             size: "Размеры: диаметр 190 мм, высота 88 мм",
-            price: "Цена 299 р/шт"
+            price: "Цена 299 р/шт",
           };
         } else if (lampType === "лампа" && complect === "без датчика") {
           return {
@@ -673,10 +958,10 @@
             title2: "",
             power: "Потребление: до 75 Вт",
             size: "Размеры: диаметр 190 мм, высота 88 мм",
-            price: "Цена 199 р/шт"
+            price: "Цена 199 р/шт",
           };
         }
-        
+
         return null;
       }
 
@@ -685,11 +970,15 @@
         const result = computeResult(quizState);
         if (!result) return;
 
-        const resultCard = document.getElementById('resultCard');
+        const resultCard = document.getElementById("resultCard");
         resultCard.innerHTML = `
           <div class="result-photo">Фото прибора</div>
           <div class="result-title1">${result.title1}</div>
-          ${result.title2 ? `<div class="result-title2">${result.title2}</div>` : ''}
+          ${
+            result.title2
+              ? `<div class="result-title2">${result.title2}</div>`
+              : ""
+          }
           <div class="result-details">
             <div>${result.power}</div>
             <div>${result.size}</div>
@@ -700,103 +989,189 @@
 
       // Обновить сводку выбранного
       function renderSummary() {
-        const summary = document.getElementById('quizSummary');
-        const content = document.getElementById('summaryContent');
-        
+        const summary = document.getElementById("quizSummary");
+        const content = document.getElementById("summaryContent");
+
         if (currentStep > 1) {
-          let summaryText = '';
-          if (quizState.apply) summaryText += `Применение: ${quizState.apply}<br>`;
-          if (quizState.lampType) summaryText += `Тип: ${quizState.lampType}<br>`;
-          if (quizState.complect) summaryText += `Комплектация: ${quizState.complect}`;
-          
+          let summaryText = "";
+          if (quizState.apply)
+            summaryText += `Применение: ${quizState.apply}<br>`;
+          if (quizState.lampType)
+            summaryText += `Тип: ${quizState.lampType}<br>`;
+          if (quizState.complect)
+            summaryText += `Комплектация: ${quizState.complect}`;
+
           content.innerHTML = summaryText;
-          summary.style.display = 'block';
+          summary.style.display = "block";
         } else {
-          summary.style.display = 'none';
+          summary.style.display = "none";
         }
       }
 
       // Отправить квиз
       function submitQuiz() {
         if (!validateStep(4)) {
-          alert('Пожалуйста, заполните все обязательные поля и подтвердите согласие');
+          highlightInvalidFields(4);
           return;
         }
-        
+
+        // Дополнительная проверка полей
+        if (
+          !quizState.qty.trim() ||
+          !quizState.email.trim() ||
+          !quizState.agree
+        ) {
+          highlightInvalidFields(4);
+          return;
+        }
+
+        // Проверка корректности email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(quizState.email.trim())) {
+          highlightInvalidFields(4);
+          return;
+        }
+
         const result = computeResult(quizState);
-        console.log({quizState, result});
-        
-        alert('Заявка отправлена (демо)');
+        if (!result) {
+          return;
+        }
+
+        console.log({ quizState, result });
+
+        // Показываем сообщение об успехе
+        const modalBody = document.querySelector(".modal-body");
+        modalBody.innerHTML = `
+          <div class="text-center py-4">
+            <div class="text-success mb-3">
+              <i class="fas fa-check-circle" style="font-size: 3rem;"></i>
+            </div>
+            <h5 class="text-success">Заявка отправлена!</h5>
+            <p class="text-muted">Мы свяжемся с вами в ближайшее время</p>
+          </div>
+        `;
+
+        // Скрываем кнопки
+        document.querySelector(".modal-footer").style.display = "none";
+
+        // Закрываем модалку через 2 секунды
         setTimeout(() => {
           closeModal();
-        }, 1000);
+        }, 2000);
       }
 
       // Обновить вариант кнопки
       function updateButtonVariant() {
-        const button = document.querySelector('.btn-quiz-red');
-        if (QUIZ_BUTTON_VARIANT === 'red') {
-          button.className = 'btn btn-quiz-red btn-lg';
-          button.textContent = 'Рассчитать стоимость';
+        const button = document.querySelector(".btn-quiz-green");
+        if (QUIZ_BUTTON_VARIANT === "red") {
+          button.className = "btn btn-quiz-red btn-lg";
+          button.textContent = "Рассчитать стоимость";
         } else {
-          button.className = 'btn btn-quiz-green btn-lg';
-          button.textContent = 'Подобрать светильник';
+          button.className = "btn btn-quiz-green btn-lg";
+          button.textContent = "Подобрать светильник";
         }
       }
 
       // Сбросить форму заказа
       function resetForm() {
-        document.getElementById('qty').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('agree').checked = false;
-        quizState.qty = '';
-        quizState.email = '';
+        // Сбрасываем поля заказа
+        document.getElementById("qty").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("agree").checked = false;
+        quizState.qty = "";
+        quizState.email = "";
         quizState.agree = false;
+
+        // Сбрасываем радио-кнопки
+        document
+          .querySelectorAll('input[name="apply"]')
+          .forEach((radio) => (radio.checked = false));
+        document
+          .querySelectorAll('input[name="lampType"]')
+          .forEach((radio) => (radio.checked = false));
+        document
+          .querySelectorAll('input[name="complect"]')
+          .forEach((radio) => (radio.checked = false));
       }
 
       // Обработчики событий для квиза
-      document.addEventListener('DOMContentLoaded', function() {
+      document.addEventListener("DOMContentLoaded", function () {
         // Обработчики для radio кнопок
-        document.querySelectorAll('input[name="apply"]').forEach(radio => {
-          radio.addEventListener('change', function() {
+        document.querySelectorAll('input[name="apply"]').forEach((radio) => {
+          radio.addEventListener("change", function () {
             quizState.apply = this.value;
             renderSummary();
+            // Очищаем подсветку ошибки
+            clearAllHighlights();
           });
         });
 
-        document.querySelectorAll('input[name="lampType"]').forEach(radio => {
-          radio.addEventListener('change', function() {
+        document.querySelectorAll('input[name="lampType"]').forEach((radio) => {
+          radio.addEventListener("change", function () {
             quizState.lampType = this.value;
             renderSummary();
+            // Очищаем подсветку ошибки
+            clearAllHighlights();
           });
         });
 
-        document.querySelectorAll('input[name="complect"]').forEach(radio => {
-          radio.addEventListener('change', function() {
+        document.querySelectorAll('input[name="complect"]').forEach((radio) => {
+          radio.addEventListener("change", function () {
             quizState.complect = this.value;
             renderSummary();
+            // Очищаем подсветку ошибки
+            clearAllHighlights();
           });
         });
 
         // Обработчики для полей заказа
-        document.getElementById('qty').addEventListener('input', function() {
+        document.getElementById("qty").addEventListener("input", function () {
           quizState.qty = this.value;
+          // Очищаем подсветку ошибки
+          this.classList.remove("is-invalid");
         });
 
-        document.getElementById('email').addEventListener('input', function() {
+        document.getElementById("email").addEventListener("input", function () {
           quizState.email = this.value;
+          // Очищаем подсветку ошибки
+          this.classList.remove("is-invalid");
         });
 
-        document.getElementById('agree').addEventListener('change', function() {
-          quizState.agree = this.checked;
-        });
+        document
+          .getElementById("agree")
+          .addEventListener("change", function () {
+            quizState.agree = this.checked;
+            // Очищаем подсветку ошибки
+            this.closest(".form-check").classList.remove("is-invalid");
+          });
 
         updateButtonVariant();
       });
 
+      // Очистка подсветки ошибок в hero форме при вводе
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .querySelector('input[placeholder="Ваше имя"]')
+          .addEventListener("input", function () {
+            this.classList.remove("is-invalid");
+          });
+
+        document
+          .querySelector('input[placeholder="Телефон"]')
+          .addEventListener("input", function () {
+            this.classList.remove("is-invalid");
+          });
+
+        document
+          .querySelector('input[placeholder="Email"]')
+          .addEventListener("input", function () {
+            this.classList.remove("is-invalid");
+          });
+      });
+
       // Закрытие модального окна при клике вне его
-      window.addEventListener('click', function(e) {
-        const modal = document.getElementById('lightingModal');
+      window.addEventListener("click", function (e) {
+        const modal = document.getElementById("lightingModal");
         if (e.target === modal) {
           closeModal();
         }

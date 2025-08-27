@@ -1167,7 +1167,11 @@
       // Вычислить результат
       function computeResult() {
         if (!state.data) return null;
-        return state.data.results[getResultKey()] || null;
+        const key = getResultKey();
+        const result = state.data.results[key];
+        console.log("Ключ результата:", key);
+        console.log("Найденный результат:", result);
+        return result || null;
       }
 
       // Рендер финальной формы
@@ -1178,6 +1182,9 @@
         const result = computeResult();
 
         if (!result) return;
+
+        console.log("Отображаем результат:", result);
+        console.log("Путь к изображению:", result.image);
 
         modalBody.innerHTML = `
           <div class="quiz-step">

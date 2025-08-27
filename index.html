@@ -428,11 +428,12 @@
                   оставив заявку на сайте:
                 </span>
               </p>
-              <form id="heroForm" class="mb-4">
+              <form id="ee-lead-form" action="index.php?route=information/contact|send" method="post" class="mb-4">
                 <div class="row">
                   <div class="col-md-6">
                     <input
                       type="text"
+                      name="name"
                       class="form-control"
                       placeholder="Ваше имя"
                       required
@@ -441,6 +442,7 @@
                   <div class="col-md-6">
                     <input
                       type="tel"
+                      name="telephone"
                       class="form-control"
                       placeholder="Телефон"
                       required
@@ -451,12 +453,14 @@
                   <div class="col-12">
                     <input
                       type="email"
+                      name="email"
                       class="form-control"
                       placeholder="Email"
                       required
                     />
                   </div>
                 </div>
+                <input type="hidden" name="enquiry" value="Заявка с лендинга (Экран 1)" />
                 <button
                   type="submit"
                   class="btn btn-success btn-lg w-100"
@@ -465,14 +469,7 @@
                   Получить предложение
                 </button>
               </form>
-              <div
-                id="heroSuccess"
-                class="alert alert-success mt-3"
-                style="display: none"
-              >
-                <strong>Заявка отправлена!</strong> Мы свяжемся с вами в
-                ближайшее время.
-              </div>
+
             </div>
           </div>
         </div>
@@ -652,73 +649,50 @@
 
       // Обработка формы hero
       document
-        .getElementById("heroForm")
+        .getElementById("ee-lead-form")
         .addEventListener("submit", function (e) {
-          e.preventDefault();
-
           // Валидация формы
           const name = document
-            .querySelector('input[placeholder="Ваше имя"]')
+            .querySelector('input[name="name"]')
             .value.trim();
           const phone = document
-            .querySelector('input[placeholder="Телефон"]')
+            .querySelector('input[name="telephone"]')
             .value.trim();
           const email = document
-            .querySelector('input[placeholder="Email"]')
+            .querySelector('input[name="email"]')
             .value.trim();
 
-          if (!name || !phone) {
+          if (!name || !phone || !email) {
+            e.preventDefault();
             // Подсвечиваем незаполненные поля
             if (!name) {
               document
-                .querySelector('input[placeholder="Ваше имя"]')
+                .querySelector('input[name="name"]')
                 .classList.add("is-invalid");
             }
             if (!phone) {
               document
-                .querySelector('input[placeholder="Телефон"]')
+                .querySelector('input[name="telephone"]')
+                .classList.add("is-invalid");
+            }
+            if (!email) {
+              document
+                .querySelector('input[name="email"]')
                 .classList.add("is-invalid");
             }
             return;
           }
 
-          // Проверка email если заполнен
-          if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          // Проверка email
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            e.preventDefault();
             document
-              .querySelector('input[placeholder="Email"]')
+              .querySelector('input[name="email"]')
               .classList.add("is-invalid");
             return;
           }
 
-          // Проверка что email заполнен (сделаем его обязательным)
-          if (!email) {
-            document
-              .querySelector('input[placeholder="Email"]')
-              .classList.add("is-invalid");
-            return;
-          }
-
-          // Отправляем заявку на email
-          const subject = "Новая заявка с лендинга";
-          const body = `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email}\n\nЗаявка отправлена с лендинга EconomEnergo`;
-
-          const mailto = `mailto:info@economenergo.ru?subject=${encodeURIComponent(
-            subject
-          )}&body=${encodeURIComponent(body)}`;
-          window.location.href = mailto;
-
-          // Показываем сообщение об успехе
-          document.getElementById("heroSuccess").style.display = "block";
-
-          // Блокируем форму от повторной отправки
-          document.getElementById("heroSubmitBtn").disabled = true;
-          document.getElementById("heroSubmitBtn").textContent =
-            "Заявка отправлена";
-
-          // Очищаем поля формы
-          document.querySelector('input[placeholder="Ваше имя"]').value = "";
-          document.querySelector('input[placeholder="Телефон"]').value = "";
-          document.querySelector('input[placeholder="Email"]').value = "";
+          // TODO: повесить цель Метрики на успешную отправку.
         });
 
       // Загрузка данных
@@ -1242,27 +1216,34 @@
               </div>
             </div>
             
-            <div class="ee-order-fields">
-              ${state.data.finalForm.fields
-                .map((field) => {
-                  if (field.type === "checkbox") {
-                    return `
-                    <div class="form-check mb-2">
-                      <input class="form-check-input" type="checkbox" id="${field.id}" required>
-                      <label class="form-check-label" for="${field.id}">${field.label}</label>
-                    </div>
-                  `;
-                  } else {
-                    return `
-                    <div class="mb-2">
-                      <label for="${field.id}" class="form-label">${field.label}</label>
-                      <input type="${field.type}" class="form-control" id="${field.id}" required>
-                    </div>
-                  `;
-                  }
-                })
-                .join("")}
-            </div>
+            <form id="ee-quiz-form" action="index.php?route=information/contact|send" method="post">
+              <input type="hidden" name="name" value="Квиз лендинг" />
+              <input type="hidden" name="telephone" value="" />
+              <input type="hidden" name="email" id="quiz-email-hidden" />
+              <input type="hidden" name="enquiry" id="quiz-enquiry-hidden" />
+              
+              <div class="ee-order-fields">
+                ${state.data.finalForm.fields
+                  .map((field) => {
+                    if (field.type === "checkbox") {
+                      return `
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="${field.id}" required>
+                        <label class="form-check-label" for="${field.id}">${field.label}</label>
+                      </div>
+                    `;
+                    } else {
+                      return `
+                      <div class="mb-2">
+                        <label for="${field.id}" class="form-label">${field.label}</label>
+                        <input type="${field.type}" class="form-control" id="${field.id}" required>
+                      </div>
+                    `;
+                    }
+                  })
+                  .join("")}
+              </div>
+            </form>
             
             <div class="quiz-hint" id="hint4">
               Заполните все поля для отправки заявки
@@ -1331,7 +1312,7 @@
         }
       }
 
-      // Отправить квиз
+            // Отправить квиз
       function submitQuiz() {
         if (!validateStep(4)) {
           highlightInvalidFields(4);
@@ -1345,52 +1326,35 @@
 
         console.log({ state, result });
 
-        // Отправляем заявку на email
-        const subject = "Новая заявка с квиза";
-        const body = `Результат квиза:\nПрименение: ${state.apply}\nТип: ${state.lampType}\nКомплектация: ${state.complect}\nКоличество: ${state.qty}\nEmail: ${state.email}\n\nВыбранный товар: ${result.title1} ${result.title2}\nЦена: ${result.price}\n\nЗаявка отправлена с квиза EconomEnergo`;
+        // Собираем текст заявки
+        const enquiryText = `Заявка из квиза:\nПрименение: ${state.apply}\nЭлемент: ${state.lampType}\nКомплектация: ${state.complect}\nВы подобрали: ${result.title1} ${result.title2}\nКоличество: ${state.qty}\nEmail: ${state.email}`;
+        
+        // Заполняем hidden поля формы
+        document.getElementById('quiz-email-hidden').value = state.email;
+        document.getElementById('quiz-enquiry-hidden').value = enquiryText;
+        
+        // Отправляем форму
+        document.getElementById('ee-quiz-form').submit();
 
-        const mailto = `mailto:info@economenergo.ru?subject=${encodeURIComponent(
-          subject
-        )}&body=${encodeURIComponent(body)}`;
-        window.location.href = mailto;
-
-        // Показываем сообщение об успехе
-        const modalBody = document.querySelector(".modal-body");
-        modalBody.innerHTML = `
-          <div class="text-center py-4">
-            <div class="text-success mb-3">
-              <i class="fas fa-check-circle" style="font-size: 3rem;"></i>
-            </div>
-            <h5 class="text-success">Заявка отправлена!</h5>
-            <p class="text-muted">Мы свяжемся с вами в ближайшее время</p>
-          </div>
-        `;
-
-        // Скрываем кнопки
-        document.querySelector(".modal-footer").style.display = "none";
-
-        // Закрываем модалку через 1 секунду
-        setTimeout(() => {
-          closeModal();
-        }, 1000);
+        // TODO: повесить цель Метрики на успешную отправку.
       }
 
       // Очистка подсветки ошибок в hero форме при вводе
       document.addEventListener("DOMContentLoaded", function () {
         document
-          .querySelector('input[placeholder="Ваше имя"]')
+          .querySelector('input[name="name"]')
           .addEventListener("input", function () {
             this.classList.remove("is-invalid");
           });
 
         document
-          .querySelector('input[placeholder="Телефон"]')
+          .querySelector('input[name="telephone"]')
           .addEventListener("input", function () {
             this.classList.remove("is-invalid");
           });
 
         document
-          .querySelector('input[placeholder="Email"]')
+          .querySelector('input[name="email"]')
           .addEventListener("input", function () {
             this.classList.remove("is-invalid");
           });

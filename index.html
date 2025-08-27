@@ -399,11 +399,7 @@
           <div class="row align-items-center">
             <div class="col-sm-6">
               <div class="ee-hero-image">
-                <img
-                  src="https://github.com/AOhapkin/economenergo-promo-page/blob/main/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg?raw=true"
-                  alt="Светодиодный антивандальный светильник СББ 06-06 с акустическим датчиком"
-                  class="img-fluid"
-                />
+                <img id="ee-hero-img" alt="Светодиодный антивандальный светильник СББ 06-06" class="img-fluid" />
               </div>
             </div>
             <div class="col-sm-6">
@@ -632,8 +628,14 @@
       function setImageWithFallback(imgEl, candidates, placeholder) {
         let i = 0;
         function tryNext() {
-          if (!candidates || i >= candidates.length) { imgEl.src = placeholder; return; }
-          imgEl.onerror = () => { i++; tryNext(); };
+          if (!candidates || i >= candidates.length) {
+            imgEl.src = placeholder;
+            return;
+          }
+          imgEl.onerror = () => {
+            i++;
+            tryNext();
+          };
           imgEl.src = candidates[i];
         }
         tryNext();
@@ -641,7 +643,8 @@
 
       function toRawGithubUrl(relPath) {
         // relPath: "./ФотоКвиз/…/file.jpg"
-        const base = "https://raw.githubusercontent.com/AOhapkin/economenergo-promo-page/main/";
+        const base =
+          "https://raw.githubusercontent.com/AOhapkin/economenergo-promo-page/main/";
         // убираем ведущие "./"
         const clean = relPath.replace(/^\.?\//, "");
         // кодируем каждую часть пути (чтобы русские имена работали)
@@ -1284,7 +1287,7 @@
           candidates.push(toRawGithubUrl(result.image));
         }
         setImageWithFallback(
-          document.getElementById('ee-result-img'),
+          document.getElementById("ee-result-img"),
           candidates,
           "https://via.placeholder.com/320x220?text=Фото+будет+здесь"
         );
@@ -1414,6 +1417,14 @@
           .catch((e) => {
             console.error("initQuiz завершился с ошибкой:", e);
           });
+
+        // Инициализируем hero изображение с фолбэком
+        (function(){
+          const localPath = "./ФотоКвиз/1 Светодиодный антивандальный светильник с оптико акустическим датчиком СББ 06 06/svetilnik-s-optiko-akusticheskim-datchikom-sberenergo-sbb-06-06.jpg";
+          const candidates = [ localPath, toRawGithubUrl(localPath) ];
+          const img = document.getElementById('ee-hero-img');
+          if (img) setImageWithFallback(img, candidates, "https://via.placeholder.com/680x360?text=Hero");
+        })();
       });
 
       // Закрытие модального окна при клике вне его

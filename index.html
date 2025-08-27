@@ -23,8 +23,6 @@
       href="https://economenergo.ru/catalog/view/theme/economenergo/stylesheet/stylesheet.css"
     />
 
-
-
     <meta name="theme-color" content="#1a9f29" />
     <meta name="color-scheme" content="light" />
 
@@ -629,9 +627,27 @@
       </div>
     </div>
 
-
-
     <script>
+      // Хелпер для фолбэка картинок
+      function setImageWithFallback(imgEl, candidates, placeholder) {
+        let i = 0;
+        function tryNext() {
+          if (!candidates || i >= candidates.length) { imgEl.src = placeholder; return; }
+          imgEl.onerror = () => { i++; tryNext(); };
+          imgEl.src = candidates[i];
+        }
+        tryNext();
+      }
+
+      function toRawGithubUrl(relPath) {
+        // relPath: "./ФотоКвиз/…/file.jpg"
+        const base = "https://raw.githubusercontent.com/AOhapkin/economenergo-promo-page/main/";
+        // убираем ведущие "./"
+        const clean = relPath.replace(/^\.?\//, "");
+        // кодируем каждую часть пути (чтобы русские имена работали)
+        return base + clean.split("/").map(encodeURIComponent).join("/");
+      }
+
       // Хранилище состояния
       const state = {
         apply: null,
@@ -1207,10 +1223,7 @@
     
             <div class="ee-result-card mb-2">
               <div class="result-photo">
-                <img src="${
-                  result.image ||
-                  "https://github.com/AOhapkin/economenergo-promo-page/blob/main/svetilnik-s-akusticheskim-datchikom-sberenergo-sbb-06-06-680x630.jpg?raw=true"
-                }" 
+                <img id="ee-result-img" 
                      alt="${result.title1} ${result.title2}" 
                      class="img-fluid rounded">
               </div>
@@ -1263,6 +1276,18 @@
             </div>
           </div>
         `;
+
+        // Настраиваем фолбэк для картинки
+        const candidates = [];
+        if (result.image) {
+          candidates.push(result.image);
+          candidates.push(toRawGithubUrl(result.image));
+        }
+        setImageWithFallback(
+          document.getElementById('ee-result-img'),
+          candidates,
+          "https://via.placeholder.com/320x220?text=Фото+будет+здесь"
+        );
 
         // Добавляем обработчики для полей
         state.data.finalForm.fields.forEach((field) => {

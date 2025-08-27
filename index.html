@@ -659,6 +659,11 @@
       document
         .getElementById("ee-lead-form")
         .addEventListener("submit", function (e) {
+          // Убираем все is-invalid с полей
+          document.querySelectorAll('input[name="name"], input[name="telephone"], input[name="email"]').forEach(input => {
+            input.classList.remove("is-invalid");
+          });
+
           // Валидация формы
           const name = document
             .querySelector('input[name="name"]')
@@ -699,6 +704,10 @@
               .classList.add("is-invalid");
             return;
           }
+
+          // После успешной валидации формируем текст для enquiry
+          const enquiryText = `Заявка с лендинга (Экран 1)\nИмя: ${name}\nТелефон: ${phone}\nEmail: ${email}`;
+          document.querySelector('input[name="enquiry"]').value = enquiryText;
 
           // TODO: повесить цель Метрики на успешную отправку.
         });
@@ -950,7 +959,9 @@
 
         modalBody.innerHTML = `
           <div class="quiz-step">
-            <div class="mb-2"><strong>${getStepDescription(step.id)}</strong></div>
+            <div class="mb-2"><strong>${getStepDescription(
+              step.id
+            )}</strong></div>
             <div class="mb-2">
               ${options
                 .map(
@@ -1335,7 +1346,7 @@
         console.log({ state, result });
 
         // Собираем текст заявки
-        const enquiryText = `Заявка из квиза:\nПрименение: ${state.apply}\nЭлемент: ${state.lampType}\nКомплектация: ${state.complect}\nВы подобрали: ${result.title1} ${result.title2}\nКоличество: ${state.qty}\nEmail: ${state.email}`;
+        const enquiryText = `Заявка из квиза:\nПрименение: ${state.apply}\nЭлемент: ${state.lampType}\nКомплектация: ${state.complect}\nВы подобрали: ${result.title1} ${result.title2}\nХарактеристики: ${result.power}; ${result.size}; ${result.price}\nSKU: ${result.product_id || 'не указан'}\nКоличество: ${state.qty}\nEmail для счёта: ${state.email}`;
 
         // Заполняем hidden поля формы
         document.getElementById("quiz-email-hidden").value = state.email;

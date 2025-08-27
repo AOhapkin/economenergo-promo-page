@@ -294,7 +294,7 @@
         font-size: 0.875rem;
       }
 
-      .ee-landing .modal {
+      .ee-landing .ee-modal {
         display: none;
         position: fixed;
         z-index: 1050;
@@ -305,42 +305,42 @@
         background-color: rgba(0, 0, 0, 0.5);
       }
 
-      .ee-landing .modal.show {
+      .ee-landing .ee-modal.show {
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
-      .ee-landing .modal-dialog {
+      .ee-landing .ee-modal-dialog {
         max-width: 500px;
         width: 90%;
         max-height: 90vh;
         overflow-y: auto;
       }
 
-      .ee-landing .modal-content {
+      .ee-landing .ee-modal-content {
         background: #fff;
         border-radius: 0.5rem;
         box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
       }
 
-      .ee-landing .modal-header {
+      .ee-landing .ee-modal-header {
         border-bottom: 1px solid #dee2e6;
         padding: 0.33rem 1.5rem;
       }
 
-      .ee-landing .modal-title {
+      .ee-landing .ee-modal-title {
         font-weight: bold;
         margin: 0;
       }
 
-      .ee-landing .modal-body {
+      .ee-landing .ee-modal-body {
         padding: 0.5rem 1.5rem 0.5rem 1.5rem;
         max-height: 70vh;
         overflow-y: auto;
       }
 
-      .ee-landing .modal-footer {
+      .ee-landing .ee-modal-footer {
         border-top: 1px solid #dee2e6;
         padding: 0.33rem 1.5rem;
       }
@@ -428,7 +428,12 @@
                   оставив заявку на сайте:
                 </span>
               </p>
-              <form id="ee-lead-form" action="index.php?route=information/contact|send" method="post" class="mb-4">
+              <form
+                id="ee-lead-form"
+                action="index.php?route=information/contact|send"
+                method="post"
+                class="mb-4"
+              >
                 <div class="row">
                   <div class="col-md-6">
                     <input
@@ -460,7 +465,11 @@
                     />
                   </div>
                 </div>
-                <input type="hidden" name="enquiry" value="Заявка с лендинга (Экран 1)" />
+                <input
+                  type="hidden"
+                  name="enquiry"
+                  value="Заявка с лендинга (Экран 1)"
+                />
                 <button
                   type="submit"
                   class="btn btn-success btn-lg w-100"
@@ -469,7 +478,6 @@
                   Получить предложение
                 </button>
               </form>
-
             </div>
           </div>
         </div>
@@ -575,16 +583,16 @@
       </section>
 
       <!-- Модальное окно квиза -->
-      <div id="lightingModal" class="modal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="modalTitle">Загрузка...</h5>
+      <div id="lightingModal" class="ee-modal">
+        <div class="ee-modal-dialog">
+          <div class="ee-modal-content">
+            <div class="ee-modal-header">
+              <h5 class="ee-modal-title" id="modalTitle">Загрузка...</h5>
               <button type="button" class="close" onclick="closeModal()">
                 &times;
               </button>
             </div>
-            <div class="modal-body">
+            <div class="ee-modal-body">
               <!-- Содержимое будет генерироваться динамически -->
             </div>
 
@@ -597,7 +605,7 @@
               <h6 class="mb-2">Выбрано:</h6>
               <div id="summaryContent" class="small text-muted"></div>
             </div>
-            <div class="modal-footer">
+            <div class="ee-modal-footer">
               <button
                 type="button"
                 class="btn btn-secondary"
@@ -927,7 +935,7 @@
       function renderStep() {
         if (!state.data) return;
 
-        const modalBody = document.querySelector(".modal-body");
+        const modalBody = document.querySelector(".ee-modal-body");
         const step = state.data.steps[state.step - 1];
 
         if (state.step === 4) {
@@ -942,7 +950,7 @@
 
         modalBody.innerHTML = `
           <div class="quiz-step">
-
+            <div class="mb-2"><strong>${getStepDescription(step.id)}</strong></div>
             <div class="mb-2">
               ${options
                 .map(
@@ -1181,7 +1189,7 @@
       function renderFinalForm() {
         if (!state.data) return;
 
-        const modalBody = document.querySelector(".modal-body");
+        const modalBody = document.querySelector(".ee-modal-body");
         const result = computeResult();
 
         if (!result) return;
@@ -1312,7 +1320,7 @@
         }
       }
 
-            // Отправить квиз
+      // Отправить квиз
       function submitQuiz() {
         if (!validateStep(4)) {
           highlightInvalidFields(4);
@@ -1328,13 +1336,13 @@
 
         // Собираем текст заявки
         const enquiryText = `Заявка из квиза:\nПрименение: ${state.apply}\nЭлемент: ${state.lampType}\nКомплектация: ${state.complect}\nВы подобрали: ${result.title1} ${result.title2}\nКоличество: ${state.qty}\nEmail: ${state.email}`;
-        
+
         // Заполняем hidden поля формы
-        document.getElementById('quiz-email-hidden').value = state.email;
-        document.getElementById('quiz-enquiry-hidden').value = enquiryText;
-        
+        document.getElementById("quiz-email-hidden").value = state.email;
+        document.getElementById("quiz-enquiry-hidden").value = enquiryText;
+
         // Отправляем форму
-        document.getElementById('ee-quiz-form').submit();
+        document.getElementById("ee-quiz-form").submit();
 
         // TODO: повесить цель Метрики на успешную отправку.
       }

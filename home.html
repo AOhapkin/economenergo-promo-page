@@ -1,0 +1,533 @@
+{{ header }} {{ content_fluid }} {% if (aurus_banners_fluid != 1) %}
+<h1 class="ee-main-title">
+  Энергосберегающие антивандальные светильники для ЖКХ
+</h1>
+<div class="ee-hero-row">
+  <div class="ee-hero-left">{{ content_slleft }}</div>
+  <div class="ee-hero-right">
+    {# === EE landing: форма === #}
+    <div class="ee-landing-form-wrapper">
+      <form
+        id="ee-lead-form"
+        action="index.php?route=information/contact|send"
+        method="post"
+        class="ee-landing mb-4"
+      >
+        <p class="ee-landing-subtitle text-start">
+          Получите коммерческое предложение по самым<br />
+          выгодным ценам, оставив заявку на сайте:
+        </p>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              placeholder="Ваше имя"
+              required
+            />
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <input
+              type="tel"
+              name="telephone"
+              class="form-control"
+              placeholder="Телефон"
+              required
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+              required
+            />
+          </div>
+        </div>
+        <input
+          type="hidden"
+          name="enquiry"
+          value="Заявка с лендинга (Экран 1)"
+        />
+        <button
+          type="submit"
+          class="btn btn-success btn-lg btn-block"
+          id="heroSubmitBtn"
+        >
+          Получить предложение
+        </button>
+      </form>
+    </div>
+    {# === /EE landing === #}
+  </div>
+</div>
+{% endif %}
+
+<div class="container">
+  <div class="row">
+    {{ column_left }} {% if (column_left and column_right) %} {% set class =
+    'col-sm-5 col-md-6' %} {% elseif (column_left or column_right) %} {% set
+    class = 'fix_cleft col-sm-9' %} {% else %} {% set class = 'col-sm-12' %} {%
+    endif %} {% if (aurus_banners_fluid == 1) %} {% if (column_left or
+    column_right) %} {% if (content_top1 or content_top2) %}
+    <h1 class="ee-main-title">
+      Энергосберегающие антивандальные светильники для ЖКХ
+    </h1>
+    <div class="ee-hero-row">
+      <div class="ee-hero-left">{{ content_slleft }}</div>
+      <div class="ee-hero-right">
+        {# === EE landing: форма === #}
+        <div class="ee-landing-form-wrapper">
+          <form
+            id="ee-lead-form"
+            action="index.php?route=information/contact|send"
+            method="post"
+            class="ee-landing mb-4"
+          >
+            <p class="ee-landing-subtitle text-start">
+              Получите коммерческое предложение по самым<br />
+              выгодным ценам, оставив заявку на сайте:
+            </p>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Ваше имя"
+                  required
+                />
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <input
+                  type="tel"
+                  name="telephone"
+                  class="form-control"
+                  placeholder="Телефон"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+            </div>
+            <input
+              type="hidden"
+              name="enquiry"
+              value="Заявка с лендинга (Экран 1)"
+            />
+            <button
+              type="submit"
+              class="btn btn-success btn-lg btn-block"
+              id="heroSubmitBtn"
+            >
+              Получить предложение
+            </button>
+          </form>
+        </div>
+        {# === /EE landing === #}
+      </div>
+    </div>
+    {% else %}
+    <div class="ban_col sm_bann hcol-xs-12 col-sm-9 fixsl">
+      {{ content_slleft }}
+    </div>
+    {% endif %} {% else %}
+    <h1 class="ee-main-title">
+      Энергосберегающие антивандальные светильники для ЖКХ
+    </h1>
+    <div class="ee-hero-row">
+      <div class="ee-hero-left">{{ content_slleft }}</div>
+      <div class="ee-hero-right">
+        {# === EE landing: форма === #}
+        <div class="ee-landing-form-wrapper">
+          <form
+            id="ee-lead-form"
+            action="index.php?route=information/contact|send"
+            method="post"
+            class="ee-landing mb-4"
+          >
+            <p class="ee-landing-subtitle text-start">
+              Получите коммерческое предложение по самым<br />
+              выгодным ценам, оставив заявку на сайте:
+            </p>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Ваше имя"
+                  required
+                />
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <input
+                  type="tel"
+                  name="telephone"
+                  class="form-control"
+                  placeholder="Телефон"
+                  required
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12">
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  placeholder="Email"
+                  required
+                />
+              </div>
+            </div>
+            <input
+              type="hidden"
+              name="enquiry"
+              value="Заявка с лендинга (Экран 1)"
+            />
+            <button
+              type="submit"
+              class="btn btn-success btn-lg btn-block"
+              id="heroSubmitBtn"
+            >
+              Получить предложение
+            </button>
+          </form>
+        </div>
+        {# === /EE landing === #}
+      </div>
+    </div>
+    {% endif %} {% endif %}
+
+    <div class="clearfix visible-xs"></div>
+
+    <div id="content" class="{{ class }}">
+      {{ content_top }} {% if (aurus_banners == 1) %}
+      <div class="row flbann">
+        {% if (content_bot2) %}
+        <div
+          class="{% if (aurus_banners_hiddensm == 1) %} hidden-xs {% endif %} containerfluid2 fluid2 col-xs-12 col-sm-12 col-md-12 col-lg-6 col-lg-push-3"
+        >
+          {{ content_bot2 }}
+        </div>
+        {% endif %} {% if (content_bot1) %}
+        <div
+          class="{% if (aurus_banners_hiddensm == 1) %} hidden-xs {% endif %} containerfluid2 fluid2 col-xs-6 col-sm-6 col-md-6 col-lg-3 col-lg-pull-6"
+        >
+          {{ content_bot1 }}
+        </div>
+        {% endif %} {% if (content_bot3) %}
+        <div
+          class="{% if (aurus_banners_hiddensm == 1) %} hidden-xs {% endif %} containerfluid2 fluid2 col-xs-6 col-sm-6 col-md-6 col-lg-3"
+        >
+          {{ content_bot3 }}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %} {% if (content_slrig2) %} {{ content_slrig2 }} {% endif %}
+    </div>
+
+    {{ column_right }}
+  </div>
+</div>
+
+{% if (content_slrig1) %}
+<div class="containerfluid1">
+  <div class="container">{{ content_slrig1 }}</div>
+</div>
+{% endif %} {% if (content_bottom) %}
+<div class="container">
+  <div class="row">
+    <div id="content2" class="col-sm-12">{{ content_bottom }}</div>
+  </div>
+</div>
+{% endif %} {% if (aurus_banners != 1) %}
+<div class="container">
+  <div class="row flbann containerfluid1">
+    {% if (content_bot2) %}
+    <div
+      class="{% if (aurus_banners_hiddensm == 1) %} hidden-xs {% endif %} containerfluid2 col-xs-12 col-sm-12 col-md-6 col-lg-6 col-lg-push-3"
+    >
+      {{ content_bot2 }}
+    </div>
+    {% endif %} {% if (content_bot1) %}
+    <div
+      class="{% if (aurus_banners_hiddensm == 1) %} hidden-xs {% endif %} containerfluid2 col-xs-6 col-sm-6 col-md-3 col-lg-3 col-lg-pull-6"
+    >
+      {{ content_bot1 }}
+    </div>
+    {% endif %} {% if (content_bot3) %}
+    <div
+      class="{% if (aurus_banners_hiddensm == 1) %} hidden-xs {% endif %} containerfluid2 col-xs-6 col-sm-6 col-md-3 col-lg-3"
+    >
+      {{ content_bot3 }}
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("ee-lead-form");
+    if (!form) return;
+
+    // статус под формой
+    const status = document.createElement("div");
+    status.id = "ee-lead-status";
+    status.style.marginTop = "8px";
+    form.appendChild(status);
+
+    // тянем настоящий action с /information/contact
+    let cachedAction = null;
+    async function getRealAction() {
+      if (cachedAction) return cachedAction;
+      const resp = await fetch("index.php?route=information/contact", {
+        credentials: "same-origin",
+        cache: "no-store",
+      });
+      if (!resp.ok) throw new Error("contact page " + resp.status);
+      const html = await resp.text();
+      const doc = new DOMParser().parseFromString(html, "text/html");
+      const contactForm = doc.querySelector("form[action]");
+      if (!contactForm)
+        throw new Error("form[action] not found on contact page");
+      const a = document.createElement("a");
+      a.href = contactForm.getAttribute("action") || "";
+      cachedAction = a.href; // браузер сделает абсолютный URL
+      return cachedAction;
+    }
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = form.querySelector('input[name="name"]');
+      const tel = form.querySelector('input[name="telephone"]');
+      const email = form.querySelector('input[name="email"]');
+      [name, tel, email].forEach((el) => el.classList.remove("is-invalid"));
+
+      if (!name.value.trim()) {
+        name.classList.add("is-invalid");
+        return;
+      }
+      if (!tel.value.trim()) {
+        tel.classList.add("is-invalid");
+        return;
+      }
+      if (
+        !email.value.trim() ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
+      ) {
+        email.classList.add("is-invalid");
+        return;
+      }
+
+      // приводим enquiry к формату заказа
+      form.querySelector('input[name="enquiry"]').value =
+        "Заявка с лендинга (Экран 1)\n" +
+        "Имя: " +
+        name.value.trim() +
+        "\n" +
+        "Телефон: " +
+        tel.value.trim() +
+        "\n" +
+        "Email: " +
+        email.value.trim();
+
+      status.textContent = "Отправляем...";
+      status.style.color = "#666";
+
+      try {
+        const action = await getRealAction();
+        const fd = new FormData(form);
+        if (!fd.has("agree")) fd.append("agree", "1");
+
+        const resp = await fetch(action, {
+          method: "POST",
+          body: fd,
+          headers: { "X-Requested-With": "XMLHttpRequest" },
+          credentials: "same-origin",
+        });
+
+        // некоторые темы отвечают html/редиректом, без JSON
+        if (resp.ok) {
+          form.reset();
+          status.textContent = "Заявка отправлена! Мы свяжемся с вами.";
+          status.style.color = "#1a9f29";
+          return;
+        }
+
+        status.textContent = "Не удалось отправить заявку. Попробуйте ещё раз.";
+        status.style.color = "#e11919";
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Сбой при отправке. Попробуйте позже.";
+        status.style.color = "#e11919";
+      }
+    });
+  });
+</script>
+
+{{ footer }}
+
+<style>
+  /* === EE Landing: Основные стили === */
+  .ee-main-title {
+    color: #222222;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 2rem 0 3rem;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 768px) {
+    .ee-main-title {
+      font-size: 2rem;
+      margin: 1.5rem 0 2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .ee-main-title {
+      font-size: 1.75rem;
+      margin: 1rem 0 1.5rem;
+    }
+  }
+
+  .ee-landing .btn-success {
+    background: #1a9f29;
+    border-color: #178e24;
+  }
+  .ee-landing .btn-success:hover {
+    background: #178e24;
+    border-color: #147a1f;
+  }
+
+  .ee-landing .ee-landing-subtitle {
+    color: #222;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 14px;
+    line-height: 1.25;
+  }
+
+  .ee-landing .form-control {
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+
+  .ee-landing .form-control.is-invalid {
+    border-color: #e11919;
+    box-shadow: 0 0 0 0.2rem rgba(225, 25, 25, 0.25);
+  }
+
+  .ee-landing .btn-lg {
+    height: 48px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .ee-landing .row + .row {
+    margin-top: 12px;
+  }
+
+  .ee-landing-form-wrapper {
+    padding: 22px 22px 18px;
+    background: #fff;
+    border-radius: 12px;
+  }
+
+  /* === Layout для hero секции === */
+  .ee-hero-row {
+    display: block;
+  }
+
+  @media (min-width: 992px) {
+    .ee-hero-row {
+      display: flex;
+      align-items: stretch;
+      gap: 20px;
+    }
+
+    .ee-hero-left,
+    .ee-hero-right {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .ee-hero-right .ee-landing-form-wrapper {
+      margin-left: 18px;
+    }
+  }
+
+  /* === Layout для banfluid колонок === */
+  @media (min-width: 992px) {
+    .banfluid {
+      float: none;
+      clear: none;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .banfluid.col-md-9 {
+      width: 58.3333%;
+    }
+
+    .banfluid.ee-form-col {
+      width: 41.6667%;
+    }
+
+    .banfluid.col-md-3:not(.ee-form-col) {
+      display: none;
+    }
+
+    .banfluid.ee-form-col .ee-landing-form-wrapper {
+      margin-left: 18px;
+    }
+
+    .fixsl {
+      width: 58.3333%;
+    }
+
+    .fixsn_ban.ee-form-col,
+    .fixsn_ban2.ee-form-col {
+      width: 41.6667%;
+    }
+
+    .fixsn_ban:not(.ee-form-col),
+    .fixsn_ban2:not(.ee-form-col) {
+      display: none;
+    }
+  }
+
+  /* === Дополнительные стили === */
+  .row.ee-gap > [class*="col-"] {
+    margin-bottom: 10px;
+  }
+
+  .ee-hero-right .ee-landing-form-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+</style>

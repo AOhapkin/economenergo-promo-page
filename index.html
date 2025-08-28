@@ -399,7 +399,11 @@
           <div class="row align-items-center">
             <div class="col-sm-6">
               <div class="ee-hero-image">
-                <img id="ee-hero-img" alt="Светодиодный антивандальный светильник СББ 06-06" class="img-fluid" />
+                <img
+                  id="ee-hero-img"
+                  alt="Светодиодный антивандальный светильник СББ 06-06"
+                  class="img-fluid"
+                />
               </div>
             </div>
             <div class="col-sm-6">
@@ -1419,11 +1423,17 @@
           });
 
         // Инициализируем hero изображение с фолбэком
-        (function(){
-          const localPath = "./ФотоКвиз/1 Светодиодный антивандальный светильник с оптико акустическим датчиком СББ 06 06/svetilnik-s-optiko-akusticheskim-datchikom-sberenergo-sbb-06-06.jpg";
-          const candidates = [ localPath, toRawGithubUrl(localPath) ];
-          const img = document.getElementById('ee-hero-img');
-          if (img) setImageWithFallback(img, candidates, "https://via.placeholder.com/680x360?text=Hero");
+        (function () {
+          const localPath =
+            "./ФотоКвиз/1 Светодиодный антивандальный светильник с оптико акустическим датчиком СББ 06 06/svetilnik-s-optiko-akusticheskim-datchikom-sberenergo-sbb-06-06.jpg";
+          const candidates = [localPath, toRawGithubUrl(localPath)];
+          const img = document.getElementById("ee-hero-img");
+          if (img)
+            setImageWithFallback(
+              img,
+              candidates,
+              "https://via.placeholder.com/680x360?text=Hero"
+            );
         })();
       });
 

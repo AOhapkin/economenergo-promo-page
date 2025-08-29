@@ -282,104 +282,360 @@
 {% endif %}
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("ee-lead-form");
-    if (!form) return;
+  (function () {
+    // ===== CONFIG =====
+    var BTN_SEL = "#heroSubmitBtn"; // your button
+    var FALLBACK_FORM_SEL = "#ee-lead-form"; // your form (if button.form is missing)
+    var HIDDEN_PRODUCT_ID = "hidden_product_id"; // <-- put real product_id here
+    var COUNTRY_ID = 176; // Russia
+    var ZONE_ID = 2726; // Moscow (any valid RU zone id works)
+    var PAYMENT_CODE = "bank_transfer"; // "Банковский перевод"
+    var AFTER_SUCCESS_REDIRECT = "index.php?route=information/contact/success";
 
-    // статус под формой
-    const status = document.createElement("div");
-    status.id = "ee-lead-status";
-    status.style.marginTop = "8px";
-    form.appendChild(status);
+    if (!window.jQuery) {
+      console.error("[Lead] jQuery required");
+      return;
+    }
+    var $ = window.jQuery,
+      running = false;
 
-    // тянем настоящий action с /information/contact
-    let cachedAction = null;
-    async function getRealAction() {
-      if (cachedAction) return cachedAction;
-      const resp = await fetch("index.php?route=information/contact", {
-        credentials: "same-origin",
-        cache: "no-store",
+    // ===== small utils =====
+    function log() {
+      try {
+        console.log.apply(console, arguments);
+      } catch (e) {}
+    }
+    function group(name) {
+      console.group(name);
+    }
+    function groupEnd() {
+      console.groupEnd();
+    }
+    function jx(o) {
+      return new Promise(function (res, rej) {
+        $.ajax(
+          $.extend(
+            true,
+            { headers: { "X-Requested-With": "XMLHttpRequest" } },
+            o
+          )
+        )
+          .done(function (data, ts, jq) {
+            res({ data: data, jq: jq });
+          })
+          .fail(function (jq, ts, err) {
+            rej({ jq: jq, err: err });
+          });
       });
-      if (!resp.ok) throw new Error("contact page " + resp.status);
-      const html = await resp.text();
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      const contactForm = doc.querySelector("form[action]");
-      if (!contactForm)
-        throw new Error("form[action] not found on contact page");
-      const a = document.createElement("a");
-      a.href = contactForm.getAttribute("action") || "";
-      cachedAction = a.href; // браузер сделает абсолютный URL
-      return cachedAction;
+    }
+    function POST(u, d) {
+      group("[POST] " + u);
+      log(d);
+      return jx({ url: u, method: "POST", data: d }).then(function (r) {
+        log("↳ HTTP", r.jq.status);
+        groupEnd();
+        return r;
+      });
+    }
+    function GET(u) {
+      group("[GET]  " + u);
+      return jx({ url: u, method: "GET" }).then(function (r) {
+        log("↳ HTTP", r.jq.status);
+        groupEnd();
+        return r;
+      });
     }
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
+    function snippet(tag, r) {
+      var s = String(r && r.data != null ? r.data : "");
+      log(tag, "len=", s.length, "→", s.slice(0, 160));
+    }
+    function setStatus(msg, color) {
+      var n = document.getElementById("ee-lead-status");
+      if (!n) {
+        n = document.createElement("div");
+        n.id = "ee-lead-status";
+        n.style.marginTop = "8px";
+        var f = getForm();
+        if (f) f.appendChild(n);
+      }
+      n.textContent = msg;
+      if (color) n.style.color = color;
+    }
+    function getForm() {
+      var btn = document.querySelector(BTN_SEL);
+      if (btn && btn.form) return btn.form;
+      return (
+        document.querySelector(FALLBACK_FORM_SEL) ||
+        (btn ? btn.closest("form") : null) ||
+        document.querySelector("form")
+      );
+    }
+    function cartLooksNonEmpty(html) {
+      return /cart|subtotal|итог|товар/i.test(String(html || ""));
+    }
+    function responseHasCartRedirect(r) {
+      var s = String(r && r.data != null ? r.data : "");
+      return (
+        /route=checkout\/cart/.test(s) ||
+        /location\s*=\s*['"][^'"]*route=checkout\/cart/.test(s)
+      );
+    }
 
-      const name = form.querySelector('input[name="name"]');
-      const tel = form.querySelector('input[name="telephone"]');
-      const email = form.querySelector('input[name="email"]');
-      [name, tel, email].forEach((el) => el.classList.remove("is-invalid"));
+    // ===== core steps (with auto-heal) =====
+    function ensureCart() {
+      return POST("index.php?route=checkout/cart/add", {
+        product_id: 164,
+        quantity: 1,
+      })
+        .then(function () {
+          return GET("index.php?route=checkout/cart");
+        })
+        .then(function (r) {
+          snippet("cart page", r);
+          if (!cartLooksNonEmpty(r.data))
+            throw new Error(
+              "Hidden product NOT in cart (check stock/min qty/options/price)."
+            );
+        });
+    }
 
-      if (!name.value.trim()) {
-        name.classList.add("is-invalid");
+    function initCheckout() {
+      return GET("index.php?route=checkout/checkout");
+    }
+
+    function saveGuest(firstname, email, tel) {
+      var payload = {
+        firstname: firstname,
+        lastname: "Клиент",
+        email: email,
+        telephone: tel,
+        company: "",
+        customer_group_id: 1,
+        address_1: "Заявка с лендинга",
+        address_2: "",
+        city: "Москва",
+        postcode: "",
+        country_id: COUNTRY_ID,
+        zone_id: ZONE_ID,
+        shipping_address: 1,
+      };
+      console.table(payload);
+      return POST("index.php?route=checkout/guest/save", payload).then(
+        function (r) {
+          // Some builds return JSON {redirect: '.../checkout/cart'} here and empty the cart
+          if (r.data && r.data.redirect) {
+            log("[Lead] guest/save redirect →", r.data.redirect);
+            return GET(r.data.redirect).then(function (rr) {
+              snippet("guest/save redirect follow (cart)", rr);
+              // Re-add the hidden item if cart got wiped
+              if (!cartLooksNonEmpty(rr.data)) return ensureCart();
+            });
+          }
+        }
+      );
+    }
+
+    function paymentList() {
+      return GET("index.php?route=checkout/payment_method").then(function (r) {
+        snippet("payment_method (GET)", r);
+        var html = String(r.data || "");
+        var tmp = document.createElement("div");
+        tmp.innerHTML = html;
+        var radios = tmp.querySelectorAll('input[name="payment_method"]');
+        var codes = [];
+        for (var i = 0; i < radios.length; i++) codes.push(radios[i].value);
+        return { html: html, codes: codes };
+      });
+    }
+
+    function savePaymentOrHeal(comment) {
+      // Try to save the preferred code. If it redirects to cart (cart became empty), heal and retry once.
+      return paymentList().then(function (list) {
+        if (list.codes.length === 0)
+          throw new Error("No payment methods available (module restriction).");
+        var code =
+          list.codes.indexOf(PAYMENT_CODE) >= 0 ? PAYMENT_CODE : list.codes[0];
+        log("[Lead] choosing payment:", code);
+        return POST("index.php?route=checkout/payment_method/save", {
+          payment_method: code,
+          comment: comment,
+          agree: 1,
+        }).then(function (r) {
+          if (r.data && r.data.error)
+            throw new Error(
+              "payment_method/save error: " + JSON.stringify(r.data.error)
+            );
+          if (r.data && r.data.redirect) {
+            // Heal: cart got redirected/emptied — re-add and retry once
+            log(
+              "[Lead] payment_method/save redirect →",
+              r.data.redirect,
+              "healing…"
+            );
+            return GET(r.data.redirect).then(function (rr) {
+              if (!cartLooksNonEmpty(rr.data)) {
+                return ensureCart().then(function () {
+                  return savePaymentOrHeal(comment);
+                });
+              }
+            });
+          }
+          return code;
+        });
+      });
+    }
+
+    function confirmSummaryOrHeal(comment) {
+      return POST("index.php?route=checkout/confirm", {}).then(function (r) {
+        snippet("confirm", r);
+        if (responseHasCartRedirect(r)) {
+          // Heal: we lost payment or cart -> ensure cart, re-save payment, re-confirm
+          log("[Lead] confirm redirected to cart — healing sequence…");
+          return ensureCart()
+            .then(function () {
+              return savePaymentOrHeal(comment);
+            })
+            .then(function () {
+              return POST("index.php?route=checkout/confirm", {});
+            });
+        }
+        return r;
+      });
+    }
+
+    function paymentConfirm(code) {
+      return POST(
+        "index.php?route=extension/payment/" + code + "/confirm",
+        {}
+      ).catch(function () {
+        log("[Lead] extension path failed → trying legacy");
+        return POST("index.php?route=payment/" + code + "/confirm", {});
+      });
+    }
+
+    // ===== bind: intercept native contact submit =====
+    function bind() {
+      var btn = document.querySelector(BTN_SEL);
+      var form = getForm();
+      if (!btn || !form) {
+        console.warn("[Lead] Button or form not found");
         return;
       }
-      if (!tel.value.trim()) {
-        tel.classList.add("is-invalid");
-        return;
-      }
-      if (
-        !email.value.trim() ||
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)
-      ) {
-        email.classList.add("is-invalid");
-        return;
-      }
-
-      // приводим enquiry к формату заказа
-      form.querySelector('input[name="enquiry"]').value =
-        "Заявка с лендинга (Экран 1)\n" +
-        "Имя: " +
-        name.value.trim() +
-        "\n" +
-        "Телефон: " +
-        tel.value.trim() +
-        "\n" +
-        "Email: " +
-        email.value.trim();
-
-      status.textContent = "Отправляем...";
-      status.style.color = "#666";
 
       try {
-        const action = await getRealAction();
-        const fd = new FormData(form);
-        if (!fd.has("agree")) fd.append("agree", "1");
+        btn.type = "button";
+      } catch (e) {}
+      form.addEventListener(
+        "submit",
+        function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        },
+        true
+      );
 
-        const resp = await fetch(action, {
-          method: "POST",
-          body: fd,
-          headers: { "X-Requested-With": "XMLHttpRequest" },
-          credentials: "same-origin",
-        });
+      btn.addEventListener(
+        "click",
+        function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          if (running) return;
+          running = true;
 
-        // некоторые темы отвечают html/редиректом, без JSON
-        if (resp.ok) {
-          form.reset();
-          status.textContent = "Заявка отправлена! Мы свяжемся с вами.";
-          status.style.color = "#1a9f29";
-          return;
-        }
+          var nameEl = form.querySelector('input[name="name"]');
+          var telEl = form.querySelector('input[name="telephone"]');
+          var emailEl = form.querySelector('input[name="email"]');
+          [nameEl, telEl, emailEl].forEach(function (el) {
+            if (el) el.classList.remove("is-invalid");
+          });
+          if (!nameEl || !nameEl.value.trim()) {
+            if (nameEl) nameEl.classList.add("is-invalid");
+            running = false;
+            return;
+          }
+          if (!telEl || !telEl.value.trim()) {
+            if (telEl) telEl.classList.add("is-invalid");
+            running = false;
+            return;
+          }
+          if (
+            !emailEl ||
+            !emailEl.value ||
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)
+          ) {
+            if (emailEl) emailEl.classList.add("is-invalid");
+            running = false;
+            return;
+          }
 
-        status.textContent = "Не удалось отправить заявку. Попробуйте ещё раз.";
-        status.style.color = "#e11919";
-      } catch (err) {
-        console.error(err);
-        status.textContent = "Сбой при отправке. Попробуйте позже.";
-        status.style.color = "#e11919";
-      }
-    });
-  });
+          var firstname = nameEl.value.trim().slice(0, 32);
+          var comment =
+            "запрос на КП из контактной формы\n" +
+            "Имя: " +
+            firstname +
+            "\n" +
+            "Телефон: " +
+            telEl.value.trim() +
+            "\n" +
+            "Email: " +
+            emailEl.value.trim();
+
+          setStatus("Создаём заявку...", "#666");
+
+          ensureCart()
+            .then(initCheckout)
+            .then(function () {
+              return saveGuest(
+                firstname,
+                emailEl.value.trim(),
+                telEl.value.trim()
+              );
+            })
+            .then(function () {
+              return savePaymentOrHeal(comment);
+            })
+            .then(function (code) {
+              return confirmSummaryOrHeal(comment).then(function () {
+                return code;
+              });
+            })
+            .then(paymentConfirm)
+            .then(function () {
+              setStatus(
+                "Заявка оформлена! Мы скоро свяжемся с вами.",
+                "#1a9f29"
+              );
+              try {
+                form.reset();
+              } catch (e) {}
+              if (AFTER_SUCCESS_REDIRECT)
+                window.location.href = AFTER_SUCCESS_REDIRECT;
+            })
+            .catch(function (err) {
+              console.error("[Lead] FAIL:", err);
+              setStatus(
+                "Не удалось оформить заказ. Проверьте поля и попробуйте ещё раз.",
+                "#e11919"
+              );
+            })
+            .finally(function () {
+              running = false;
+            });
+        },
+        true
+      );
+
+      log("[Lead] Bound to", BTN_SEL, "form:", form);
+    }
+
+    if (document.readyState === "loading")
+      document.addEventListener("DOMContentLoaded", bind);
+    else bind();
+  })();
 </script>
 
 {{ footer }}

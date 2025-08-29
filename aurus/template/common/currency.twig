@@ -1,0 +1,28 @@
+{% if currencies|length > 1 %}
+<div class="pull-left">
+<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-currency">
+  <div class="open_btn btn-group">
+    <button class="serv2_none btn btnh btn-link dropdown-toggle" data-toggle="dropdown">
+    {% for currency in currencies %} 
+    {% if (currency['symbol_left'] and currency['code'] == code) %} 
+    <strong>{{ currency['symbol_left'] }}</strong>
+    {% elseif (currency['symbol_right'] and currency['code'] == code) %} 
+    <strong>{{ currency['symbol_right'] }}</strong>
+    {% endif %} 
+    {% endfor %} 
+    <span class="hidden-xs hidden-sm hidden-md">{{ text_currency }}</span> <i class="fa fa-caret-down"></i></button>
+    <ul class="serv2_pos dropdown-menu">
+      {% for currency in currencies %} 
+      {% if (currency['symbol_left']) %} 
+      <li {% if (currency['code'] == code) %} {{ 'class="active"' }} {% endif %}><button class="currency-select btn btnh btn-link btn-block btn_left" type="button" name="{{ currency['code'] }}">{{ currency['symbol_left'] }} <span class="serv2_none">{{ currency['title'] }}</span></button></li>
+      {% else %} 
+      <li {% if (currency['code'] == code) %} {{ 'class="active"' }} {% endif %}><button class="currency-select btn btnh btn-link btn-block btn_left" type="button" name="{{ currency['code'] }}">{{ currency['symbol_right'] }} <span class="serv2_none">{{ currency['title'] }}</span></button></li>
+      {% endif %} 
+      {% endfor %} 
+    </ul>
+  </div>
+  <input type="hidden" name="code" value="" />
+  <input type="hidden" name="redirect" value="{{ redirect }}" />
+</form>
+</div>
+{% endif %} 

@@ -1,0 +1,1717 @@
+{% if (carusel != '1') %} 
+<div id="product-tab">
+   <ul class="nav nav-tabs mod scroll-width-thin">
+      {% if (featured_products) %} 
+      <li><a href="#tab2" data-toggle="tab">{{ tab_featured }}</a></li>
+      {% endif %} 
+      {% if (special_products) %} 
+      <li><a href="#tab1" data-toggle="tab">{{ tab_special }}</a></li>
+      {% endif %} 
+      {% if (bestseller_products) %} 
+      <li><a href="#tab3" data-toggle="tab">{{ tab_bestseller }}</a></li>
+      {% endif %} 
+      {% if (latest_products) %} 
+      <li><a href="#tab4" data-toggle="tab">{{ tab_latest }}</a></li>
+      {% endif %} 
+      {% if (mostviewed_products) %} 
+      <li><a href="#tab5" data-toggle="tab">{{ tab_mostviewed }}</a></li>
+      {% endif %} 
+   </ul>
+   <div class="tab-content">
+      <!-- featuredtab start -->
+      {% if (featured_products) %} 
+      <div class="tab-pane" id="tab2">
+         <div id="featuredtab-grid" class="bl_margin flex_height_row">
+            {% for product in featured_products %} 
+            <div class="product-layout {% if (column_left or column_right ) %} nth1 {% else %} nth2 {% endif %} featuredtab {% if (column_left or column_right ) %} col-xl-five col-lg-3 col-md-4 col-sm-4 col-xs-6 {% else %} col-xl-2 col-lg-five col-md-3 col-sm-4 col-xs-6 {% endif %}">
+               <div class="gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="item_feattab caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_featuredtab">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src = "{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %} 
+         </div>
+      </div>
+      {% endif %} 
+      <!-- featuredtab end -->
+      <!-- specialtab start -->
+      {% if (special_products) %} 
+      <div class="tab-pane" id="tab1">
+         <div id="specialtab-grid" class="bl_margin flex_height_row">
+            {% for product in special_products %} 
+            <div class="product-layout {% if (column_left or column_right ) %} nth1 {% else %} nth2 {% endif %} specialtab {% if (column_left or column_right ) %} col-xl-five col-lg-3 col-md-4 col-sm-4 col-xs-6 {% else %} col-xl-2 col-lg-five col-md-3 col-sm-4 col-xs-6 {% endif %}">
+               <div class="gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="item_spectab caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_spectab">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src ="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %} 
+         </div>
+      </div>
+      {% endif %} 
+      <!-- specialtab end -->
+      <!-- bestsellertab start -->
+      {% if (bestseller_products) %} 
+      <div class="tab-pane" id="tab3">
+         <div id="bestsellertab-grid" class="bl_margin flex_height_row">
+            {% for product in bestseller_products %} 
+            <div class="product-layout {% if (column_left or column_right ) %} nth1 {% else %} nth2 {% endif %} bestsellertab {% if (column_left or column_right ) %} col-xl-five col-lg-3 col-md-4 col-sm-4 col-xs-6 {% else %} col-xl-2 col-lg-five col-md-3 col-sm-4 col-xs-6 {% endif %}">
+               <div class="gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="item_besttab caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class = "box_bestsellertab">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src = "{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %} 
+         </div>
+      </div>
+      {% endif %} 
+      <!-- bestsellertab end -->
+      <!-- latesttab start -->
+      {% if (latest_products) %} 
+      <div class="tab-pane" id="tab4">
+         <div id="latesttab-grid" class="bl_margin flex_height_row">
+            {% for product in latest_products %} 
+            <div class="product-layout {% if (column_left or column_right ) %} nth1 {% else %} nth2 {% endif %} latesttab {% if (column_left or column_right ) %} col-xl-five col-lg-3 col-md-4 col-sm-4 col-xs-6 {% else %} col-xl-2 col-lg-five col-md-3 col-sm-4 col-xs-6 {% endif %}">
+               <div class="gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="item_lattab caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class = "box_latesttab">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src = "{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %} 
+         </div>
+      </div>
+      {% endif %} 
+      <!-- latesttab end -->
+      <!-- mostviewed start -->
+      {% if (mostviewed_products) %} 
+      <div class="tab-pane" id="tab5">
+         <div id="viewedtab-grid" class="bl_margin flex_height_row">
+            {% for product in mostviewed_products %} 
+            <div class="product-layout {% if (column_left or column_right ) %} nth1 {% else %} nth2 {% endif %} viewedtab {% if (column_left or column_right ) %} col-xl-five col-lg-3 col-md-4 col-sm-4 col-xs-6 {% else %} col-xl-2 col-lg-five col-md-3 col-sm-4 col-xs-6 {% endif %}">
+               <div class="gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="item_viewedtab caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class = "box_viewedtab">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src = "{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            {% endfor %} 
+         </div>
+      </div>
+      {% endif %} 
+      <!-- mostviewed end -->
+   </div>
+</div>
+<div class="clearfix"></div>
+{% if (special_products) %} 
+<script>
+   $(document).ready(function () {
+   var size_li_spectab = $("#specialtab-grid > div").size();
+   var li_element_spectab = {% if (column_left or column_right ) %}5{% else %}6{% endif %};
+   if(li_element_spectab !=size_li_spectab){
+   $( ".product-layout.specialtab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)" ).append('<div class="gridcount specialtab"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ button_load }}</span></div>');
+   $(".product-layout.specialtab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)").addClass("specialtab_box quickview_hidden");
+   }
+   $('#specialtab-grid > div:lt('+li_element_spectab+')').fadeIn('slow');
+   $('.gridcount.specialtab').click(function () {
+   $(this).remove();
+   $('.specialtab_box.quickview_hidden').first().removeClass('quickview_hidden')
+   if(li_element_spectab==size_li_spectab){
+   $('.btn.btn-default.gridcount.specialtab').remove();
+   }else{
+   li_element_spectab = (li_element_spectab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} <= size_li_spectab) ? li_element_spectab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} : size_li_spectab;
+   $('#specialtab-grid > div:lt('+li_element_spectab+')').fadeIn('slow');
+   }
+   $("#sticky_item").trigger("sticky_kit:recalc"); // пересчет affix
+   });
+   });
+</script>
+{% endif %} 
+{% if (featured_products) %} 
+<script>
+   $(document).ready(function () {
+   var size_litab = $("#featuredtab-grid > div").size();
+   var li_elementtab = {% if (column_left or column_right ) %}5{% else %}6{% endif %};
+   if(li_elementtab !=size_litab){
+   $( ".product-layout.featuredtab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)" ).append('<div class="gridcount featuredtab"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ button_load }}</span></div>');
+   $(".product-layout.featuredtab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)").addClass("featuredtab_box quickview_hidden");
+   }
+   $('#featuredtab-grid > div:lt('+li_elementtab+')').fadeIn('slow');
+   $('.gridcount.featuredtab').click(function () {
+   $(this).remove();
+   $('.featuredtab_box.quickview_hidden').first().removeClass('quickview_hidden')
+   if(li_elementtab==size_litab){
+   $('.btn.btn-default.gridcount.featuredtab').remove();
+   }else{
+   li_elementtab = (li_elementtab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} <= size_litab) ? li_elementtab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} : size_litab;
+   $('#featuredtab-grid > div:lt('+li_elementtab+')').fadeIn('slow');
+   }
+   $("#sticky_item").trigger("sticky_kit:recalc"); // пересчет affix
+   });
+   });
+</script>
+{% endif %} 
+{% if (bestseller_products) %} 
+<script>
+   $(document).ready(function () {
+   var size_li_besttab = $("#bestsellertab-grid > div").size();
+   var li_element_besttab = {% if (column_left or column_right ) %}5{% else %}6{% endif %};
+   if(li_element_besttab !=size_li_besttab){
+   $( ".product-layout.bestsellertab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)" ).append('<div class="gridcount bestsellertab"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ button_load }}</span></div>');
+   $(".product-layout.bestsellertab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)").addClass("bestsellertab_box quickview_hidden");
+   }
+   $('#bestsellertab-grid > div:lt('+li_element_besttab+')').fadeIn('slow');
+   $('.gridcount.bestsellertab').click(function () {
+   $(this).remove();
+   $('.bestsellertab_box.quickview_hidden').first().removeClass('quickview_hidden')
+   if(li_element_besttab==size_li_besttab){
+   $('.btn.btn-default.gridcount.bestsellertab').remove();
+   }else{
+   li_element_besttab = (li_element_besttab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} <= size_li_besttab) ? li_element_besttab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} : size_li_besttab;
+   $('#bestsellertab-grid > div:lt('+li_element_besttab+')').fadeIn('slow');
+   }
+   $("#sticky_item").trigger("sticky_kit:recalc"); // пересчет affix
+   });
+   });
+</script>
+{% endif %} 
+{% if (latest_products) %} 
+<script>
+   $(document).ready(function () {
+   var size_li_lattab = $("#latesttab-grid > div").size();
+   var li_element_lattab = {% if (column_left or column_right ) %}5{% else %}6{% endif %};
+   if(li_element_lattab !=size_li_lattab){
+   $( ".product-layout.latesttab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)" ).append('<div class="gridcount latesttab"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ button_load }}</span></div>');
+   $(".product-layout.latesttab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)").addClass("latesttab_box quickview_hidden");
+   }
+   $('#latesttab-grid > div:lt('+li_element_lattab+')').fadeIn('slow');
+   $('.gridcount.latesttab').click(function () {
+   $(this).remove();
+   $('.latesttab_box.quickview_hidden').first().removeClass('quickview_hidden')
+   if(li_element_lattab==size_li_lattab){
+   $('.btn.btn-default.gridcount.latesttab').remove();
+   }else{
+   li_element_lattab = (li_element_lattab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} <= size_li_lattab) ? li_element_lattab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} : size_li_lattab;
+   $('#latesttab-grid > div:lt('+li_element_lattab+')').fadeIn('slow');
+   }
+   $("#sticky_item").trigger("sticky_kit:recalc"); // пересчет affix
+   });
+   });
+</script>
+{% endif %} 
+{% if (mostviewed_products) %} 
+<script>
+   $(document).ready(function () {
+   var size_li_viewedtab = $("#viewedtab-grid > div").size();
+   var li_element_viewedtab = {% if (column_left or column_right ) %}5{% else %}6{% endif %};
+   if(li_element_viewedtab !=size_li_viewedtab){
+   $( ".product-layout.viewedtab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)" ).append('<div class="gridcount viewedtab"><i class="gridcount_load fa fa-refresh fa-lg"></i><span class="gridcount2">{{ button_load }}</span></div>');
+   $(".product-layout.viewedtab:nth-child({% if (column_left or column_right ) %}5{% else %}6{% endif %}n):not(:last-child)").addClass("viewedtab_box quickview_hidden");
+   }
+   $('#viewedtab-grid > div:lt('+li_element_viewedtab+')').fadeIn('slow');
+   $('.gridcount.viewedtab').click(function () {
+   $(this).remove();
+   $('.viewedtab_box.quickview_hidden').first().removeClass('quickview_hidden')
+   if(li_element_viewedtab==size_li_viewedtab){
+   $('.btn.btn-default.gridcount.viewedtab').remove();
+   }else{
+   li_element_viewedtab = (li_element_viewedtab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} <= size_li_viewedtab) ? li_element_viewedtab+{% if (column_left or column_right ) %}5{% else %}6{% endif %} : size_li_viewedtab;
+   $('#viewedtab-grid > div:lt('+li_element_viewedtab+')').fadeIn('slow');
+   }
+   $("#sticky_item").trigger("sticky_kit:recalc"); // пересчет affix
+   });
+   });
+</script>
+{% endif %} 
+<script>
+   //Active Tab
+   $(document).ready(function() {
+   $(".nav-tabs li:first").addClass("active");
+   $(".tab-pane:first").addClass("active");
+   });
+</script>
+{% else %} 
+<div id="product-tab">
+   <ul class="nav nav-tabs mod tabshadow">
+      {% if (special_products) %} 
+      <li><a href="#tab1" data-toggle="tab">{{ tab_special }}</a></li>
+      {% endif %} 
+      {% if (featured_products) %} 
+      <li><a href="#tab2" data-toggle="tab">{{ tab_featured }}</a></li>
+      {% endif %} 
+      {% if (bestseller_products) %} 
+      <li><a href="#tab3" data-toggle="tab">{{ tab_bestseller }}</a></li>
+      {% endif %} 
+      {% if (latest_products) %} 
+      <li><a href="#tab4" data-toggle="tab">{{ tab_latest }}</a></li>
+      {% endif %} 
+      {% if (mostviewed_products) %} 
+      <li><a href="#tab5" data-toggle="tab">{{ tab_mostviewed }}</a></li>
+      {% endif %} 
+   </ul>
+   <div class="tab-content">
+      {% if (special_products) %} 
+      <div  class="tab-pane padding-carusel" id="tab1">
+         <div id="specialtab_carusel" class="swiper-container tab-container1">
+            <div class="swiper-wrapper">
+               {% for product in special_products %} 
+               <div class="swiper-slide product-layout_carusel gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_spec">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %} 
+            </div>
+            {% if (navigation) %} 
+            <div class="#specialtab_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+            <div class="#specialtab_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+            {% endif %} 
+         </div>
+      </div>
+      {% endif %} 
+      {% if (featured_products) %} 
+      <div class="tab-pane padding-carusel" id="tab2">
+         <div id="featuredtab_carusel" class="swiper-container tab-container2">
+            <div class="swiper-wrapper">
+               {% for product in featured_products %} 
+               <div class="swiper-slide product-layout_carusel gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_spec">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %} 
+            </div>
+            {% if (navigation) %} 
+            <div class="#featuredtab_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+            <div class="#featuredtab_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+            {% endif %} 
+         </div>
+      </div>
+      {% endif %} 
+      {% if (bestseller_products) %} 
+      <div class="tab-pane padding-carusel" id="tab3">
+         <div id="bestsellertab_carusel" class="swiper-container tab-container3">
+            <div class="swiper-wrapper">
+               {% for product in bestseller_products %} 
+               <div class="swiper-slide product-layout_carusel gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_spec">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %} 
+            </div>
+            {% if (navigation) %} 
+            <div class="#bestsellertab_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+            <div class="#bestsellertab_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+            {% endif %} 
+         </div>
+      </div>
+      {% endif %} 
+      {% if (latest_products) %} 
+      <div class="tab-pane padding-carusel" id="tab4">
+         <div id="latesttab_carusel" class="swiper-container tab-container4">
+            <div class="swiper-wrapper">
+               {% for product in latest_products %} 
+               <div class="swiper-slide product-layout_carusel gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_spec">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %} 
+            </div>
+            {% if (navigation) %} 
+            <div class="#latesttab_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+            <div class="#latesttab_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+            {% endif %} 
+         </div>
+      </div>
+      {% endif %} 
+      {% if (mostviewed_products) %} 
+      <div class="tab-pane padding-carusel" id="tab5">
+         <div id="mostviewedtab_carusel" class="swiper-container tab-container5">
+            <div class="swiper-wrapper">
+               {% for product in mostviewed_products %} 
+               <div class="swiper-slide product-layout_carusel gtile-i-wrap">
+                  <div class="gtile-i">
+                     <div class="gtile-i-box">
+                        <div class="caption">
+                           <div class="{% if (rat) %}raiting_thumb{% endif %} product-thumb">
+                              <div class="box_spec">
+                                 {% if (rat) %} 
+                                 <div class="rating rating_sm">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+                                 <div class="snav en">
+                                    <ul>
+                                       {% if (wish) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="wishlist.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-heart"></i>
+                                          <span>{{ button_wishlist }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (comp) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="compare.add('{{ product['product_id'] }}');">
+                                          <i class="fa fa-exchange"></i>
+                                          <span>{{ button_compare }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                       {% if (quickview) %} 
+                                       <li>
+                                          <a rel="nofollow" onclick="quickview_open('{{ product['product_id'] }}');">
+                                          <i class="fa fa-search"></i>
+                                          <span>{{ text_quickview }}</span>
+                                          </a>
+                                       </li>
+                                       {% endif %} 
+                                    </ul>
+                                 </div>
+         <div class="positionsticker">
+                            <!-- special -->
+						    {% if (aurus_sticker_sale_product_auto != 1 and product['special'] and product['price_sticker'] != 0) %} 
+                            {% set percent = (100 - (product['special_sticker'] / product['price_sticker']) * 100)|round %} 
+                            <div class="stickers-special">-{{ percent }}%</div>
+                            {% endif %} 
+                            <!-- special END -->
+                            <!-- new -->
+						    {% set startDate1 = (product['dateadded']|slice(0, 10))|date('U') %}
+						    {% set endDate2 = ("now"|date("Y/m/d"))|date('U') %}
+						    {% set days = ((endDate2 / 86400)|round) - ((startDate1 / 86400)|round) %}
+                            {% if (aurus_sticker_new_product_auto != 1 and days < aurus_sticker_product_new_day) %} 
+                            <div class="stickers-new">{{ aurus_name_sticker_product_new[language_id] }}</div>
+                            {% endif %} 
+                            <!-- new END -->
+                            <!-- top -->
+							{% if (aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 1 and product['rating'] == aurus_sticker_product_top_rating or aurus_sticker_top_product_auto != 1 and aurus_sticker_product_top_ratinr == 2 and product['viewed'] > aurus_sticker_product_top_viewed) %} 
+							<div class="stickers-top">{{ aurus_name_sticker_product_top[language_id] }}</div>
+							{% endif %} 
+							<!-- top END -->
+							{% if (product['stickers2']) %} 
+							{% for sticker2 in product['stickers2'] %} 
+							<div class="stickers-all" style="color:{{ sticker2['color'] }};background:{{ sticker2['background'] }};">{{ sticker2['name'] }}</div>
+							{% endfor %} 
+							{% endif %} 
+         </div>
+                                 {% if (rat) %} 
+                                 <div class="rating rating_lg">
+                                    {% set i = 1 %}{% for i in i..5 %} 
+                                    {% if (product['rating'] < i) %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% else %} 
+                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                                    {% endif %} 
+                                    {% endfor %} 
+                                 </div>
+                                 {% endif %} 
+                                 <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                                    </a>
+                                 </div>
+                                 {% if (product['price']) %} 
+                                 <p class="price">
+                                    {% if (not product['special']) %} 
+                                    {{ product['price'] }} 
+                                    {% else %} 
+                                    <span class="price-new">{{ product['special'] }}</span><span class="price-old">{{ product['price'] }}</span>
+                                    {% endif %} 
+                                    {% if (product['tax']) %} 
+                                    <span class="price-tax">{{ text_tax }} {{ product['tax'] }}</span>
+                                    {% endif %} 
+                                 </p>
+                                 {% endif %} 
+                                 <div class="cart">
+                                    {% if (product['quantity'] <= 0 and aridiusinstock_status ) %} 
+                                    <button type="button" class="btn-instock" onclick="instock.add('{{ product['product_id'] }}');" data-product-id=" {{ product['product_id'] }}">{{ button_instock }}</button>
+                                    {% else %} 
+                                    <button type="button" class="btn-cart" onclick="cart.add('{{ product['product_id'] }}');"><i class="fa fa-shopping-cart"></i> {{ button_cart }}</button>
+                                    {% endif %} 
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %} 
+            </div>
+            {% if (navigation) %} 
+            <div class="#mostviewedtab_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+            <div class="#mostviewedtab_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+            {% endif %} 
+         </div>
+      </div>
+      {% endif %} 
+   </div>
+</div>
+<script>
+   //Active Tab
+   $(".nav-tabs li:first").addClass("active");
+   $(".tab-pane:first").addClass("active");
+</script>
+<script>
+   $(document).ready(function(){
+   var swiper1;
+   var swiper2;
+   var swiper3;
+   var swiper4;
+   var swiper5;
+   {% if (special_products) %} 
+   swiper1 = new Swiper('.tab-container1', {
+   slidesPerView: {{ items }},
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: {% if (column_left or column_right ) %} 3 {% else %} 4 {% endif %},
+   },
+   1600: {
+   slidesPerView: {% if (column_left or column_right ) %} 4 {% else %} 5 {% endif %},
+   }
+   },
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#specialtab_carusel .swiper-button-next',
+   prevEl: '#specialtab_carusel .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (featured_products) %} 
+   swiper2 = new Swiper('.tab-container2', {
+   slidesPerView: {{ items }},
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: {% if (column_left or column_right ) %} 3 {% else %} 4 {% endif %},
+   },
+   1600: {
+   slidesPerView: {% if (column_left or column_right ) %} 4 {% else %} 5 {% endif %},
+   }
+   },
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#featuredtab_carusel .swiper-button-next',
+   prevEl: '#featuredtab_carusel .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (bestseller_products) %} 
+   swiper3 = new Swiper('.tab-container3', {
+   slidesPerView: {{ items }},
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: {% if (column_left or column_right ) %} 3 {% else %} 4 {% endif %},
+   },
+   1600: {
+   slidesPerView: {% if (column_left or column_right ) %} 4 {% else %} 5 {% endif %},
+   }
+   },
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#bestsellertab_carusel .swiper-button-next',
+   prevEl: '#bestsellertab_carusel .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (latest_products) %} 
+   swiper4 = new Swiper('.tab-container4', {
+   slidesPerView: {{ items }},
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: {% if (column_left or column_right ) %} 3 {% else %} 4 {% endif %},
+   },
+   1600: {
+   slidesPerView: {% if (column_left or column_right ) %} 4 {% else %} 5 {% endif %},
+   }
+   },
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#latesttab_carusel .swiper-button-next',
+   prevEl: '#latesttab_carusel .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (mostviewed_products) %} 
+   swiper5 = new Swiper('.tab-container5', {
+   slidesPerView: {{ items }},
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 2,
+   },
+   992: {
+   slidesPerView: 3,
+   },
+   1200: {
+   slidesPerView: {% if (column_left or column_right ) %} 3 {% else %} 4 {% endif %},
+   },
+   1600: {
+   slidesPerView: {% if (column_left or column_right ) %} 4 {% else %} 5 {% endif %},
+   }
+   },
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#mostviewedtab_carusel .swiper-button-next',
+   prevEl: '#mostviewedtab_carusel .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (special_products) %} 
+   $('.nav-tabs a[href="#tab1"]').on('shown.bs.tab', function (e) {
+   swiper1.update()
+   {% if (autoplay_on) %} 
+   swiper1.autoplay.stop();
+   swiper1.autoplay.start();
+   {% endif %} 
+   {% if (stophover and autoplay_on) %} 
+   $("#specialtab_carusel").hover(function() {
+   swiper1.autoplay.stop();
+   }, function() {
+   swiper1.autoplay.start();
+   });
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (featured_products) %} 
+   $('.nav-tabs a[href="#tab2"]').on('shown.bs.tab', function (e) {
+   swiper2.update()
+   {% if (autoplay_on) %} 
+   swiper2.autoplay.stop();
+   swiper2.autoplay.start();
+   {% endif %} 
+   {% if (stophover and autoplay_on) %} 
+   $("#featuredtab_carusel").hover(function() {
+   swiper2.autoplay.stop();
+   }, function() {
+   swiper2.autoplay.start();
+   });
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (bestseller_products) %} 
+   $('.nav-tabs a[href="#tab3"]').on('shown.bs.tab', function (e) {
+   swiper3.update()
+   {% if (autoplay_on) %} 
+   swiper3.autoplay.stop();
+   swiper3.autoplay.start();
+   {% endif %} 
+   {% if (stophover and autoplay_on) %} 
+   $("#bestsellertab_carusel").hover(function() {
+   swiper3.autoplay.stop();
+   }, function() {
+   swiper3.autoplay.start();
+   });
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (latest_products) %} 
+   $('.nav-tabs a[href="#tab4"]').on('shown.bs.tab', function (e) {
+   swiper4.update()
+   {% if (autoplay_on) %} 
+   swiper4.autoplay.stop();
+   swiper4.autoplay.start();
+   {% endif %} 
+   {% if (stophover and autoplay_on) %} 
+   $("#latesttab_carusel").hover(function() {
+   swiper4.autoplay.stop();
+   }, function() {
+   swiper4.autoplay.start();
+   });
+   {% endif %} 
+   });
+   {% endif %} 
+   {% if (mostviewed_products) %} 
+   $('.nav-tabs a[href="#tab5"]').on('shown.bs.tab', function (e) {
+   swiper5.update()
+   {% if (autoplay_on) %} 
+   swiper5.autoplay.stop();
+   swiper5.autoplay.start();
+   {% endif %} 
+   {% if (stophover and autoplay_on) %} 
+   $("#mostviewedtab_carusel").hover(function() {
+   swiper5.autoplay.stop();
+   }, function() {
+   swiper5.autoplay.start();
+   });
+   {% endif %} 
+   {% endif %} 
+   });
+   });
+</script>
+{% endif %} 

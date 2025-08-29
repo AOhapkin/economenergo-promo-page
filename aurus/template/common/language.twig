@@ -1,0 +1,22 @@
+{% if languages|length > 1 %}
+<div class="pull-left">
+<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-language">
+  <div class="open_btn btn-group">
+    <button class="serv2_none btn btnh btn-link dropdown-toggle" data-toggle="dropdown">
+    {% for language in languages %} 
+    {% if (language['code'] == code) %} 
+    <img src="catalog/language/{{ language['code'] }}/{{ language['code'] }}.png" alt="{{ language['name'] }}" title="{{ language['name'] }}">
+    {% endif %} 
+    {% endfor %} 
+    <span class="hidden-xs hidden-sm hidden-md">{{ text_language }}</span> <i class="fa fa-caret-down"></i></button>
+    <ul class="serv2_pos dropdown-menu">
+      {% for language in languages %} 
+      <li {% if (language['code'] == code) %} {{ 'class="active"' }} {% endif %}><button class="btn btnh btn-link btn-block btn_left language-select" type="button" name="{{ language['code'] }}"><img src="catalog/language/{{ language['code'] }}/{{ language['code'] }}.png" alt="{{ language['name'] }}" title="{{ language['name'] }}" /><span class="serv2_none">{{ language['name'] }}</span></button></li>
+      {% endfor %} 
+    </ul>
+  </div>
+  <input type="hidden" name="code" value="" />
+  <input type="hidden" name="redirect" value="{{ redirect }}" />
+</form>
+</div>
+{% endif %} 

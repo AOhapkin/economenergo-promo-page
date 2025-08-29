@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<!--[if IE 8 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie8"><![endif]-->
+<!--[if IE 9 ]><html dir="{{ direction }}" lang="{{ lang }}" class="ie9"><![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html dir="{{ direction }}" lang="{{ lang }}">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{{ title }}</title>
+{% if robots %}
+<meta name="robots" content="{{ robots }}" />
+{% endif %}
+<base href="{{ base }}" />
+{% if description %}
+<meta name="description" content="{{ description }}" />
+{% endif %}
+{% if keywords %}
+<meta name="keywords" content="{{ keywords }}" />
+{% endif %}
+<meta property="og:title" content="{{ title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ og_url }}" />
+{% if og_image %}
+<meta property="og:image" content="{{ og_image }}" />
+{% else %}
+<meta property="og:image" content="{{ logo }}" />
+{% endif %}
+<meta property="og:site_name" content="{{ name }}" />
+{% if (config_minify != 0) %} 
+<script src="catalog/view/theme/aurus/js/jquery/jquery-2.1.1.min.js"></script>
+<script src="catalog/view/javascript/bootstrap/js/bootstrap.min.js"></script>
+<script src="catalog/view/theme/aurus/js/aridius/blazy.min.js"></script>
+<script src="catalog/view/theme/aurus/js/swiper/js/swiper.min.js"></script>
+<script src="catalog/view/theme/aurus/js/common.js"></script>
+<script src="catalog/view/theme/aurus/js/aridius/aridiusquickview.js"></script>
+<script src="catalog/view/theme/aurus/js/aridius/slideout.min.js"></script>
+<script src="catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js"></script>
+<script src="catalog/view/theme/aurus/js/aridius/module.js"></script>
+<link href="catalog/view/javascript/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+<link href="catalog/view/theme/aurus/js/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+<link href="catalog/view/theme/aurus/stylesheet/stylesheet.css" rel="stylesheet">
+<link href="catalog/view/theme/aurus/stylesheet/aurus.css" rel="stylesheet">
+<link href="catalog/view/theme/aurus/stylesheet/module.css" rel="stylesheet">
+<link href="catalog/view/theme/aurus/js/swiper/css/swiper.min.css" rel="stylesheet" type="text/css" />
+<link href="catalog/view/javascript/jquery/magnific/magnific-popup.css" rel="stylesheet">
+<link href="catalog/view/theme/aurus/stylesheet/animate.min.css" rel="stylesheet" type="text/css" />
+{% else %}	
+<script src="/min/f=catalog/view/theme/aurus/js/jquery/jquery-2.1.1.min.js,catalog/view/javascript/bootstrap/js/bootstrap.min.js,catalog/view/theme/aurus/js/aridius/blazy.min.js,catalog/view/theme/aurus/js/swiper/js/swiper.min.js,catalog/view/theme/aurus/js/common.js,catalog/view/theme/aurus/js/aridius/aridiusquickview.js,catalog/view/theme/aurus/js/aridius/slideout.min.js,catalog/view/javascript/jquery/magnific/jquery.magnific-popup.min.js,catalog/view/theme/aurus/js/aridius/module.js"></script>
+<link href="/min/f=catalog/view/javascript/bootstrap/css/bootstrap.min.css,catalog/view/theme/aurus/js/font-awesome/css/font-awesome.min.css,catalog/view/theme/aurus/stylesheet/stylesheet.css,catalog/view/theme/aurus/stylesheet/aurus.css,catalog/view/theme/aurus/stylesheet/module.css,catalog/view/theme/aurus/js/swiper/css/swiper.min.css,catalog/view/javascript/jquery/magnific/magnific-popup.css,catalog/view/theme/aurus/stylesheet/animate.min.css" rel="stylesheet" media="screen" />
+{% endif %}	
+{% for style in styles %} 
+<link href="{{ style['href'] }}" type="text/css" rel="{{ style['rel'] }}" media="{{ style['media'] }}" />
+{% endfor %} 
+{% for link in links %} 
+<link href="{{ link['href'] }}" rel="{{ link['rel'] }}" />
+{% endfor %} 
+{% for script in scripts %} 
+<script src="{{ script }}"></script>
+{% endfor %} 
+{% for analytic in analytics %} 
+{{ analytic }} 
+{% endfor %} 
+<style>
+{{ theme_aurus_css }} 
+.dropdown.hidev  {
+{{ theme_aurus_gradient }};
+}
+{% if (theme_aurus_options_prise == 0) %}
+.hide_optprise {
+display: none;
+}
+{% endif %} 
+.block_desc {
+height: {{ theme_aurus_categories_limit_height }}px;
+}
+{% if (aridius_text_home_height is not empty) %}
+.block_desc2 {
+height: {{ aridius_text_home_height }}px;
+}
+{% else %} 
+height: auto;
+{% endif %} 
+{% if (aridius_cookie_status == '1') %} 
+#section_cookies, .section_indents a {
+color: {{ aridius_cookie_col }};
+background: {{ aridius_cookie_back }};
+}
+.section_indents a:hover {
+color: inherit;
+}
+{% endif %}
+.btn-cart, .btn-instock, .load_more {
+border-radius: {{ theme_aurus_border_cart }}px;
+}
+.stickers-all, .stickers-top, .stickers-special, .stickers-new {
+border-radius: {{ theme_aurus_border_stickers }}px;
+}
+#menu .nav > li.hidev > a {
+color: {{ theme_aurus_color81 }}!important;
+}
+#menu .nav > li.hidev > a:hover {
+color: {{ theme_aurus_color82 }}!important;
+}
+#top {
+background: {{ theme_aurus_color1 }};
+border-bottom: 1px solid {{ theme_aurus_color7 }};
+}
+#top .btn-link, #top-links li, #top-links a {
+color: {{ theme_aurus_color2 }};
+}
+#top .btn-link:hover, #top-links li:hover, #top-links a:hover {
+color: {{ theme_aurus_color3 }};
+}
+.top-header{
+background: {{ theme_aurus_color4 }};
+}
+.tell_nav, .phone .caret, .call_v1.call-order {
+color: {{ theme_aurus_color5 }};
+}
+.mob_phone .listunstyled, .mob_search2.serv2 .sub_sear, .mob_settings .listunstyled, .header_v1 .sub_sear:before  {
+color: {{ theme_aurus_color6 }}!important;
+}
+.cart-item {
+background: {{ theme_aurus_color8 }};
+}
+.cart-item-after {
+color: {{ theme_aurus_color9 }};
+}
+#cart > .btn {
+color: {{ theme_aurus_color10 }};
+}
+#search .btn-lg {
+background: {{ theme_aurus_color11 }};
+}
+#search .btn-lg:hover {
+background: {{ theme_aurus_color12 }};
+}
+#top-menu, #menu_scroll.top-header2, .top-menu_p {
+background: {{ theme_aurus_color13 }} none repeat scroll 0 0;
+}
+#menu .nav > li > a {
+color: {{ theme_aurus_color14 }};
+}
+.menu_icon_svg {
+fill: {{ theme_aurus_color14 }};
+}
+#menu .nav > li > a:hover,  #menu .nav > li.activetopmenu > a {
+color:  {{ theme_aurus_color15 }};
+}
+#menu .nav > li > a:hover .menu_icon_svg,  #menu .nav > li.activetopmenu > a .menu_icon_svg {
+fill: {{ theme_aurus_color15 }};
+}
+.menuv-all, .menuv-allv{
+color: {{ theme_aurus_color17 }}!important;
+}
+.menuv-all:hover, .menuv-allv:hover {
+color: {{ theme_aurus_color18 }}!important;
+}
+.stickersmenu1, .stickersmenu1:after, .stickersmenu1v {
+background: {{ theme_aurus_color19 }};
+color: {{ theme_aurus_color20 }};
+}
+.stickersmenu2, .stickersmenu2:after, .stickersmenu2v {
+background: {{ theme_aurus_color21 }};
+color: {{ theme_aurus_color22 }};
+}
+.stickersmenu3, .stickersmenu3:after, .stickersmenu3v {
+background: {{ theme_aurus_color23 }};
+color: {{ theme_aurus_color24 }};
+}
+.btn-cart, .btn-primary, .load_more, .load_more:focus, .noUi-connect {
+background: {{ theme_aurus_color25 }};
+color: {{ theme_aurus_color26 }};
+}
+.btn-instock, .btn-instock2 {
+background: {{ theme_aurus_color27 }};
+color: {{ theme_aurus_color28 }};
+border: 1px solid {{ theme_aurus_color29 }};
+}
+.btn-cart:hover, .btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled], .load_more:hover  {
+background: {{ theme_aurus_color30 }};
+color: {{ theme_aurus_color31 }};
+}
+.btn-instock:hover, .btn-instock2:hover {
+background: {{ theme_aurus_color32 }};
+color: {{ theme_aurus_color33 }};
+border: 1px solid {{ theme_aurus_color34 }};
+}
+#fast-order.btn-cart, #fast-order2.btn-cart, #fast-order3.btn-cart {
+background: {{ theme_aurus_color86 }};
+color: {{ theme_aurus_color87 }};
+border: 1px solid {{ theme_aurus_color88 }};
+}
+#fast-order.btn-cart:hover, #fast-order2.btn-cart:hover, #fast-order3.btn-cart:hover{
+background: {{ theme_aurus_color89 }};
+color: {{ theme_aurus_color90 }};
+border: 1px solid {{ theme_aurus_color91 }};
+}
+.price-new, .price, .prise_spec_clone {
+color: {{ theme_aurus_color35 }};
+}
+.price-old, .prise_clone {
+color: {{ theme_aurus_color36 }};
+}
+.nav-tabs.mod > li.active > a, .nav-tabs.mod > li.active > a:focus, .nav-tabs.mod > li.active > a:hover {
+border-bottom: 2px solid {{ theme_aurus_color37 }};
+}
+a, .search-all, .currency-select, .list-unstyled li span a{
+color: {{ theme_aurus_color38 }};
+}
+.currency-select, .language-select, #navt .dropdown-menu-left li a {
+color: {{ theme_aurus_color38 }}!important;
+}
+.currency-select:hover, .language-select:hover, #navt .dropdown-menu-left li a:hover {
+color: {{ theme_aurus_color39 }}!important;
+}
+a:focus, a:hover, .search-all:hover, .breadcrumb > li > a:hover, .buttonsaridius_news a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover, .list-unstyled li span a:hover, .list-unstyled li a:hover{
+color: {{ theme_aurus_color39 }};
+}
+.stickers-new{
+background: {{ theme_aurus_color40 }};
+color: {{ theme_aurus_color41 }};
+}
+.stickers-special{
+background: {{ theme_aurus_color42 }};
+color: {{ theme_aurus_color43 }};
+}
+.stickers-top{
+background: {{ theme_aurus_color44 }};
+color: {{ theme_aurus_color45 }};
+}
+.btn-default2.active {
+color: {{ theme_aurus_color46 }};
+}
+.bl_center a {
+color: {{ theme_aurus_color47 }};
+}
+.bl_center a:hover {
+color: {{ theme_aurus_color85}};
+}
+footer {
+background-color: {{ theme_aurus_color48 }};
+}
+.footer-name {
+color: {{ theme_aurus_color49 }};
+}
+footer .list-unstyled li ,footer .list-unstyled li a, .aboutus_footer, .copyrightf, footer a, .cat_footer {
+color: {{ theme_aurus_color50 }};
+}
+footer .list-unstyled li a:hover, footer a:hover, .cat_footer:hover  {
+color: {{ theme_aurus_color51 }};
+}
+.setib{
+background: {{ theme_aurus_color52 }};
+}
+footer .fa-inverse {
+color: {{ theme_aurus_color53 }};
+}
+.setib:hover{
+background: {{ theme_aurus_color54 }};
+}
+.footer_mailtext_back{
+background: {{ theme_aurus_color55 }};
+}
+.footer_mailtext_back .title-module{
+color: {{ theme_aurus_color56 }};
+}
+.btn-send {
+background: {{ theme_aurus_color57 }};
+color: {{ theme_aurus_color58 }};
+}
+.btn-send:hover {
+background: {{ theme_aurus_color59 }};
+color: {{ theme_aurus_color60 }};
+}
+.textdanger, .textsuccess{
+color: {{ theme_aurus_color61 }};
+}
+.scup {
+background: {{ theme_aurus_color62 }};
+}
+a.scup i {
+color: {{ theme_aurus_color63 }};
+}
+a.scup i:hover {
+color: {{ theme_aurus_color64 }};
+}
+.circle {
+box-shadow: 0 0 8px 20px {{ theme_aurus_color65 }};
+}
+.circleout {
+background-color: {{ theme_aurus_color65 }};
+color: {{ theme_aurus_color66 }};
+}
+.cart_fixed {
+background: {{ theme_aurus_color67 }};
+}
+#cart_clone .cart-item {
+background: {{ theme_aurus_color68 }};
+}
+#cart_clone .fa-shopping-cart {
+color: {{ theme_aurus_color69 }};
+}
+#cart_clone .cart-item-after {
+color: {{ theme_aurus_color70 }};
+}
+.wishlist_fixed, .compare_fixed {
+background: {{ theme_aurus_color71 }};
+}
+.item_blright {
+background: {{ theme_aurus_color72 }};
+color: {{ theme_aurus_color74 }};
+}
+#wishlist_clone .fa-heart, #compare_clone .fa-exchange {
+color: {{ theme_aurus_color73 }};
+}
+.toggle_m i {
+color: {{ theme_aurus_color92 }};
+}
+#menu_scroll.sticky {
+background: {{ theme_aurus_color77 }}!important;
+}
+#menu_scroll #menu .nav > li > a {
+color: {{ theme_aurus_color78 }}!important;
+}
+#menu_scroll .menu_icon_svg {
+fill: {{ theme_aurus_color78 }}!important;
+}
+#menu_scroll #menu .nav > li > a:hover {
+color: {{ theme_aurus_color79 }}!important;
+}
+#menu_scroll #menu .nav > li > a:hover .menu_icon_svg {
+fill: {{ theme_aurus_color79 }}!important;
+}
+#menu_scroll.sticky {
+opacity: {{ theme_aurus_color80 }};
+}
+#menu .dropdown-inner a, .box-category > ul > li a, .dropdown-menu.multi-level > li > a, #menu li .dropdown-submenu a, #menu .dropdown-inner1 a {
+color: {{ theme_aurus_color75 }};
+}
+.menu_icon_svg2lv, .menuv_icon_svg {
+fill: {{ theme_aurus_color75 }};
+}
+#menu li a:hover, .box-category > ul > li a:hover, #menu li .dropdown-submenu a:hover, .v3hover a:hover, .dropdown-inner1 ul li a:hover {
+color: {{ theme_aurus_color76 }};
+}
+#menu li a:hover .menu_icon_svg2lv, #menu li a:hover .menuv_icon_svg {
+fill: {{ theme_aurus_color76 }};
+}
+.price-old, .prise_clone {
+text-decoration-color: {{ theme_aurus_color84 }};
+}
+.menu_mob_plus .nav > li > a, .cart_open_mmenu, .tell_mmenu a, .mail_mmenu a, .address_mmenu, .work_time_mmenu, .cat_mob, .home_mob a, .menu_mob_plus .dropdown-inner a  {
+color:{{ theme_aurus_color93 }}!important;
+}
+.menu_mob_plus .menumob_icon_svg   {
+fill:{{ theme_aurus_color93 }}!important;
+}
+.menu_mob_plus .nav > li > a:hover, .cart_open_mmenu:hover, .tell_mmenu a:hover, .mail_mmenu a:hover, .home_mob a:hover, .menu_mob_plus .dropdown-inner a:hover {
+color:{{ theme_aurus_color94 }}!important;
+}
+.menu_mob_plus .nav > li > a:hover .menumob_icon_svg {
+fill:{{ theme_aurus_color94 }}!important;
+}
+@media (max-width: 991px) {
+{% if (theme_aurus_right_sm == 1) %} 
+.right_fixed{
+display:none;
+}
+{% endif %} 
+}
+@media (min-width: 992px) {
+{% if (theme_aurus_vmenuheight is not empty and class == 'common-home' ) %}
+#menu_colheight {
+min-height: {{ theme_aurus_vmenuheight }}px;
+}
+{% endif %} 
+#menu .dropdown-menu {
+border-top: 7px solid {{ theme_aurus_color16 }};
+}
+}
+.product-thumb .product-name, .product-thumb_cart .product-name {
+height: {{ theme_aurus_height_symbolst }}px;
+}
+{% if (theme_aurus_description_cat == 1) %} 
+.product-grid .description_cat{
+display: none;
+}
+{% endif %} 
+{% if (theme_aurus_seevmenu_menu != 1) %} 
+@media (min-width: 992px) {
+.hidem{
+display: none!important;
+}
+}
+{% endif %} 
+{% if (theme_aurus_arrowup_lr != 1) %} 
+@media (max-width: 991px) {
+.scup {
+right: 15px;
+}
+}
+@media (min-width: 992px) {
+.scup {
+right: 14px;
+}
+}
+{% else %} 
+@media (max-width: 991px) {
+.scup {
+left: 20px;
+}
+}
+@media (min-width: 992px) {
+.scup {
+left: 25px;
+}
+}
+{% endif %} 
+{% if (theme_aurus_callleftr != 1) %} 
+.container-circle {
+right: 30px;
+}
+{% else %} 
+.container-circle {
+left: 5px;
+}
+{% endif %} 
+{% if (theme_aurus_show_cart == 1) %} 
+.cart, .btn-cart, .mob_cart {
+display:none;
+}
+{% endif %} 
+{% if (theme_aurus_show_price == 1) %} 
+.price, .line-product, .pull-left1 {
+display:none;
+}
+{% endif %} 
+</style>
+</head>
+<body class="{{ class }} {% if (theme_aurus_header_var == 3) %}header_v3class{% endif %}">
+
+            <div id="scroll"></div>
+            <div class="overlay" style="display: none;"></div>
+            <div class="overlay_cart"></div>
+            {% if (theme_aurus_preloader != 1) %} 
+            <!--preloader-->
+            <div id="preloader">
+               <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            {% endif %}	
+            {% if (theme_aurus_arrowup != 1) %} 
+            <span class="{% if (theme_aurus_arrowup_mobile != 1) %} visible-xs visible-sm {% endif %} visible-md visible-lg"><a href="#" class="scup"><i class="fa fa-angle-up active"></i></a></span>
+            {% endif %} 
+            <!--col_cart-->
+            <div class="right_fixed">
+               {% if (theme_aurus_cart_right != 1) %} 
+               <div class="cart_fixed cart_openp" {% if (theme_aurus_right_tittle != 1) %} data-toggle="tooltip" data-placement="right" title="{{ text_cartp }}"{% endif %}>
+                  <div id="cart_clone"> 
+                     {{ cart2 }} 
+                  </div>
+               </div>
+               {% endif %} 
+               {% if (theme_aurus_wish_right != 1) %} 
+               <a rel="nofollow" class="wishlist_fixed" href="{{ wishlist }}" {% if (theme_aurus_right_tittle != 1) %} data-toggle="tooltip" data-placement="right" title="{{ text_wishlistp }}{% endif %}">
+                  <div id="wishlist_clone"> 
+                     <i class="fa fa-heart"></i>
+                     <span class="item_blright"><span class="item-after_blright"><span id="wishlist-total2"> {{ text_wishlist }}</span></span></span>
+                  </div>
+               </a>
+               {% endif %} 
+               {% if (theme_aurus_comp_right != 1) %} 
+               <a rel="nofollow" class="compare_fixed" href="{{ compare }}" {% if (theme_aurus_right_tittle != 1) %} data-toggle="tooltip" data-placement="right" title="{{ text_comparep }}{% endif %}">
+                  <div id="compare_clone"> 
+                     <i class="fa fa-exchange"></i>
+                     <span class="item_blright"><span class="item-after_blright"><span id="compare-total2"> {{ text_compare }}</span></span></span>
+                  </div>
+               </a>
+               {% endif %} 
+            </div>
+            <!--col_cart end-->
+            <div id="wishlist" class="modal fade">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     </div>
+                     <div class="modal-body flex_ico">
+                        <p></p>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn-cart" data-dismiss="modal">{{ text_continue2 }}</button>
+                        <a href="{{ wishlist }}" class="btn-cart">{{ text_wishlist2 }}</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div id="compare" class="modal fade">
+               <div class="modal-dialog">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     </div>
+                     <div class="modal-body flex_ico">
+                        <p></p>
+                     </div>
+                     <div class="modal-footer">
+                        <button type="button" class="btn-cart" data-dismiss="modal">{{ text_continue2 }}</button>
+                        <a href="{{ compare }}" class="btn-cart">{{ text_compare2 }}</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="bantop hidden-xs hidden-sm scaleslide">
+               {{ content_topfl }}	
+            </div>
+            {% if (theme_aurus_show_topmenu != 1) %}	
+            <nav id="top">
+               <div class="container nobackground">
+                  {% if (theme_aurus_show_topmenu_set != 1) %} 
+                  {{ currency }} 
+                  {{ language }} 
+                  {% endif %} 
+                  <div id="top-links" class="nav pull-right">
+                     <ul class="list-inline top">
+                        <li>	
+                           <a href="#" class="nav-opener pull-right visible-xs visible-sm "><i class="fa fa-bars" aria-hidden="true"></i></a>
+                        </li>
+                     </ul>
+                     <nav id="navt" class="topnav">
+                        <ul class="nav-list list-inline text-center hidden-md hidden-lg">
+                           {% if (logged) %} 
+                           <li><a href="{{ account }}">{{ text_account }}</a></li>
+                           {% if (theme_aurus_order_top != 1) %} 
+                           <li><a href="{{ order }}">{{ text_order }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_transaction_top != 1) %} 
+                           <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_download_top != 1) %} 
+                           <li><a href="{{ download }}">{{ text_download }}</a></li>
+                           {% endif %} 
+                           <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                           {% else %} 
+                           <li><a href="{{ register }}"><i class="fa fa-user"></i> {{ text_register }}</a></li>
+                           <li><a href="{{ login }}"><i class="fa fa-key"></i> {{ text_login }}</a></li>
+                           {% endif %} 
+                        </ul>
+                        <ul class="nav-list list-inline text-center">
+                           {% if (theme_aurus_show_add_link != 1) %} 
+                           {% if (theme_aurus_top_links6 ) %} 
+                           {% for theme_aurus_top_link6 in theme_aurus_top_links6 %} 
+                           <li>
+                              <a {% if (theme_aurus_top_link6['link_top'][language_id]) %} href="{{ theme_aurus_top_link6['link_top'][language_id] }}"{% endif %} title="{{ theme_aurus_top_link6['title'][language_id] }}">{% if (theme_aurus_top_link6['faicons_top']) %} <i class="{{ theme_aurus_top_link6['faicons_top'] }}"></i>{% endif %}{% if (theme_aurus_top_link6['title']) %} {{ theme_aurus_top_link6['title'][language_id] }}{% endif %}</a>
+                           </li>
+                           {% endfor %} 
+                           {% endif %} 
+                           {% endif %} 
+                           {% if (theme_aurus_wishlist_top != 1) %} 
+                           <li><a rel="nofollow" href="{{ wishlist }}" id="wishlist-total"><i class="fa fa-heart"></i> {{ text_wishlist }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_compare_top != 1) %} 
+                           <li><a rel="nofollow" href="{{ compare }}" id="compare-total"><i class="fa fa-exchange"></i> {{ text_compare }}</a></li>
+                           {% endif %} 
+                        </ul>
+                        <ul class="list-inline top visible-md visible-lg">
+                           {% if (theme_aurus_account_top != 1) %} 
+                           <li class="dropdown dropdown-toggle">
+                              <a href="{{ account }}" title="{{ text_account }}" data-toggle="dropdown"><i class="fa fa-user"></i> {{ text_account }} <i class="fa fa-caret-down"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-left">
+                                 {% if (logged) %} 
+                                 <li><a href="{{ account }}">{{ text_account }}</a></li>
+                                 {% if (theme_aurus_order_top != 1) %} 
+                                 <li><a href="{{ order }}">{{ text_order }}</a></li>
+                                 {% endif %} 
+                                 {% if (theme_aurus_transaction_top != 1) %} 
+                                 <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+                                 {% endif %} 
+                                 {% if (theme_aurus_download_top != 1) %} 
+                                 <li><a href="{{ download }}">{{ text_download }}</a></li>
+                                 {% endif %} 
+                                 <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                                 {% else %} 
+                                 <li><a href="{{ register }}">{{ text_register }}</a></li>
+                                 <li><a href="{{ login }}">{{ text_login }}</a></li>
+                                 {% endif %} 
+                              </ul>
+                           </li>
+                           {% endif %} 
+                        </ul>
+                     </nav>
+                  </div>
+               </div>
+            </nav>
+            {% endif %}
+			
+
+
+{% if (theme_aurus_header_var == 2 or theme_aurus_header_var == 3) %} 
+<header>
+   <div class="top-menu_p {% if (theme_aurus_header_var == 2) %}header_v_2{% endif %}{% if (theme_aurus_header_var == 3) %}header_v3{% endif %}">
+   <div class="top-menu top-menu_h2">
+      <div id="top-menu">
+         <div class="container nobackground">
+            <div class="row vertical-align">
+               <div class="col-xs-2 col-sm-2 hidden-md hidden-lg">
+                  <nav id="menu_m" class="menu_mobile"></nav>
+                  <span id="main_m" class="panel"></span>
+                  <div id="mobmenu">
+                     <button onclick="MobMenu();" class="toggle_m toggle js-slideout-toggle"><i class="fa fa-bars"></i></button>
+                  </div>
+               </div>
+               <div class="logo_v2 col-xs-3 col-sm-4 col-md-2 {% if (theme_aurus_logo_width != 1) %} col-lg-2 {% else %} col-lg-1 {% endif %}">
+                  <div id="logo">
+                     {% if (logo) %} 
+                     {% if (home == og_url) %} 
+                     <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                     {% else %} 
+                     <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
+                     {% endif %} 
+                     {% else %} 
+                     <h1><a href="{{ home }}">{{ name }}</a></h1>
+                     {% endif %} 
+                  </div>
+               </div>
+{{ menu }}				   
+               <div class="fix_mxs col-xs-7 col-sm-6 col-md-3 col-lg-2 ">
+               <div id="setclone">
+               <div class="serv2 mob_cart">
+               {{ cart }} 
+               </div>
+               <div class="mob_search2 serv2 header_v2">
+               {{ search }} 
+               </div>
+               <div class="mob_phone dropdown phone">
+               <div class="listunstyled dropdown-toggle" data-toggle="dropdown"><i class="fa fa-phone"></i></div>  
+               <ul class="dropdown-menu fixxsmenu">
+               <li class="dropdown-header"><i class="fa fa-phone"></i> {{ dropdown_tell }}</li>
+               {% if (theme_aurus_top_links3 ) %} 
+               {% for theme_aurus_top_link3 in theme_aurus_top_links3 %} 
+               <li>
+               <a {% if (theme_aurus_top_link3['title'][language_id]) %} href="tel:{{ theme_aurus_top_link3['title'][language_id] }}"{% endif %} > {{ (theme_aurus_top_link3['title'][language_id]) }}</a>
+               </li>
+               {% endfor %} 
+               {% endif %} 
+               {% if ((theme_aurus_work_time is not empty or (theme_aurus_work_time1 is not empty) or theme_aurus_work_time2 is not empty)) %} 
+               <li class="drop_head"></li>		
+               <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ dropdown_work_time }}</li>
+               {% endif %}	
+               {% if (theme_aurus_work_time is not empty) %}	
+               <li class = "work_time">
+               {{ theme_aurus_work_time }} 
+               </li>
+               {% endif %} 
+               {% if (theme_aurus_work_time1 is not empty) %} 
+               <li class = "work_time">
+               {{ theme_aurus_work_time1 }} 
+               </li>
+               {% endif %}	
+               {% if (theme_aurus_work_time2 is not empty) %}	
+               <li class = "work_time">
+               {{ theme_aurus_work_time2 }} 
+               </li>
+               {% endif %}	
+               {% if (theme_aurus_address) %} 
+               <li class="drop_head"></li>
+               <li class="dropdown-header"><i class="fa fa-map-marker"></i> {{ dropdown_address }}</li>
+               {% if (theme_aurus_show_fluid_map_footer == '0') %}		
+               <li class = "address_yak address"><a href="#map_yak">{{ theme_aurus_address }}</a></li>
+               {% else %} 
+               <li class = "address">
+               {{ theme_aurus_address }}
+               </li>
+               {% endif %}	
+               {% endif %}	
+               {% if (theme_aurus_mail_header[language_id]) %}	
+               <li class="drop_head"></li>
+               <li class="dropdown-header"><i class="fa fa-envelope-o "></i> {{ dropdown_mail }}</li>
+               {% if (theme_aurus_mail_header[language_id] ) %} 
+               <li><a onClick="javascript:window.open('mailto:{{ theme_aurus_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ theme_aurus_mail_header[language_id] }}</a></li>
+               {% endif %} 
+               {% endif %} 
+               {% if (aridiuscallback_status and theme_aurus_calltop != 1) %} 
+               <li class="drop_head"></li>
+               <li class="dropdown-header"><i class="fa fa-volume-control-phone"></i> {{ dropdown_callorder }}</li>
+               <li>
+               <a class = "call-order">{{ button_title }}</a>
+               </li>
+               {% endif %} 
+               </ul>
+               </div>
+               {% if (theme_aurus_show_set != 1) %} 
+               <div class="header_v2 mob_settings serv2">
+               <div class="dropdown bars">
+               <div class="listunstyled dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i></div>
+               <ul class="dropdown-menu fixxsmenu">
+               {% if (theme_aurus_show_topmenu_set != 0) %} 
+               {% if (currency is not empty) %} 
+               <li class="dropdown-header"><i class="fa fa-money"></i> {{ text_money_set }}</li>
+               {% endif %}					
+               <li>   {{ currency }}  </li>
+               {% if (currency is not empty) %}		
+               <li class="clearfix"></li>	
+               <li class="drop_head"></li>	
+               {% endif %}	
+               {% if (language is not empty) %}	
+               <li class="dropdown-header"><i class="fa fa-globe"></i> {{ text_language_set }}</li>
+               {% endif %}	
+               <li> {{ language }} </li>
+               {% endif %} 
+               {% if (language is not empty) %}				
+               <li class="clearfix"></li>	
+               <li class="drop_head"></li>						
+               {% endif %}						
+               {% if (theme_aurus_account_top != 0) %} 
+               <li class="dropdown-header"><i class="fa fa-fw fa-sign-in"></i> {{ text_account_set }}</li>	
+               {% if (logged) %} 
+               <li><a rel="nofollow" href="{{ account }}">{{ text_account }}</a></li>
+               {% if (theme_aurus_order_top != 1) %} 
+               <li><a href="{{ order }}">{{ text_order }}</a></li>
+               {% endif %} 
+               {% if (theme_aurus_transaction_top != 1) %} 
+               <li><a href="{{ transaction }}">{{ text_transaction }}</a></li>
+               {% endif %} 
+               {% if (theme_aurus_download_top != 1) %} 
+               <li><a href="{{ download }}">{{ text_download }}</a></li>
+               {% endif %} 
+               <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+               {% else %} 
+               <li><a rel="nofollow" href="{{ register }}"><i class="fa fa-user"></i> {{ text_register }}</a></li>
+               <li><a rel="nofollow" href="{{ login }}"><i class="fa fa-key"></i> {{ text_login }}</a></li>
+               {% endif %} 
+               {% endif %} 
+               {% if (theme_aurus_wishlist_top != 0) %} 
+               <li><a rel="nofollow" href="{{ wishlist }}" id="wishlist-total"><i class="fa fa-heart"></i> {{ text_wishlist }}</a></li>
+               {% endif %} 
+               {% if (theme_aurus_compare_top != 0) %} 
+               <li><a rel="nofollow" href="{{ compare }}" id="compare-total"><i class="fa fa-exchange"></i> {{ text_compare }}</a></li>
+               {% endif %} 
+               {% if (theme_aurus_show_add_link != 0) %} 
+               <li class="clearfix"></li>	
+               {% if (theme_aurus_show_topmenu_set != 0 or theme_aurus_account_top != 0 or theme_aurus_wishlist_top != 0 or theme_aurus_compare_top != 0) %}				 
+               <li class="рррррр drop_head"></li>
+               {% endif %} 
+               <li class="dropdown-header"><i class="fa fa-info"></i> {{ text_info_set }}</li>	
+               {% if (theme_aurus_top_links6 ) %} 
+               {% for theme_aurus_top_link6 in theme_aurus_top_links6 %} 
+               <li>
+               <a {% if (theme_aurus_top_link6['link_top'][language_id]) %} href="{{ theme_aurus_top_link6['link_top'][language_id] }}"{% endif %} title="{{ theme_aurus_top_link6['title'][language_id] }}">{% if (theme_aurus_top_link6['faicons_top']) %} <i class="{{ theme_aurus_top_link6['faicons_top'] }}"></i>{% endif %}{% if (theme_aurus_top_link6['title']) %} {{ theme_aurus_top_link6['title'][language_id] }}{% endif %}</a>
+               </li>
+               {% endfor %} 
+               {% endif %} 
+               {% endif %} 
+               </ul>
+               </div>
+               </div>	   
+               {% endif %} 
+               </div>
+               </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</header>	
+
+{% else %} 
+
+
+<header>
+   <div class="top-header">
+      <div class="container">
+         <div class="row vertical-align">
+            <div class="col-xs-2 col-sm-1 hidden-md hidden-lg">
+               <nav id="menu_m" class="menu_mobile"></nav>
+               <span id="main_m" class="panel"></span>
+               <div id="mobmenu">
+                  <button onclick="MobMenu();" class="toggle_m toggle js-slideout-toggle"><i class="fa fa-bars"></i></button>
+               </div>
+            </div>
+            <div class="logo_v3 col-xs-3 col-sm-3 col-md-2 mob_logo">
+               <div id="logo">
+                  {% if (logo) %} 
+                  {% if (home == og_url) %} 
+                  <img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" />
+                  {% else %} 
+                  <a href="{{ home }}"><img src="{{ logo }}" title="{{ name }}" alt="{{ name }}" class="img-responsive" /></a>
+                  {% endif %} 
+                  {% else %} 
+                  <h1><a href="{{ home }}">{{ name }}</a></h1>
+                  {% endif %} 
+               </div>
+            </div>
+            <div class="fix_mxs2 col-xs-7 col-sm-8 col-md-10">
+               <div id="setclone">
+                  <div class="mob_cart">
+                     {{ cart }} 
+                  </div>
+                  <div class="st_search mob_search serv1 header_v1">
+                     {{ search }} 
+                  </div>
+                  <div class="sss2 mob_phonexl header_v1 hidden-xs hidden-sm hidden-md">
+                     {% if (theme_aurus_top_links3 or theme_aurus_mail_header[language_id] ) %} 
+                     <div class="dropdown phone">
+                        <div class="listunstyled btn-lg  dropdown-toggle" data-toggle="dropdown"><span class="tell_nav">{{ theme_aurus_telephone_mainheader[language_id] }}</span><b class="caret"></b></div>
+                        {% if (aridiuscallback_status and theme_aurus_calltop != 1) %} 
+                        <a class = "call_v1 call-order">{{ button_title }}</a>
+                        {% endif %} 
+                        <ul class="dropdown-menu fixxsmenu">
+                           <li class="dropdown-header"><i class="fa fa-phone"></i> {{ dropdown_tell }}</li>
+                           {% if (theme_aurus_top_links3 ) %} 
+                           {% for theme_aurus_top_link3 in theme_aurus_top_links3 %} 
+                           <li>
+                              <a {% if (theme_aurus_top_link3['title'][language_id]) %} href="tel:{{ theme_aurus_top_link3['title'][language_id] }}"{% endif %} > {{ (theme_aurus_top_link3['title'][language_id]) }}</a>
+                           </li>
+                           {% endfor %} 
+                           {% endif %} 
+                           {% if ((theme_aurus_work_time is not empty or (theme_aurus_work_time1 is not empty) or theme_aurus_work_time2 is not empty)) %} 
+                           <li class="drop_head"></li>
+                           <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ dropdown_work_time }}</li>
+                           {% endif %} 
+                           {% if (theme_aurus_work_time is not empty) %} 
+                           <li class = "work_time">
+                              {{ theme_aurus_work_time }} 
+                           </li>
+                           {% endif %} 
+                           {% if (theme_aurus_work_time1 is not empty) %} 
+                           <li class = "work_time">
+                              {{ theme_aurus_work_time1 }} 
+                           </li>
+                           {% endif %} 
+                           {% if (theme_aurus_work_time2 is not empty) %} 
+                           <li class = "work_time">
+                              {{ theme_aurus_work_time2 }} 
+                           </li>
+                           {% endif %} 
+                           {% if (theme_aurus_address) %} 
+                           <li class="drop_head"></li>
+                           <li class="dropdown-header"><i class="fa fa-map-marker"></i> {{ dropdown_address }}</li>
+                           {% if (theme_aurus_show_fluid_map_footer == '0') %} 
+                           <li class = "address_yak address"><a href="#map_yak">{{ theme_aurus_address}}</a></li>
+                           {% else %} 
+                           <li class = "address">
+                              {{ theme_aurus_address }}
+                           </li>
+                           {% endif %} 
+                           {% endif %} 
+                           {% if (theme_aurus_mail_header[language_id]) %} 
+                           <li class="drop_head"></li>
+                           <li class="dropdown-header"><i class="fa fa-envelope-o "></i> {{ dropdown_mail }}</li>
+                           {% if (theme_aurus_mail_header[language_id] ) %} 
+                           <li><a onClick="javascript:window.open('mailto:{{ theme_aurus_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ theme_aurus_mail_header[language_id] }}</a></li>
+                           {% endif %} 
+                           {% endif %} 
+                           {% if (aridiuscallback_status and theme_aurus_calltop != 1) %} 
+                           <li class="drop_head"></li>
+                           <li class="dropdown-header"><i class="fa fa-volume-control-phone"></i> {{ dropdown_callorder }}</li>
+                           <li>
+                              <a class = "call-order">{{ button_title }}</a>
+                           </li>
+                           {% endif %} 
+                        </ul>
+                     </div>
+                     {% endif %} 
+                  </div>
+                  <div class="header_v1 mob_phone dropdown phone hidden-lg">
+                     <div class="listunstyled dropdown-toggle" data-toggle="dropdown"><i class="fa fa-phone"></i></div>
+                     <ul class="dropdown-menu fixxsmenu">
+                        <li class="dropdown-header"><i class="fa fa-phone"></i> {{ dropdown_tell }}</li>
+                        {% if (theme_aurus_top_links3 ) %} 
+                        {% for theme_aurus_top_link3 in theme_aurus_top_links3 %} 
+                        <li>
+                           <a {% if (theme_aurus_top_link3['title'][language_id]) %} href="tel:{{ theme_aurus_top_link3['title'][language_id] }}"{% endif %} > {{ (theme_aurus_top_link3['title'][language_id]) }}</a>
+                        </li>
+                        {% endfor %} 
+                        {% endif %} 
+                        {% if ((theme_aurus_work_time is not empty or (theme_aurus_work_time1 is not empty) or theme_aurus_work_time2 is not empty)) %} 
+                        <li class="drop_head"></li>
+                        <li class="dropdown-header"><i class="fa fa-clock-o"></i> {{ dropdown_work_time }}</li>
+                        {% endif %} 
+                        {% if (theme_aurus_work_time is not empty) %} 
+                        <li class = "work_time">
+                           {{ theme_aurus_work_time }} 
+                        </li>
+                        {% endif %} 
+                        {% if (theme_aurus_work_time1 is not empty) %} 
+                        <li class = "work_time">
+                           {{ theme_aurus_work_time1 }} 
+                        </li>
+                        {% endif %} 
+                        {% if (theme_aurus_work_time2 is not empty) %} 
+                        <li class = "work_time">
+                           {{ theme_aurus_work_time2 }} 
+                        </li>
+                        {% endif %} 
+                        {% if (theme_aurus_address) %} 
+                        <li class="drop_head"></li>
+                        <li class="dropdown-header"><i class="fa fa-map-marker"></i> {{ dropdown_address }}</li>
+                        {% if (theme_aurus_show_fluid_map_footer == '0') %} 
+                        <li class = "address_yak address"><a href="#map_yak">{{ theme_aurus_address }}</a></li>
+                        {% else %} 
+                        <li class = "address">
+                           {{ theme_aurus_address }}
+                        </li>
+                        {% endif %} 
+                        {% endif %} 
+                        {% if (theme_aurus_mail_header[language_id]) %} 
+                        <li class="drop_head"></li>
+                        <li class="dropdown-header"><i class="fa fa-envelope-o "></i> {{ dropdown_mail }}</li>
+                        {% if (theme_aurus_mail_header[language_id] ) %} 
+                        <li><a onClick="javascript:window.open('mailto:{{ theme_aurus_mail_header[language_id] }}', 'Mail');event.preventDefault()" >{{ theme_aurus_mail_header[language_id] }}</a></li>
+                        {% endif %} 
+                        {% endif %} 
+                        {% if (aridiuscallback_status and theme_aurus_calltop != 1) %} 
+                        <li class="drop_head"></li>
+                        <li class="dropdown-header"><i class="fa fa-volume-control-phone"></i> {{ dropdown_callorder }}</li>
+                        <li>
+                           <a class = "call-order">{{ button_title }}</a>
+                        </li>
+                        {% endif %} 
+                     </ul>
+                  </div>
+                  {% if (theme_aurus_show_set != 1) %} 
+                  <div class="mob_settings header_v1">
+                     <div class="dropdown bars">
+                        <div class="listunstyled dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i></div>
+                        <ul class="dropdown-menu fixxsmenu">
+                           {% if (theme_aurus_show_topmenu_set != 0) %} 
+                           {% if (currency is not empty) %} 
+                           <li class="dropdown-header"><i class="fa fa-money"></i> {{ text_money_set }}</li>
+                           {% endif %} 
+                           <li>   {{ currency }}  </li>
+                           {% if (currency is not empty) %} 
+                           <li class="clearfix"></li>
+                           <li class="drop_head"></li>
+                           {% endif %} 
+                           {% if (language is not empty) %} 
+                           <li class="dropdown-header"><i class="fa fa-globe"></i> {{ text_language_set }}</li>
+                           {% endif %} 
+                           <li> {{ language }} </li>
+                           {% if (language is not empty) %} 
+                           <li class="clearfix"></li>
+                           <li class="drop_head"></li>
+                           {% endif %} 
+                           {% endif %} 
+                           {% if (theme_aurus_account_top != 0) %} 
+                           <li class="dropdown-header"><i class="fa fa-fw fa-sign-in"></i> {{ text_account_set }}</li>
+                           {% if (logged) %} 
+                           <li><a rel="nofollow" href="{{ account }}">{{ text_account }}</a></li>
+                           {% if (theme_aurus_order_top != 1) %} 
+                           <li><a rel="nofollow" href="{{ order }}">{{ text_order }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_transaction_top != 1) %} 
+                           <li><a rel="nofollow" href="{{ transaction }}">{{ text_transaction }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_download_top != 1) %} 
+                           <li><a rel="nofollow" href="{{ download }}">{{ text_download }}</a></li>
+                           {% endif %} 
+                           <li><a href="{{ logout }}">{{ text_logout }}</a></li>
+                           {% else %} 
+                           <li><a rel="nofollow" href="{{ register }}"><i class="fa fa-user"></i> {{ text_register }}</a></li>
+                           <li><a rel="nofollow" href="{{ login }}"><i class="fa fa-key"></i> {{ text_login }}</a></li>
+                           {% endif %} 
+                           {% endif %} 
+                           {% if (theme_aurus_wishlist_top != 0) %} 
+                           <li><a rel="nofollow" href="{{ wishlist }}" id="wishlist-total"><i class="fa fa-heart"></i> {{ text_wishlist }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_compare_top != 0) %} 
+                           <li><a rel="nofollow" href="{{ compare }}" id="compare-total"><i class="fa fa-exchange"></i> {{ text_compare }}</a></li>
+                           {% endif %} 
+                           {% if (theme_aurus_show_add_link != 0) %} 
+                           <li class="clearfix"></li>
+                           {% if (theme_aurus_show_topmenu_set != 0 or theme_aurus_account_top != 0 or theme_aurus_wishlist_top != 0 or theme_aurus_compare_top != 0) %} 
+                           <li class="drop_head"></li>
+                           {% endif %} 
+                           <li class="dropdown-header"><i class="fa fa-info"></i> {{ text_info_set }}</li>
+                           {% if (theme_aurus_top_links6 ) %} 
+                           {% for theme_aurus_top_link6 in theme_aurus_top_links6 %} 
+                           <li>
+                              <a {% if (theme_aurus_top_link6['link_top'][language_id]) %} href="{{ theme_aurus_top_link6['link_top'][language_id] }}"{% endif %} title="{{ theme_aurus_top_link6['title'][language_id] }}">{% if (theme_aurus_top_link6['faicons_top']) %} <i class="{{ theme_aurus_top_link6['faicons_top'] }}"></i>{% endif %}{% if (theme_aurus_top_link6['title']) %} {{ theme_aurus_top_link6['title'][language_id] }}{% endif %}</a>
+                           </li>
+                           {% endfor %} 
+                           {% endif %} 
+                           {% endif %} 
+                        </ul>
+                     </div>
+                  </div>
+                  {% endif %} 
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</header>
+
+{{ menu }}	
+
+
+		   
+			   
+			   
+{% endif %} 
+
+
+
+
+
+
+
+	
+
+			
+<!--for menu dropdown -->
+<!--height Vmenu for col left-->
+<script><!--
+$(function () {
+var width_ch = window.innerWidth;
+if (width_ch > 991) {
+onResize();
+}
+function onResize(){
+var width_ch = window.innerWidth;
+if (width_ch > 991) {
+<!--height Vmenu for col left-->
+{% if (class == 'common-home' and theme_aurus_seevmenu_menu_open != 1 and not content_fluid and (theme_aurus_vmenuheight is empty) ) %}
+$('#menu_colheight').css({'min-height': $('#menu_height').outerHeight() });
+{% endif %} 
+var heighttopmenu = $("#top-menu").height();
+$('.top-menu').css({position: 'relative',height: heighttopmenu});
+} else {
+<!--height Vmenu for col left-->
+{% if (class == 'common-home' and theme_aurus_seevmenu_menu_open != 1 and not content_fluid and (theme_aurus_vmenuheight is empty) ) %}
+$('#menu_colheight').css({'min-height': 0 });
+{% endif %} 
+$('.top-menu').css({position: 'relative',height: 'auto'});
+}
+}
+window.addEventListener('resize', onResize);
+document.body.addEventListener('resize', onResize);
+})
+//-->
+</script>
+<!--scrollUp-->
+{% if (theme_aurus_arrowup != 1) %} 
+<script><!--
+$(document).ready(function() {
+$(window).scroll(function(){
+if ($(this).scrollTop() > 100) {
+$('.scup').fadeIn();
+} else {
+$('.scup').fadeOut();
+}
+});
+$('.scup').click(function(){
+$("html, body").animate({ scrollTop: 0 }, 900);
+return false;
+});
+});
+//-->
+</script>
+{% endif %} 
+<!--preloader-->
+{% if (theme_aurus_preloader != 1) %} 
+<script>
+$(window).load(function() {
+$('#preloader').find('i').fadeOut().end().delay(400).fadeOut('slow');
+});
+</script>
+{% endif %} 
+<script>
+$(document).ready(function() {
+jQuery('.nav-opener').on( "click", function(e){
+e.preventDefault();
+jQuery("body").toggleClass("nav-active");
+});
+});
+</script>
+<!-- anchors for footer map -->
+{% if (theme_aurus_show_fluid_map_footer == '0') %} 
+<script>
+$(document).ready(function(){
+$(".address").on("click","a", function (event) {
+event.preventDefault();
+var id  = $("#map_yak"),
+top = $(id).offset().top;
+$('body,html').animate({scrollTop: top}, 1500);
+{% if (theme_aurus_show_map_open == '1') %} 
+$('#hfooter').animate({
+height:270,
+opacity: 0.9
+}, 1200 );
+$('.link_footer').remove();
+{% endif %} 
+});
+});
+</script>
+{% endif %}
+
+
+
+

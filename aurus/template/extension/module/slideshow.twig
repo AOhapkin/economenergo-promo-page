@@ -1,0 +1,53 @@
+<div class="pagcolor">
+<div id="slideshow{{ module }}" class="swiper-container">
+<div class="swiper-wrapper">
+{% for banner in banners %} 
+<div class="item swiper-slide">
+<div class="visible-sm visible-md visible-lg">{{ banner['description'] }}</div>
+{% if (banner['link']) %} 
+<a href="{{ banner['link'] }}"><img src="{{ banner['image'] }}" alt="{{ banner['title'] }}" class="img-responsive scaleslide" /></a>
+{% else %} 
+<img src="{{ banner['image'] }}" alt="{{ banner['title'] }}" class="img-responsive scaleslide" />
+{% endif %} 
+</div>
+{% endfor %} 
+</div>
+<div class="swiper-pager">
+<div class="#slideshow{{ module }} swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+<div class="#slideshow{{ module }} swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+</div>
+<div class="#slideshow{{ module }} swiper-pagination"></div>
+</div>
+</div>
+<script>
+$(document).ready(function () {
+var SlideSwiper = new Swiper ('#slideshow{{ module }}.swiper-container', {
+slidesPerView: 1,
+mode: 'horizontal',
+{% if (transitionStyle != '0') %} effect: {% if (transitionStyle == '1') %}"fade",{% endif %}{% if (transitionStyle == '2') %}"coverflow",{% endif %}{% if (transitionStyle == '3') %}"cube",{% endif %} {% endif %} 
+loop: true,
+autoplay: { delay: 5000, },
+autoplayDisableOnInteraction: true,
+navigation: {
+nextEl: '#slideshow{{ module }} .swiper-button-next',
+prevEl: '#slideshow{{ module }} .swiper-button-prev',
+},
+paginationClickable: true,
+pagination: {
+el: '#slideshow{{ module }} .swiper-pagination',
+clickable: true,
+},
+});
+SlideSwiper.on('transitionStart', function () {
+for(let i = 1; i <= 4; i++) {
+$('.swiper-slide').find('.text-slider' + + i).removeClass('ef-slider' + i);
+$('.swiper-slide.swiper-slide-active').find('.text-slider' + i).addClass('ef-slider' + i);
+}
+});
+$("#slideshow{{ module }}.swiper-container").hover(function() {
+SlideSwiper.autoplay.stop();
+}, function() {
+SlideSwiper.autoplay.start();
+});
+});
+</script>

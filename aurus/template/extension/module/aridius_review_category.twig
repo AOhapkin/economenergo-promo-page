@@ -1,0 +1,117 @@
+<div class="{% if (colleft == 1 ) %}colleft{% endif %} grouph">
+   <div class="title_h title_center title-module" style="display: inline;">{{ heading_title_review_category }}</div>
+   {% if (colleft != 1 ) %} 
+   <div class="buttonsaridius_news">
+      <div class="pull-right"><a href="{{ aridius_rewlist }}">{{ buttonlist_rew }}</a></div>
+   </div>
+   {% endif %} 
+</div>
+<div class="avr">
+   {{ text_avr }} 
+</div>
+<div class="avr_rating">
+{{ rating_avr|round(1) }}
+</div>
+{{ text_avr3 }} 
+<div class="avr_rating">
+&nbsp;5
+</div>
+<div class="avr_sum">
+   {{ text_sum }} <a class ="colorhr" href="index.php?route=extension/module/aridius_store_review">{{ review_total }}</a>
+</div>
+<div id="review_carusel" class="swiper-container">
+   <div class="swiper-wrapper">
+      {% for review in reviews %} 
+      <div class="swiper-slide">
+         <div class="{% if (colleft == 1 ) %}colleft{% endif %} review-thumb transition">
+            <div class="rev_author">
+               {{ review['author'] }} 
+            </div>
+            <div class="rev_rating">
+               <input type="hidden" class="rating" data-readonly value="{{ review['rating'] }}"/>
+            </div>
+            <div class="rev_text">
+               {{ review['text'] }} 
+            </div>
+            {% if (date) %} 
+            <div class="rev_date">
+               <i class="fa fa-clock-o"></i> {{ review['date_added'] }} 
+            </div>
+            {% endif %} 
+         </div>
+      </div>
+      {% endfor %} 
+   </div>
+   {% if (navigation) %} 
+   <div class="#review_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+   <div class="#review_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+   {% endif %} 
+</div>
+{% if (colleft == 1 ) %} 
+<br />
+<a href="{{ aridius_rewlist }}" class="buttonsall_news btn-primary">{{ buttonlist_rew }}</a>
+{% endif %} 
+<div class="clearfix"></div>
+<script src="catalog/view/theme/aurus/js/bootstrap_rating/bootstrap-rating.js"></script>
+<script><!--
+   $(document).ready(function () {
+   var ocSwiper = new Swiper('#review_carusel.swiper-container', {
+   {% if (colleft != 1 ) %} 
+   slidesPerView: {{ items }},
+   {% else %} 
+   slidesPerView:1,
+   {% endif %} 
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ rew_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   {% if (colleft != 1 ) %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 1,
+   },
+   992: {
+   slidesPerView: 2,
+   },
+   1200: {
+   slidesPerView: 2,
+   },
+   1600: {
+   slidesPerView: 2,
+   }
+   },
+   {% endif %} 
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#review_carusel .swiper-button-next',
+   prevEl: '#review_carusel .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% if (stophover and autoplay_on) %} 
+   $("#review_carusel.swiper-container").hover(function() {
+   ocSwiper.autoplay.stop();
+   }, function() {
+   ocSwiper.autoplay.start();
+   });
+   {% endif %} 
+   });
+   -->
+</script>
+<script><!--
+   $(function () {
+   $('.rating-tooltip').ar_rating({
+   extendSymbol: function (rate) {
+   $(this).tooltip({
+   container: 'body',
+   placement: 'bottom',
+   title: rate
+   });
+   }
+   });
+   });
+   //-->
+</script>

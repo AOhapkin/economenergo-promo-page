@@ -1,0 +1,314 @@
+<script>
+    window.bLazy = new Blazy({});
+</script>
+{% if (theme_aurus_show_fluid_map_footer == '0') %}
+    <div class="footerh"></div>
+{% endif %} 
+{% if (theme_aurus_show_fluid_map_footer == '0' ) %}
+    {% if (class_home == "/" or class_home == "/index.php?route=common/home") %}
+        <div class="line1"></div>
+        <div id="hfooter">
+            <div class="container ">
+                <div id="map-canvas2" style="position:relative; margin: 0 auto;">
+                </div>
+            </div>
+            <div id="map_yak"></div>
+            {% if (theme_aurus_map_noapi == '1') %}
+                <div id="map_canvas" style="width:auto; height:270px;position:relative;"></div>
+            {% else %}
+                {{ theme_aurus_mapcode }}
+            {% endif %}
+        </div>
+        <div class="line12"></div>
+    {% endif %}
+{% endif %} 
+{% if (theme_aurus_show_fluid_map_footer == '1') %}
+    <div class="footerh"></div>
+{% endif %}
+<footer>
+    <div class="container no-flick">
+        <div class="row">
+            <!--col1 contact-->
+            <div class="col-xs-6 col-sm-4 col-md-4 {% if (content_mail) %} col-lg-2 {% else %} col-lg-3 {% endif %}">
+                <div class="footer-name">{{ text_footer_contacts }}</div>
+                <ul class="list-unstyled">
+                    {% if (theme_aurus_top_links3 and theme_aurus_phone_footer == '0') %}
+                        {% for theme_aurus_top_link3 in theme_aurus_top_links3 %}
+                            <li class="footer_tell">
+                                <a {% if (theme_aurus_top_link3['title'][language_id]) %} href="tel:{{ theme_aurus_top_link3['title'][language_id] }}"{% endif %} > {{ (theme_aurus_top_link3['title'][language_id]) }}</a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                    {% if (theme_aurus_time_footer == '0') %}
+                        {% if (theme_aurus_work_time is not empty) %}
+                            <li class="work_time work_timef ">
+                                {{ theme_aurus_work_time }}
+                            </li>
+                        {% endif %}
+                        {% if (theme_aurus_work_time1 is not empty) %}
+                            <li class="work_time">
+                                {{ theme_aurus_work_time1 }}
+                            </li>
+                        {% endif %}
+                        {% if (theme_aurus_work_time2 is not empty) %}
+                            <li class="work_time">
+                                {{ theme_aurus_work_time2 }}
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                    {% if (theme_aurus_mail_header[language_id] and theme_aurus_mail_footer == '0' ) %}
+                        <li class="footer_mail"><a
+                                    onClick="javascript:window.open('mailto:{{ theme_aurus_mail_header[language_id] }}', 'Mail');event.preventDefault()">{{ theme_aurus_mail_header[language_id] }}</a>
+                        </li>
+                    {% endif %}
+                    {% if (theme_aurus_address and theme_aurus_address_footer == '0' ) %}
+                        <li class="address">
+                            {{ theme_aurus_address }}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!--col3-->
+            <div class="col-xs-6 col-sm-4 col-md-4 {% if (content_mail) %} col-lg-2 {% else %} col-lg-3 {% endif %}">
+                <div class="footer-name">{{ text_information }}</div>
+                <ul class="list-unstyled">
+                    {% for information in informations %}
+                        <li><a href="{{ information['href'] }}">{{ information['title'] }}</a></li>
+                    {% endfor %}
+                    {% if (theme_aurus_contact_footer != 1) %}
+                        <li><a href="{{ contact }}">{{ text_contact }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="clearfix visible-xs"></div>
+            <div class="col-xs-6 col-sm-4 col-md-4 {% if (content_mail) %} col-lg-2 {% else %} col-lg-3 {% endif %}">
+                <div class="footer-name">{{ text_account }}</div>
+                <ul class="list-unstyled">
+                    {% if (theme_aurus_account_footer != 1) %}
+                        <li><a href="{{ account }}">{{ text_account }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_order_footer != 1) %}
+                        <li><a href="{{ order }}">{{ text_order }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_wishlist_footer != 1) %}
+                        <li><a href="{{ wishlist }}">{{ text_wishlist }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_newsletter_footer != 1) %}
+                        <li><a href="{{ newsletter }}">{{ text_newsletter }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_return_footer != 1) %}
+                        <li><a href="{{ return }}">{{ text_return }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="clearfix visible-sm visible-md"></div>
+            <!--col5-->
+            <div class="col-xs-6 col-sm-4 col-md-4 {% if (content_mail) %} col-lg-2 {% else %} col-lg-3 {% endif %}">
+                <div class="footer-name">{{ text_extra }}</div>
+                <ul class="list-unstyled">
+                    {% if (theme_aurus_manufacturer_footer != 1) %}
+                        <li><a href="{{ manufacturer }}">{{ text_manufacturer }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_voucher_footer != 1) %}
+                        <li><a href="{{ voucher }}">{{ text_voucher }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_affiliate_footer != 1) %}
+                        <li><a href="{{ affiliate }}">{{ text_affiliate }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_sitemap_footer != 1) %}
+                        <li><a href="{{ sitemap }}">{{ text_sitemap }}</a></li>
+                    {% endif %}
+                    {% if (theme_aurus_special_footer != 1) %}
+                        <li><a href="{{ special }}">{{ text_special }}</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="content_mail col-xs-12 col-sm-8 col-md-4 col-lg-4">
+                {% if (content_mail is not empty) %}
+                    <div class="footer-name">{{ text_footer_send }}</div>
+                    <div class="footer_mailtext_back">
+                        {{ content_mail }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="clearfix visible-lg"></div>
+            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-6">
+                <div class="setifooter">
+                    {% if (theme_aurus_top_links2 ) %}
+                        {% for theme_aurus_top_link2 in theme_aurus_top_links2 %}
+                            <a {% if (theme_aurus_top_link2['link_top']) %} href="{{ theme_aurus_top_link2['link_top'] }}" target="_blank" {% endif %}>{% if (theme_aurus_top_link2['faicons_top']) %}
+                                    <span class=" setib fa-stack fa-xs"><i data-toggle="tooltip" title="{{ theme_aurus_top_link2['tooltipseti'] }}"
+                                                                           class="{{ theme_aurus_top_link2['faicons_top'] }} fa-stack-1x fa-inverse"></i></span>{% endif %}</a>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-6">
+                <div class="footer_add">
+                    {% if (footer_pay is not empty) %}
+                        <img class="img-responsive rigimg" alt="payment" title="payment" src="{{ footer_pay }}">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-xs-12">
+                <div class="copyrightf">
+                    {{ theme_aurus_license_text }}
+                </div>
+            </div>
+            {% if (content_top3) %}
+                <div class="col-xs-12">
+                    <div class="footer_line"></div>
+                    {{ content_top3 }}
+                </div>
+            {% endif %}
+            <div class="clearfix"></div>
+            <div class="col-sm-9 ">
+            <span class="col-sm-12 counter-footer">
+            {{ theme_aurus_counter }} 
+            </span>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--
+   OpenCart is open source software and you are free to remove the powered by OpenCart if you want, but its generally accepted practise to make a small donation.
+   Please donate via PayPal to donate@opencart.com
+   //-->
+<!--код tooltip-->
+<script><!--
+    $(document).ready(function () {
+        $(".tooltip-examples a").tooltip();
+        $(".tooltip-examples button").tooltip();
+    });
+    //-->
+</script>
+
+
+{% if (theme_aurus_show_fluid_map_footer == '0' and theme_aurus_map_noapi == '1') %}
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ theme_aurus_fluid_map_key }}&language={{ language_code }}"></script>
+    <script><!--
+        function initialize() {
+            var latlng = new google.maps.LatLng({{ theme_aurus_latitude_fluid_map[language_id] }}, {{ theme_aurus_longitude_fluid_map[language_id] }});
+            {% if (theme_aurus_map_links) %}
+            {% for key, theme_aurus_map_link in theme_aurus_map_links %}
+            var pos{{ key }} = new google.maps.LatLng({{ theme_aurus_map_link.latitude[language_id] }}, {{ theme_aurus_map_link.longitude[language_id] }} );
+            {% endfor %}
+            {% endif %}
+            var settings = {
+                zoom: {{ theme_aurus_fluid_map_zoom }},
+                center: latlng,
+                zoomControl: true,
+                scrollwheel: false,
+                mapTypeControl: true,
+                mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+                navigationControl: true,
+                navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("map_canvas"), settings);
+            {% if theme_aurus_description_map_logo %}
+            var contentString = '<div id="content">' +
+                '<div id="siteNotice">' +
+                '</div>' +
+                '<div id="bodyContent">' +
+                '{{ theme_aurus_description_map_logo }}' +
+                '</div>' +
+                '</div>';
+            var infowindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            {% endif %}
+            {% if (theme_aurus_map_links) %}
+            {% for key, theme_aurus_map_link in theme_aurus_map_links %}
+            {% if theme_aurus_map_link.title %}
+            var contentString{{ key }} = '<div id="content{{ key }}">' +
+                '<div id="siteNotice{{ key }}">' +
+                '</div>' +
+                '<div id="bodyContent{{ key }}">' +
+                '{{ theme_aurus_map_link.title }}' +
+                '</div>' +
+                '</div>';
+            var infowindow{{ key }} = new google.maps.InfoWindow({
+                content: contentString{{ key }}
+            });
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            var companyImage = new google.maps.MarkerImage('{{ map_img }}',
+                new google.maps.Size(80, 80),
+                new google.maps.Point(0, 0),
+                new google.maps.Point(50, 50)
+            );
+            var companyMarker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                icon: companyImage,
+                zIndex: 3
+            });
+            {% if (theme_aurus_map_links) %}
+            {% for key, theme_aurus_map_link in theme_aurus_map_links %}
+            var marker{{ key }} = new google.maps.Marker({
+                position: pos{{ key }},
+                map: map,
+                icon: companyImage,
+                zIndex: 3
+            });
+            {% endfor %}
+            {% endif %}
+            {% if (theme_aurus_show_info_marker_block != 1) %}
+            {% if (theme_aurus_description_map_logo) %}
+            google.maps.event.addListener(companyMarker, 'mouseover', function () {
+                infowindow.open(map, companyMarker);
+            });
+            {% endif %}
+            {% if (theme_aurus_map_links) %}
+            {% for key, theme_aurus_map_link in theme_aurus_map_links %}
+            {% if (theme_aurus_map_link.title) %}
+            google.maps.event.addListener(marker{{ key }}, 'mouseover', function () {
+                infowindow{{ key }}.open(map, marker{{ key }});
+            });
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+        //-->
+    </script>
+{% endif %} 
+
+{% if (theme_aurus_show_map_open == '1') %}
+    <script>
+        $(document).ready(function () {
+            $('#hfooter').prepend('<a class="link_footer"><i class="fa fa-map-marker"></i> {{ text_map_open }}</a>');
+            $('#hfooter').css({'height': 50, 'opacity': 0.5, 'overflow': 'hidden'});
+            $('.link_footer').on("click", function () {
+                $('#hfooter').animate({
+                    height: 270,
+                    opacity: 0.9
+                }, 1200);
+                $('.link_footer').remove();
+            });
+        });
+    </script>
+{% endif %} 
+{% if (aridius_cookie_status == '1') %}
+    <script>
+        var text_cookie = '{{ aridius_cookie_description }}';
+        $(document).ready(function () {
+            $.cookieAr();
+        });
+    </script>
+{% endif %}
+
+<script>
+    $("body").on('click', '[href*="#"]', function (e) {
+        var fixed_offset = 100;
+        $('html,body').stop().animate({scrollTop: $(this.hash).offset().top - fixed_offset}, 800);
+        e.preventDefault();
+    });
+</script>
+
+</body></html>

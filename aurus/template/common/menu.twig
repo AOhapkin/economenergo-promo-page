@@ -1,0 +1,412 @@
+
+<div class="top-menu">
+<div id="top-menu">
+   <div class="container nobackground">
+      <nav id="menu" >
+         <div class="collapse navbar-collapse navbar-ex1-collapse">
+            {% if (theme_aurus_seevmenu_menu != 1) %} 
+            <ul class="nav navbar-nav">
+               <li class="dropdown hidev {% if (theme_aurus_seevmenuw != 1) %}seevmenuw {% endif %} {% if ( home == og_url and theme_aurus_seevmenu_menu_open != 1) %} open {% endif %} ">
+                  <a class="with-child dropdown-toggle" {% if (theme_aurus_link_menucatalog is not empty) %} href="{{ theme_aurus_link_menucatalog }}" {% endif %} data-hover="dropdown" data-delay="1" data-close-others="false">
+                  {% if (theme_aurus_seevmenuico != 1) %} 
+                  <i class="fa fa-bars"></i>&nbsp;&nbsp;
+                  {% endif %} 
+                  {{ theme_aurus_vmenu_menu[language_id] }}<span class="fa fa-angle-down menu"></span></a>
+                  <ul id="menu_height" class="{% if (class != 'common-home' and theme_aurus_ico_home != 1) %} home {% else %}home1{% endif %} dropdown-menu {% if (theme_aurus_seevmenu_menu_open != 1) %} fix_scrollmenu {% endif %} multi-level" role="menu">
+                     {% for category in categories %} 
+                     {% if (category['children']) %} 
+                     <li class="dropdown-submenu" >
+                     <a style="white-space: normal; margin: 0; padding: 0; left: 12px; position: relative; line-height: 30px;" tabindex="-1" href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menuv_icon_ico"><img src="{{ category['image_menu_icol'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %}  {% if (category['image_menu_svg']) %}<span class="menuv_icon_svg">{{ category['image_menu_svg'] }}</span>{% endif %} {{ category['name'] }}<span class="arrowvertmenu"></span>
+						{% if (theme_aurus_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1v">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2v">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3v">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a>
+                        {% if (category['image_main'] and theme_aurus_main_photos_menu != 1 and category['column'] > 1) %} 
+                        {% if (category['column'] < 2) %} 
+                        {% set column_class = 'col-sm-12' %} 
+                        {% set column_width = 'column_width1_noimg' %} 
+                        {% set column_clear = 1 %} 
+                        {% elseif (category['column'] == 2) %} 
+                        {% set column_class = 'col-sm-6' %} 
+                        {% set column_width = 'column_width2' %} 
+                        {% set column_clear = 2 %} 
+                        {% elseif (category['column'] > 2) %} 
+                        {% set column_class = 'col-sm-4' %} 
+                        {% set column_width = 'column_width3' %} 
+                        {% set column_clear = 3 %} 
+                        {% endif %} 
+                        {% else %} 
+                        {% if (category['column'] < 2) %} 
+                        {% set column_class = 'col-sm-12' %} 
+                        {% set column_width = 'column_width1_noimg' %} 
+                        {% set column_clear = 1 %} 
+                        {% elseif (category['column'] == 2) %} 
+                        {% set column_class = 'col-sm-6' %} 
+                        {% set column_width = 'column_width2_noimg' %} 
+                        {% set column_clear = 2 %} 
+                        {% elseif (category['column'] == 3) %} 
+                        {% set column_class = 'col-sm-4' %} 
+                        {% set column_width = 'column_width3_noimg' %} 
+                        {% set column_clear = 3 %} 
+                        {% elseif (category['column'] > 3) %} 
+                        {% set column_class = 'col-sm-3' %} 
+                        {% set column_width = 'column_width3_noimg' %} 
+                        {% set column_clear = 4 %} 
+                        {% endif %} 
+                        {% endif %} 
+                        <ul class="dropdown-menu2 {{ column_width }}" style="background: url({{ category['image_menu_background'] }}) 50% 50% no-repeat #ffffff;background-position:right;" >
+                           {% set i = 0 %} 
+                           {% if (category['image_main'] and theme_aurus_main_photos_menu != 1 and category['column'] > 1) %} 
+                           <li class="col-md-9">
+                              {% else %} 
+                           <li class="col-md-12">
+                              {% endif %} 
+                              {% for child in category['children'] %} 
+                              <div class="{{ column_class }} mcol">
+                               {% if (not child['image_menu_ico2'] and not child['image_menu_svg'] ) %} 
+							   <span class = "hidden-xs hidden-sm">{% if (aurus_photos_menu != 1 and (child['image2'] is not empty)) %}<a href="{{ child['href'] }}"><img class="vopmen img-responsive" src="{{ child['image2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a>{% endif %}</span>
+                               {% endif %} 
+							   <div class="clearfix"></div>
+                               <a class="submenu_main" href="{{ child['href'] }}">{% if (child['image_menu_ico2']) %}<span class="menu_icon_2lv"><img src="{{ child['image_menu_ico2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %}  {% if (child['image_menu_svg']) %}<span class="menu_icon_svg2lv">{{ child['image_menu_svg'] }}</span>{% endif %}{{ child['name'] }}</a>
+							  {% if (theme_aurus_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %} 
+                              {% if (child['children_lv3'] is defined and child['children_lv3'] and theme_aurus_3lv_menu != 1) %}
+                              {% set v = 0 %}
+                              {% set break = false %}
+                              {% for child_lv3 in child['children_lv3'] if not break %}
+                              <a class = "menuv_3lv " href="{{ child_lv3['href'] }}">&nbsp;&nbsp;- {{ child_lv3['name'] }}</a>
+                              {% set v = v + 1 %}
+                              {% if (v >theme_aurus_countvmenulv - 1) %}
+                              <a class="menuv-allv" href="{{ child['href'] }}">{{ theme_aurus_seeall_menu[language_id] }}</a>
+                              {% set break = true %}
+                              {% endif %}
+                              {% endfor %}
+                              {% endif %}
+                              </div>
+                              {% set i = i + 1 %} 
+                              {% if ((i == column_clear) and (i != 1)) %} 
+                              <div class="clearfix  visible-md visible-lg"></div>
+                              {% set i = 0 %} 
+                              {% endif %} 
+                              {% endfor %} 
+                           </li>
+                           {% if (category['image_main'] and theme_aurus_main_photos_menu != 1 and category['column'] > 1) %} 
+                           <li class="col-lg-3">
+                              {% if (not category['image_menu_background']) %} 
+                              <a href="{{ category['href'] }}"><img class="image_main img-responsive" alt="{{ category['name'] }}" title="{{ category['name'] }}" src="{{ category['image_main'] }}"></a>
+                              {% endif %} 
+                           </li>
+                           {% endif %} 
+                        </ul>
+                     </li>
+                     {% else %} 
+                     <li class="v3hover"><a style="white-space: normal; margin: 0; padding: 0; left: 12px; position: relative; line-height: 30px;" href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menu_icon_2lv"><img src="{{ category['image_menu_icol'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %}  {% if (category['image_menu_svg']) %}<span class="menuv_icon_svg">{{ category['image_menu_svg'] }}</span>{% endif %} {{ category['name'] }} 
+					  {% if (theme_aurus_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1v">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2v">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3v">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a>
+                     </li>
+                     {% endif %} 
+                     {% endfor %} 
+                     {% if (theme_aurus_link_special) %} 
+                     <li>
+                        <hr>
+                     </li>
+                     {% endif %} 
+                     <!--add menu link-->
+                     {% if (theme_aurus_link_special) %} 
+                     <li class ="menu_special"><a href="{{ theme_aurus_link_special }}">{{ theme_aurus_menu_special[language_id] }}</a></li>
+                     {% endif %} 
+                  </ul>
+                  {% if (theme_aurus_hover_menu != 1) %} 
+                  <div class="backdrop"></div>
+                  {% endif %} 
+               </li>
+            </ul>
+            {% endif %} 
+            {% if (theme_aurus_ico_home != 1 and home != og_url) %} 
+            <ul class="nav navbar-nav">
+               <li><a href="{{ base }}"><i class="fa fa-home" style="font-size: 16px;"></i></a></li>
+            </ul>
+            {% endif %} 
+            {% if (theme_aurus_seevmenu_menu == 1) %} 
+            <div class="menu_mob_plus1">
+               <ul class="nav navbar-nav">
+                  {% for category in categories %} 
+                  {% if (category['children']) %} 
+                  <li class="{% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %} dropdown menu-large" {% if (category['column'] == 1 and aurus_col1_menu != 1) %}{% else %}style='position:static;'{% endif %}	>
+                     <a class="with-child dropdown-toggle" href="{{ category['href'] }}" data-hover="dropdown" data-delay="1" data-close-others="false"> {% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %}  {% if (category['image_menu_svg']) %}<span class="menu_icon_svg">{{ category['image_menu_svg'] }}</span>{% endif %} {{ category['name'] }}{% if (theme_aurus_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}<span class="fa fa-angle-down menu"></span></a>
+                     <div class="{% if (category['column'] == 1 and aurus_col1_menu != 1) %} colm1{% endif %} bgm dropdown-menu megamenu row backgnone" {% if (category['image_menu_background']) %} style="background: url({{ category['image_menu_background'] }}) 50% 50% no-repeat #ffffff;background-position:right;"{% endif %}	 >
+                        {% if ((category['column'] == 1 and aurus_col1_menu != 1) or (category['column'] == 2 and aurus_col1_menu != 2)) %} 
+                        <div class="container2">
+                           {% else %} 
+                           <div class="container fixmmenu">
+                              {% endif %} 
+                              <div class="dropdown-inner children-category">
+                                 {% if (category['image_main'] and theme_aurus_main_photos_menu != 1 and not category['image_menu_background'] ) %} 
+                                 <div class="menu_main_photos {% if (category['column'] == 1) %} hidden-md hidden-lg{% endif %}">
+                                    <a href="{{ category['href'] }}"><img class="image_main img-responsive" alt="{{ category['name'] }}" title="{{ category['name'] }}" src="{{ category['image_main'] }}">
+                                    </a>
+                                    <span class="main-foto-back"></span>
+                                 </div>
+                                 {% endif %} 
+                                 {% for child in category['children'] %} 
+                                 <ul class="list-unstyled" style="width: {% if (category['image_main'] and theme_aurus_main_photos_menu != 1 and not category['image_menu_background']) %}{{ 82/category['column']-1 }}{% else %} {{ 100/category['column']-1 }}{% endif %}%">
+                                    {% if (child['children_lv3'] is defined and child['children_lv3']) %} 
+                                    <li class="with-child" >
+									   {% if (not child['image_menu_ico2'] and not child['image_menu_svg'] ) %} 
+                                       <span>{% if (aurus_photos_menu != 1 and (child['image2'] is not empty)) %}<a href="{{ child['href'] }}"><img class="opacityhv img-responsive" src="{{ child['image2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a>{% endif %}</span>
+                                       {% endif %} 
+									   <a href="{{ child['href'] }}"><span class="style2lv"> {% if (child['image_menu_ico2']) %}<span class="menu_icon_ico2lv"><img src="{{ child['image_menu_ico2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %}  {% if (child['image_menu_svg']) %}<span class="menu_icon_svg2lv">{{ child['image_menu_svg'] }}</span>{% endif %} {{ child['name'] }}{% if (theme_aurus_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
+								{% if (theme_aurus_3lv_menu != 1) %}
+                                 {% set m = 0 %}
+                                 {% set break = false %}
+                                 {% for child_lv3 in child['children_lv3'] if not break %}
+                                 <li class="children_lv3"><a href="{{ child_lv3['href'] }}">&nbsp;&nbsp;- {{ child_lv3['name'] }}</a>
+                                    {% set m = m + 1 %}
+                                    {% if (m >theme_aurus_countvmenulv - 1) %}
+                                    <a class="menuv-all" href="{{ child['href'] }}">{{ theme_aurus_seeall_menu[language_id] }}</a>
+                                    {% set break = true %}
+                                    {% endif %}
+                                 </li>
+                                    {% endfor %} 
+                                    {% endif %} 
+                                    {% else %} 
+									<li>
+									{% if (not child['image_menu_ico2'] and not child['image_menu_svg'] ) %} 
+									{% if (aurus_photos_menu != 1 and (child['image2'] is not empty)) %}<span><a href="{{ child['href'] }}"><img class="opacityhv img-responsive" src="{{ child['image2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}" ></a></span>{% endif %} 
+									{% endif %} 
+									<a href="{{ child['href'] }}"><span class="style2lv"> {% if (child['image_menu_ico2']) %}<span class="menu_icon_ico2lv"><img src="{{ child['image_menu_ico2'] }}" alt="{{ child['name'] }}" title="{{ child['name'] }}"></span>{% endif %}  {% if (child['image_menu_svg']) %}<span class="menu_icon_svg2lv">{{ child['image_menu_svg'] }}</span>{% endif %} {{ child['name'] }}{% if (theme_aurus_sticker_menu != 1) %}{% if (child['stickers'] == '1') %}<span class="stickersmenu1v">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (child['stickers'] == '2') %}<span class="stickersmenu2v">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (child['stickers'] == '3') %}<span class="stickersmenu3v">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</span></a>
+									</li>
+								   {% endif %} 
+                                 </ul>
+                                 {% endfor %} 
+                              </div>
+                           </div>
+                        </div>
+                        {% if (theme_aurus_hover_menu != 1) %} 
+                        <div class="backdrop"></div>
+                        {% endif %} 
+                        <div class="clearfix"></div>
+                  </li>
+                           {% else %} 
+                          <li class="{% if (category['category_id'] == category_id) %}{{ 'activetopmenu' }}{% endif %}"><a href="{{ category['href'] }}">{% if (category['image_menu_icol']) %}<span class="menu_icon_ico"><img src="{{ category['image_menu_icol'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"></span>{% endif %}  {% if (category['image_menu_svg']) %}<span class="menu_icon_svg">{{ category['image_menu_svg'] }}</span>{% endif %} {{ category['name'] }}{% if (theme_aurus_sticker_menu != 1) %}{% if (category['stickers'] == '1') %}<span class="stickersmenu1">{{ theme_aurus_name_sticker_menu_new[language_id] }}</span>{% endif %}{% if (category['stickers'] == '2') %}<span class="stickersmenu2">{{ theme_aurus_name_sticker_menu_sale[language_id] }}</span>{% endif %}{% if (category['stickers'] == '3') %}<span class="stickersmenu3">{{ theme_aurus_name_sticker_menu_top[language_id] }}</span>{% endif %}{% endif %}</a></li>
+						   {% endif %} 
+                  {% endfor %} 
+               </ul>
+               </div>
+               {% endif %} 
+               <ul class="nav navbar-nav">
+                  <!--add menu link-->
+                  {% if (theme_aurus_top_links8 ) %} 
+                  {% for theme_aurus_top_link8 in theme_aurus_top_links8 %} 
+                  <li>
+                     <a {% if (theme_aurus_top_link8['link_top'][language_id]) %} href="{{ theme_aurus_top_link8['link_top'][language_id] }}"{% endif %}>{% if (theme_aurus_top_link8['faicons_top']) %} <i class="{{ theme_aurus_top_link8['faicons_top'] }}"></i> {% endif %}{% if (theme_aurus_top_link8['title']) %}{{ theme_aurus_top_link8['title'][language_id] }}{% endif %}</a>
+                  </li>
+                  {% endfor %} 
+                  {% endif %} 
+                  <!--add menu link-->
+                  <!--other link-->
+                  {% if (theme_aurus_main_link_menu[language_id]) %} 
+                  <li class="dropdown">
+                     <a class="with-child dropdown-toggle" href="{{ theme_aurus_main_link_href_menu[language_id] }}" data-hover="dropdown" data-delay="1" data-close-others="false">{{ theme_aurus_main_link_menu[language_id] }}<span class="fa fa-angle-down menu"></span></a>
+                     <div class="dropdown-menu">
+                        <div class="dropdown-inner1 children-category">
+                           <ul class="list-unstyled">
+                              {% if (theme_aurus_top_links4 ) %} 
+                              {% for theme_aurus_top_link4 in theme_aurus_top_links4 %} 
+                              <li>
+                                 <a {% if (theme_aurus_top_link4['link_top'][language_id]) %} href="{{ theme_aurus_top_link4['link_top'][language_id] }}"{% endif %} title="{{ theme_aurus_top_link4['title'][language_id] }}">{% if (theme_aurus_top_link4['faicons_top']) %} <i class="{{ theme_aurus_top_link4['faicons_top'] }}"></i>{% endif %}{% if (theme_aurus_top_link4['title']) %} {{ theme_aurus_top_link4['title'][language_id] }}{% endif %}</a>
+                              </li>
+                              {% endfor %} 
+                              {% endif %} 
+                           </ul>
+                        </div>
+                     </div>
+                  </li>
+                  {% endif %} 
+                  <!--other link END-->
+                  <!--informations-->
+                  {% if (theme_aurus_info_menu != 1) %} 
+                  {% if (informations) %} 
+                  <li class="dropdown">
+                     <a class="with-child dropdown-toggle" data-hover="dropdown" data-delay="1" data-close-others="false">{{ text_information }}<span class="fa fa-angle-down menu"></span></a>
+                     <div class="dropdown-menu">
+                        <div class="dropdown-inner1 children-category">
+                           <ul class="list-unstyled">
+                              {% for information in informations %} 
+                              <li><a href="{{ information['href'] }}">{{ information['title'] }}</a></li>
+                              {% endfor %} 
+                           </ul>
+                        </div>
+                     </div>
+                  </li>
+                  {% endif %} 
+                  {% endif %} 
+                  <!--informations END-->
+                  <!--add menu link-->
+                  {% if (theme_aurus_link_special) %} 
+                  <li class ="menu_special hide_dopmenu"><a href="{{ theme_aurus_link_special }}">{{ theme_aurus_menu_special[language_id] }}</a></li>
+                  {% endif %} 
+               </ul>
+            </div>
+      </nav>
+      </div>
+   </div>
+</div>
+<script>
+   //mobile_menu
+   function MobMenu() {
+   slideout.open();
+   $.ajax({
+   type: 'POST',
+   url: 'index.php?route=common/header',
+   data:"aridius_mob_menu=1&location={{ class }}",
+   beforeSend: function(){
+   $('.overlay').html('<div id="preloader"><i class="fa fa-spinner fa-spin"></i></div>');
+   },
+   success: function(mobm){
+   $('#menu_m').html(mobm);
+   $('#preloader').remove();
+   }
+   });
+   }
+</script>
+<!--sticky-->
+{% if (theme_aurus_sticky_menu != 1) %} 
+<script>
+   $(document).ready(function() {
+   if($("#top-fixed").length==0) {
+   var menu_clone = '<div class="container">';
+   menu_clone += '<div class="row vertical-align">';
+   menu_clone += '<div class = "col-xs-2 col-sm-1 hidden-md hidden-lg" id="mobmenu_clone"></div>';
+   menu_clone += '<div class = "col-xs-3 col-sm-4 hidden-md hidden-lg" id="logo_clone"></div>';
+   menu_clone += '<div class = "header_v2 col-md-9 col-lg-10" id="menu_clone"></div>';
+   menu_clone += '<div id="set_clone" class = "fix_mxs2 col-xs-7 col-sm-8 col-md-3 col-lg-2" ></div>';
+   menu_clone += '</div>';
+   menu_clone += '</div>';
+   $('#scroll').before('<div id="menu_scroll">'+menu_clone+'</div>');
+   $('#mobmenu').clone().appendTo('#mobmenu_clone');
+   $('#logo').clone().appendTo('#logo_clone');
+   $('#menu').clone().appendTo('#menu_clone');
+   $('#setclone').clone().appendTo('#set_clone');
+   /* Search close */
+   $('#menu_scroll .serv1 .inp_sear').on('blur', function(){
+   $('.cl_search').removeClass('cl_searchon');
+   $('.mmenu').removeClass('dell_mmenu');
+   }).on('focus', function(){
+   $('.cl_search').addClass('cl_searchon');
+   $('.mmenu').addClass('dell_mmenu');
+   });
+   // Currency
+   $('#menu_scroll #form-currency .currency-select').on('click', function(e) {
+   e.preventDefault();
+   $('#form-currency input[name=\'code\']').val($(this).attr('name'));
+   $('#form-currency').submit();
+   });
+   // Language
+   $('#menu_scroll #form-language .language-select').on('click', function(e) {
+   e.preventDefault();
+   $('#form-language input[name=\'code\']').val($(this).attr('name'));
+   $('#form-language').submit();
+   });
+   /* Search */
+   $('#menu_scroll #search input[name=\'search\']').parent().find('button').on('click', function() {
+   var url = $('base').attr('href') + 'index.php?route=product/search';
+   var value = $('input[name=\'search\']').val();
+   if (value) {
+   url += '&search=' + encodeURIComponent(value);
+   }
+   location = url;
+   });
+   $('#search input[name=\'search\']').on('keydown', function(e) {
+   if (e.keyCode == 13) {
+   $('input[name=\'search\']').parent().find('button').trigger('click');
+   }
+   });
+   $('#menu_scroll input[name="search"]').livesearch({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=extension/module/aridius_livesearch/livesearch&search=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+                     label: item['name'],
+                     price: item['price'],
+                     special: item['special'],
+                     image: item['image'],
+                     href: item['href'],
+                     value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'search\']').val(item['label']);
+	}
+   });
+   /* cart_open  */
+   $("#menu_scroll .cart_openp").click(function(){$.magnificPopup.open({removalDelay:500,fixedContentPos:!0,items:{src:"index.php?route=common/aridius_cart/info"},type:"ajax",mainClass:"mfp-fade"})});
+   }
+   $(window).scroll(function(){
+   if($(this).scrollTop()>180) {
+   $('#menu_scroll').addClass('sticky');
+   $('.st_search').addClass('mob_search2').removeClass('mob_search');
+   $('.st_search').addClass('serv2').removeClass('serv1');
+   $('.st_search').addClass('header_v2').removeClass('header_v1');
+   $('.mob_phone').removeClass('hidden-lg');
+   $('.sss2').addClass('mob_phonex2');
+   $('.cart-price').addClass('st_cart-price');
+   $('.mob_settings').addClass('st_mob_settings');
+   }else{
+   $('#menu_scroll').removeClass('sticky');
+   $('.st_search').addClass('mob_search').removeClass('mob_search2');
+   $('.st_search').addClass('serv1').removeClass('serv2');
+   $('.st_search').addClass('header_v1').removeClass('header_v2');
+   $('.mob_phone').addClass('hidden-lg');
+   $('.sss2').removeClass('mob_phonex2');
+   $('.cart-price').removeClass('st_cart-price');
+   $('.mob_settings').removeClass('st_mob_settings');
+   }
+   });
+   });
+</script>
+{% endif %} 
+<script>
+   /* Search close */
+   $('.serv1 .inp_sear').on('blur', function(){
+   $('.cl_search').removeClass('cl_searchon2');
+   $('.mmenu').removeClass('dell_mmenu');
+   }).on('focus', function(){
+   $('.cl_search').addClass('cl_searchon2');
+   $('.mmenu').addClass('dell_mmenu');
+   });
+</script>
+<script>
+   // mobile menu slideout.min.js
+   var slideout = new Slideout({
+   'panel': document.getElementById('main_m'),
+   'menu': document.getElementById('menu_m'),
+   'padding': 320,
+   'tolerance': 70,
+   });
+   function close(eve) {
+   eve.preventDefault();
+   slideout.close();
+   }
+   slideout
+   .on('beforeopen', function() {
+   this.panel.classList.add('panel-open');
+   $(".overlay").css({display:""});
+   $('.slideout-menu-left').addClass('slideout_ml');
+   })
+   .on('open', function() {
+   $('.slideout-menu-left').removeClass('slideout_ml');
+   })
+   .on('close', function() {
+   $("#menu_m").html("");
+   })
+   .on('beforeclose', function() {
+   this.panel.classList.remove('panel-open');
+   $(".overlay").css({display:"none"});
+   $('.slideout-menu-left').addClass('slideout_ml');
+   });
+   $('.overlay').on('click', function() {
+   slideout.close();
+   });
+</script>

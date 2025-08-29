@@ -1,0 +1,89 @@
+<div class="title-module">{{ heading_title_aridius_pr_review }}</div>
+<div id="rev_carusel{{ module }}" class="swiper-container">
+   <div class="swiper-wrapper">
+      {% for product in products %} 
+      <div class="swiper-slide product-layout2">
+         <div class="product-thumb fixth transition">
+            <div class="img_left image"><a href="{{ product['href'] }}"><img src="{{ product['thumb'] }}" alt="{{ product['name'] }}" title="{{ product['name'] }}" class="img-responsive" /></a></div>
+            <div class="caption">
+               <div class="product-name"><a href="{{ product['href'] }}">
+						  {% if (product['name'])|length < aurus_limit_symbolst %} 
+						  {{ product['name'] }} 
+						  {% else %} 
+						  {{ (product['name']|slice(0, aurus_limit_symbolst))~"..." }} 
+						  {% endif %} 
+                  </a>
+               </div>
+               <p>{{ product['text'] }}</p>
+               {% if (rat) %} 
+               <div class=" pr rating">
+                  {% set i = 1 %}{% for i in i..5 %} 
+                  {% if (product['rating'] < i) %} 
+                  <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% else %} 
+                  <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+                  {% endif %} 
+                  {% endfor %} 
+               </div>
+               {% endif %} 
+               <div class="cart">
+                  <a class="btn btn-more btn-lg" href="{{ product['href'] }}" role="button">{{ button_more }}</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endfor %} 
+   </div>
+   {% if (navigation) %} 
+   <div class="#rev_carusel{{ module }} swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+   <div class="#rev_carusel{{ module }} swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+   {% endif %} 
+</div>
+<script><!--
+   $(document).ready(function () {
+   var ocSwiper = new Swiper('#rev_carusel{{ module }}.swiper-container', {
+   {% if (colleft != 1 ) %} 
+   slidesPerView: {{ items }},
+   {% else %} 
+   slidesPerView:1,
+   {% endif %} 
+   mode: 'horizontal',
+   pagination: false,
+   speed: {{ pag_speed }},
+   {% if (autoplay_on) %} 
+   autoplay: {delay: {{ autoplay }}},
+   autoplayDisableOnInteraction: true,
+   {% endif %} 
+   {% if (colleft != 1 ) %} 
+   breakpoints: {
+   768: {
+   slidesPerView: 1,
+   },
+   992: {
+   slidesPerView: 2,
+   },
+   1200: {
+   slidesPerView: 2,
+   },
+   1600: {
+   slidesPerView: 2,
+   }
+   },
+   {% endif %} 
+   {% if (navigation) %} 
+   navigation: {
+   nextEl: '#rev_carusel{{ module }} .swiper-button-next',
+   prevEl: '#rev_carusel{{ module }} .swiper-button-prev',
+   },
+   {% endif %} 
+   });
+   {% if (stophover and autoplay_on) %} 
+   $("#rev_carusel{{ module }}.swiper-container").hover(function() {
+   ocSwiper.autoplay.stop();
+   }, function() {
+   ocSwiper.autoplay.start();
+   });
+   {% endif %} 
+   });
+   -->
+</script>

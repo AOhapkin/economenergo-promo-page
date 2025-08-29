@@ -1,0 +1,27 @@
+<div class="effectb">
+<div class="effect-banner">
+<div id="banner{{ module }}" class="banner-margin">
+{% for banner in banners %} 
+	<div class="item">
+	{% if (banner['link']) %} 
+		<a href="{{ banner['link'] }}"><img src="{{ banner['image'] }}" alt="{{ banner['title'] }}" class="img-responsive scaleslide" /></a>
+		<div class="hover-textbanner">
+		<a href="{{ banner['link'] }}"></a>
+		{% if (banner['description']) %} 
+		<div class="efhover visible-sm visible-md visible-lg">{{ banner['description'] }}</div>
+		{% endif %} 
+		</div>	
+		{% else %} 
+		<img src="{{ banner['image'] }}" alt="{{ banner['title'] }}" class="img-responsive scaleslide" />
+	{% if (banner['description']) %}	
+		<div class="hover-textbanner">
+		<div class="efhover visible-sm visible-md visible-lg">{{ banner['description'] }}</div>
+		</div>	
+	{% endif %}	
+		{% endif %} 
+	</div>
+	{% endfor %} 
+</div>		
+</div>
+</div>
+

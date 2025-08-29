@@ -1,0 +1,81 @@
+<div class="title-module">{{ heading_title_catwall }}</div>
+{% if (variant != '1') %}
+    <div id="catwall_carusel" class="swiper-container">
+        <div class="swiper-wrapper">
+            {% for category in categories %}
+                <div class="swiper-slide">
+                    <div class="product-layoutwa_v2">
+                        {% if (add_img == '1') %}
+                            <div class="product-thumb_v2">
+                                <div class="image_v2"><a href="{{ category['href'] }}"><img src="{{ category['image'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}"
+                                                                                            class="img-responsive"/></a></div>
+                            </div>
+                        {% endif %}
+                        <div class="namelink_v2">
+                            <a href="{{ category['href'] }}">{{ category['name'] }}</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="#catwall_carusel swiper-button-next"><i class="fa fa-chevron-right fa-5x"></i></div>
+        <div class="#catwall_carusel swiper-button-prev"><i class="fa fa-chevron-left fa-5x"></i></div>
+    </div>
+    <script><!--
+        $(document).ready(function () {
+            var ocSwiper = new Swiper('#catwall_carusel.swiper-container', {
+                slidesPerView: {{ slides4 }},
+                spaceBetween: 15,
+                pagination: false,
+                autoplay: false,
+                breakpoints: {
+                    768: {
+                        slidesPerView: {{ slides1 }},
+                    },
+                    992: {
+                        slidesPerView: {{ slides2 }},
+                    },
+                    1200: {
+                        slidesPerView: {{ slides3 }},
+                    },
+                    1600: {
+                        slidesPerView: {{ slides4 }},
+                    }
+                },
+                navigation: {
+                    nextEl: '#catwall_carusel .swiper-button-next',
+                    prevEl: '#catwall_carusel .swiper-button-prev',
+                },
+            });
+        });
+        -->
+    </script>
+{% else %}
+    <div class="row catwall">
+        {% for category in categories %}
+            <div class="catb col-lg-{{ col_lg }} col-md-{{ col_md }} col-sm-{{ col_sm }} col-xs-{{ col_xs }}">
+                <div class="product-layoutwall2">
+                    <div class="namelink">
+                        <div class="product-name"><a href="{{ category['href'] }}">{{ category['name'] }}</a></div>
+                    </div>
+                    {% if (add_img == '1') %}
+                        <div class="product-thumb transition">
+                            <div class="image"><a href="{{ category['href'] }}"><img src="{{ category['image'] }}" alt="{{ category['name'] }}" title="{{ category['name'] }}" class="img-responsive"/></a>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if (child_visible) %}
+                        {% if (category['children']) %}
+                            <ul class="list-unstyled rightwallchild">
+                                {% for child in category['children'] %}
+                                    <li><a href="{{ child['href'] }}"><i class="fa fa-angle-right" aria-hidden="true"></i>&nbsp;{{ child['name'] }}</a></li>
+                                {% endfor %}
+                                <li><span><a href="{{ category['href'] }}">{{ Seeall }}</a></span></li>
+                            </ul>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %} 

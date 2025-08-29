@@ -1,0 +1,26 @@
+<div class="groupcat">
+   <div class="title-module" style="display:inline;" >{{ heading_title_news_category }}</div>
+</div>
+<div class="row">
+   {% for new in news %} 
+   <div class="product-layoutnews col-lg-3 col-md-3 col-sm-6 col-xs-12">
+      <div class="news-thumb transition ">
+         <div class="image"><a href="{{ new['href'] }}"><img src="{{ new['thumb'] }}" alt="{{ new['title'] }}" title="{{ new['title'] }}" class="img-responsive" /></a></div>
+         <div class="clearfix visible-sm"></div>
+         <div class="caption">
+            {% if (new['aridius_news_id'] == aridius_news_id) %} 
+            <div class="product-name"><a href="{{ new['href'] }}" class="active">{{ new['title'] }}</a></div>
+            {% else %} 
+            <div class="product-name"><a href="{{ new['href'] }}">{{ new['title'] }}</a></div>
+            {% endif %} 
+            {% if (not aridius_news_show_date) %}			
+            <span class="posted-aridius_news"><i class="fa fa-clock-o"></i> {{ new['posted'] }}</span>
+            {% endif %}	
+         </div>
+      </div>
+   </div>
+   {% endfor %} 
+</div>
+{% if (showbutton) %}      
+<a href="{{ aridius_newslist }}" class="buttonsall_news btn-primary">{{ text_all_news }}</a>
+{% endif %} 

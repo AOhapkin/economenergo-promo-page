@@ -41,16 +41,17 @@
 {% endif %}
 <div class="clearfix"></div>
 
-<h2>Квиз</h2>
+<h2 style="color: #222222; font-size: 2.5rem; font-weight: 700; text-align: center; margin: 2rem 0 4rem; line-height: 1.2;">Подберите светильник за 3 простых шага</h2>
 
 <!-- Кнопка запуска квиза -->
 <div class="row justify-content-center">
-  <div class="col-md-8 text-center">
+  <div class="col-12 text-center">
     <button
       type="button"
-      class="btn btn-success btn-lg"
+      class="btn btn-success"
       id="quizButton"
       onclick="openQuizModal()"
+      style="background: #1a9f29; border-color: #178e24; height: 44px; border-radius: 6px; font-size: 16px; font-weight: 600; padding: 8px 24px;"
     >
       Подобрать светильник
     </button>
@@ -328,6 +329,58 @@
     cursor: pointer;
     font-size: 14px;
     line-height: 1.4;
+  }
+
+  /* Стили для заголовка квиза */
+  h2[style*="Подберите светильник"] {
+    color: #222222 !important;
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    margin: 2rem 0 4rem !important;
+    line-height: 1.2 !important;
+  }
+
+  @media (max-width: 768px) {
+    h2[style*="Подберите светильник"] {
+      font-size: 2rem !important;
+      margin: 1.5rem 0 3rem !important;
+    }
+  }
+
+  @media (max-width: 576px) {
+    h2[style*="Подберите светильник"] {
+      font-size: 1.75rem !important;
+      margin: 1rem 0 2rem !important;
+    }
+  }
+
+  /* Стили для кнопки квиза */
+  #quizButton {
+    background: #1a9f29 !important;
+    border-color: #178e24 !important;
+    color: #fff !important;
+    transition: all 0.2s ease;
+  }
+  
+  #quizButton:hover {
+    background: #178e24 !important;
+    border-color: #147a1f !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(26, 159, 41, 0.3);
+  }
+
+  /* Отступ под кнопкой на мелких экранах */
+  @media (max-width: 768px) {
+    .row.justify-content-center:has(#quizButton) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .row.justify-content-center:has(#quizButton) {
+      margin-bottom: 1.5rem;
+    }
   }
 
   /* Адаптивность */

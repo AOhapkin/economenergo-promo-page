@@ -919,12 +919,16 @@
     return true;
   }
 
-  // Показать ошибку шага
-  function showStepError(step, message) {
+  // Показать сообщение шага (ошибка или успех)
+  function showStepError(step, message, isSuccess = false) {
     const hint = document.getElementById(`hint${step}`);
     if (hint) {
       hint.textContent = message;
-      hint.className = "quiz-hint error";
+      if (isSuccess) {
+        hint.className = "quiz-hint success";
+      } else {
+        hint.className = "quiz-hint error";
+      }
     }
   }
 
@@ -1093,8 +1097,38 @@
     document.querySelector('input[name="telephone"]').value =
       quizState.telephone;
 
-    // Отправляем форму
-    document.getElementById("ee-quiz-form").submit();
+    // Показываем статус и блокируем кнопку
+    showStepError(4, "Создаём заявку...", false);
+    const submitBtn = document.getElementById("btnSubmit");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Отправляем...";
+    
+    // Отправляем форму через AJAX как в home.html
+    const formData = new FormData(document.getElementById("ee-quiz-form"));
+    
+    fetch("index.php?route=information/contact|send", {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      // Успешная отправка
+      showStepError(4, "Заявка отправлена! Мы скоро свяжемся с вами.", true);
+      // Сбрасываем форму
+      document.getElementById("ee-quiz-form").reset();
+      // Скрываем модалку через 2 секунды
+      setTimeout(() => {
+        closeQuizModal();
+      }, 2000);
+    })
+    .catch(error => {
+      // Ошибка отправки
+      showStepError(4, "Ошибка отправки. Попробуйте ещё раз.", false);
+      console.error("Ошибка отправки квиза:", error);
+      // Восстанавливаем кнопку
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Отправить";
+    });
   }
 
   // Инициализация при загрузке страницы

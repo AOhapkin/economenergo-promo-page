@@ -283,34 +283,25 @@
 
 <script>
   (function () {
-    // ===== CONFIG =====
-    var BTN_SEL = "#heroSubmitBtn"; // your button
-    var FALLBACK_FORM_SEL = "#ee-lead-form"; // your form (if button.form is missing)
-    var HIDDEN_PRODUCT_ID = "hidden_product_id"; // <-- put real product_id here
+    // ===== CONFIG (edit if you ever change things) =====
+    var BTN_SEL = "#heroSubmitBtn";
+    var FALLBACK_FORM_SEL = "#ee-lead-form";
+    var HIDDEN_PRODUCT_ID = 164; // your numeric product_id (keep as a NUMBER)
     var COUNTRY_ID = 176; // Russia
     var ZONE_ID = 2726; // Moscow (any valid RU zone id works)
-    var PAYMENT_CODE = "bank_transfer"; // "Банковский перевод"
-    var AFTER_SUCCESS_REDIRECT = "index.php?route=information/contact/success";
+    var PAYMENT_CODE = "bank_transfer";
 
+    if (typeof HIDDEN_PRODUCT_ID !== "number") {
+      alert("Нужно указать числовой product_id скрытого товара.");
+      return;
+    }
     if (!window.jQuery) {
-      console.error("[Lead] jQuery required");
       return;
     }
     var $ = window.jQuery,
       running = false;
 
-    // ===== small utils =====
-    function log() {
-      try {
-        console.log.apply(console, arguments);
-      } catch (e) {}
-    }
-    function group(name) {
-      console.group(name);
-    }
-    function groupEnd() {
-      console.groupEnd();
-    }
+    // --- tiny helpers ---
     function jx(o) {
       return new Promise(function (res, rej) {
         $.ajax(
@@ -329,26 +320,20 @@
       });
     }
     function POST(u, d) {
-      group("[POST] " + u);
-      log(d);
-      return jx({ url: u, method: "POST", data: d }).then(function (r) {
-        log("↳ HTTP", r.jq.status);
-        groupEnd();
-        return r;
-      });
+      return jx({ url: u, method: "POST", data: d });
     }
     function GET(u) {
-      group("[GET]  " + u);
-      return jx({ url: u, method: "GET" }).then(function (r) {
-        log("↳ HTTP", r.jq.status);
-        groupEnd();
-        return r;
-      });
+      return jx({ url: u, method: "GET" });
     }
-
-    function snippet(tag, r) {
+    function cartLooksNonEmpty(html) {
+      return /cart|subtotal|итог|товар/i.test(String(html || ""));
+    }
+    function responseHasCartRedirect(r) {
       var s = String(r && r.data != null ? r.data : "");
-      log(tag, "len=", s.length, "→", s.slice(0, 160));
+      return (
+        /route=checkout\/cart/.test(s) ||
+        /location\s*=\s*['"][^'"]*route=checkout\/cart/.test(s)
+      );
     }
     function setStatus(msg, color) {
       var n = document.getElementById("ee-lead-status");
@@ -371,35 +356,21 @@
         document.querySelector("form")
       );
     }
-    function cartLooksNonEmpty(html) {
-      return /cart|subtotal|итог|товар/i.test(String(html || ""));
-    }
-    function responseHasCartRedirect(r) {
-      var s = String(r && r.data != null ? r.data : "");
-      return (
-        /route=checkout\/cart/.test(s) ||
-        /location\s*=\s*['"][^'"]*route=checkout\/cart/.test(s)
-      );
-    }
 
-    // ===== core steps (with auto-heal) =====
+    // --- core steps (quiet, with self-heal) ---
     function ensureCart() {
       return POST("index.php?route=checkout/cart/add", {
-        product_id: 164,
+        product_id: HIDDEN_PRODUCT_ID,
         quantity: 1,
       })
         .then(function () {
           return GET("index.php?route=checkout/cart");
         })
         .then(function (r) {
-          snippet("cart page", r);
           if (!cartLooksNonEmpty(r.data))
-            throw new Error(
-              "Hidden product NOT in cart (check stock/min qty/options/price)."
-            );
+            throw new Error("Товар не добавлен в корзину.");
         });
     }
-
     function initCheckout() {
       return GET("index.php?route=checkout/checkout");
     }
@@ -420,15 +391,11 @@
         zone_id: ZONE_ID,
         shipping_address: 1,
       };
-      console.table(payload);
       return POST("index.php?route=checkout/guest/save", payload).then(
         function (r) {
-          // Some builds return JSON {redirect: '.../checkout/cart'} here and empty the cart
+          // if theme sent us to cart and cleared it → re-add item
           if (r.data && r.data.redirect) {
-            log("[Lead] guest/save redirect →", r.data.redirect);
             return GET(r.data.redirect).then(function (rr) {
-              snippet("guest/save redirect follow (cart)", rr);
-              // Re-add the hidden item if cart got wiped
               if (!cartLooksNonEmpty(rr.data)) return ensureCart();
             });
           }
@@ -438,41 +405,30 @@
 
     function paymentList() {
       return GET("index.php?route=checkout/payment_method").then(function (r) {
-        snippet("payment_method (GET)", r);
         var html = String(r.data || "");
         var tmp = document.createElement("div");
         tmp.innerHTML = html;
         var radios = tmp.querySelectorAll('input[name="payment_method"]');
         var codes = [];
         for (var i = 0; i < radios.length; i++) codes.push(radios[i].value);
-        return { html: html, codes: codes };
+        return codes;
       });
     }
 
     function savePaymentOrHeal(comment) {
-      // Try to save the preferred code. If it redirects to cart (cart became empty), heal and retry once.
-      return paymentList().then(function (list) {
-        if (list.codes.length === 0)
-          throw new Error("No payment methods available (module restriction).");
-        var code =
-          list.codes.indexOf(PAYMENT_CODE) >= 0 ? PAYMENT_CODE : list.codes[0];
-        log("[Lead] choosing payment:", code);
+      return paymentList().then(function (codes) {
+        if (!codes.length)
+          throw new Error("Нет способов оплаты для текущей корзины/адреса.");
+        var code = codes.indexOf(PAYMENT_CODE) >= 0 ? PAYMENT_CODE : codes[0];
         return POST("index.php?route=checkout/payment_method/save", {
           payment_method: code,
           comment: comment,
           agree: 1,
         }).then(function (r) {
           if (r.data && r.data.error)
-            throw new Error(
-              "payment_method/save error: " + JSON.stringify(r.data.error)
-            );
+            throw new Error("Ошибка сохранения оплаты.");
           if (r.data && r.data.redirect) {
-            // Heal: cart got redirected/emptied — re-add and retry once
-            log(
-              "[Lead] payment_method/save redirect →",
-              r.data.redirect,
-              "healing…"
-            );
+            // cart lost → heal and retry once
             return GET(r.data.redirect).then(function (rr) {
               if (!cartLooksNonEmpty(rr.data)) {
                 return ensureCart().then(function () {
@@ -488,10 +444,7 @@
 
     function confirmSummaryOrHeal(comment) {
       return POST("index.php?route=checkout/confirm", {}).then(function (r) {
-        snippet("confirm", r);
         if (responseHasCartRedirect(r)) {
-          // Heal: we lost payment or cart -> ensure cart, re-save payment, re-confirm
-          log("[Lead] confirm redirected to cart — healing sequence…");
           return ensureCart()
             .then(function () {
               return savePaymentOrHeal(comment);
@@ -509,19 +462,15 @@
         "index.php?route=extension/payment/" + code + "/confirm",
         {}
       ).catch(function () {
-        log("[Lead] extension path failed → trying legacy");
         return POST("index.php?route=payment/" + code + "/confirm", {});
       });
     }
 
-    // ===== bind: intercept native contact submit =====
+    // --- bind: intercept native contact submit ---
     function bind() {
       var btn = document.querySelector(BTN_SEL);
       var form = getForm();
-      if (!btn || !form) {
-        console.warn("[Lead] Button or form not found");
-        return;
-      }
+      if (!btn || !form) return;
 
       try {
         btn.type = "button";
@@ -612,11 +561,8 @@
               try {
                 form.reset();
               } catch (e) {}
-              if (AFTER_SUCCESS_REDIRECT)
-                window.location.href = AFTER_SUCCESS_REDIRECT;
             })
-            .catch(function (err) {
-              console.error("[Lead] FAIL:", err);
+            .catch(function () {
               setStatus(
                 "Не удалось оформить заказ. Проверьте поля и попробуйте ещё раз.",
                 "#e11919"
@@ -628,8 +574,6 @@
         },
         true
       );
-
-      log("[Lead] Bound to", BTN_SEL, "form:", form);
     }
 
     if (document.readyState === "loading")

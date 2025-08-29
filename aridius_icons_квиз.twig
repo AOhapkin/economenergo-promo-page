@@ -730,26 +730,20 @@
     finalForm: {
       fields: [
         {
-          id: "name",
-          label: "Ваше имя",
-          type: "text",
-          required: true,
-        },
-        {
-          id: "telephone",
-          label: "Телефон",
-          type: "tel",
+          id: "qty",
+          label: "Напишите нужное Вам количество светильников",
+          type: "number",
           required: true,
         },
         {
           id: "email",
-          label: "Email",
+          label: "Напишите электронный адрес для выставления счёта",
           type: "email",
           required: true,
         },
         {
           id: "agree",
-          label: "Я согласен на обработку персональных данных",
+          label: "Нажимая на кнопку Отправить, я даю согласие на обработку данных.",
           type: "checkbox",
           required: true,
         },
@@ -776,8 +770,7 @@
       apply: null,
       lampType: null,
       complect: null,
-      name: "",
-      telephone: "",
+      qty: "",
       email: "",
       agree: false,
     };
@@ -989,7 +982,7 @@
               if (field.type === "checkbox") {
                 return `
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="${field.id}" required>
+                  <input class="form-check-input" type="checkbox" id="${field.id}" ${field.required ? 'required' : ''}>
                   <label class="form-check-label" for="${field.id}">${field.label}</label>
                 </div>
               `;
@@ -997,7 +990,7 @@
                 return `
                 <div class="mb-2">
                   <label for="${field.id}" class="form-label">${field.label}</label>
-                  <input type="${field.type}" class="form-control" id="${field.id}" required>
+                  <input type="${field.type}" class="form-control" id="${field.id}" ${field.required ? 'required' : ''}>
                 </div>
               `;
               }
@@ -1062,12 +1055,12 @@
     quizData.finalForm.fields.forEach((field) => {
       const element = document.getElementById(field.id);
       if (field.type === "checkbox") {
-        if (!element.checked) {
+        if (field.required && !element.checked) {
           element.closest(".form-check").classList.add("is-invalid");
           isValid = false;
         }
       } else {
-        if (!element.value.trim()) {
+        if (field.required && !element.value.trim()) {
           element.classList.add("is-invalid");
           isValid = false;
         }
@@ -1087,15 +1080,12 @@
       `Применение: ${quizState.apply}\n` +
       `Тип: ${quizState.lampType}\n` +
       `Комплектация: ${quizState.complect}\n` +
-      `Имя: ${quizState.name}\n` +
-      `Телефон: ${quizState.telephone}\n` +
+      `Количество: ${quizState.qty}\n` +
       `Email: ${quizState.email}`;
 
     // Заполняем скрытые поля
     document.getElementById("quiz-email-hidden").value = quizState.email;
     document.getElementById("quiz-enquiry-hidden").value = enquiryText;
-    document.querySelector('input[name="telephone"]').value =
-      quizState.telephone;
 
     // Показываем статус и блокируем кнопку
     showStepError(4, "Создаём заявку...", false);

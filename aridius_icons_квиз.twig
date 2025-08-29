@@ -1,0 +1,855 @@
+{% if (ico_tabs ) %}
+<div class="ico_wall">
+  {% for key, ico_tab in ico_tabs %} {% if (aridius_icons_colico == 1) %}
+  <div class="block_ico col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+    {% else %}
+    <div class="block_ico col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+      {% endif %} {% if (aridius_icons_popup == 1) %}
+      <a href="#text-popup{{ key }}" class="popup-ico{{ key }}"
+        ><i class="{{ ico_tab.faicons_icons }}"></i>
+        <span class="ico_sz">{{ ico_tab.title[language_id] }}</span>
+      </a>
+      {% elseif (aridius_icons_link == 1) %}
+      <a
+        href="{{ ico_tab.add_link }}"
+        target="_blank"
+        class="popup-ico{{ key }}"
+        ><i class="{{ ico_tab.faicons_icons }}"></i>
+        <span class="ico_sz">{{ ico_tab.title[language_id] }}</span>
+      </a>
+      {% else %}
+      <span class="popup-ico{{ key }}"
+        ><i class="{{ ico_tab.faicons_icons }}"></i>
+        <span class="ico_sz">{{ ico_tab.title[language_id] }}</span>
+      </span>
+      {% endif %} {% if (aridius_icons_popup == 1) %}
+      <div id="text-popup{{ key }}" class="white-popup mfp-hide">
+        {{ ico_tab.description }}
+      </div>
+      {% endif %}
+    </div>
+    {% if (aridius_icons_popup == 1) %}
+    <script>
+      $(document).ready(function () {
+        $(".popup-ico{{ key }}").magnificPopup({
+          type: "inline",
+        });
+      });
+    </script>
+    {% endif %} {% endfor %}
+</div>
+{% endif %}
+<div class="clearfix"></div>
+
+<h2>Квиз</h2>
+
+<!-- Кнопка запуска квиза -->
+<div class="row justify-content-center">
+  <div class="col-md-8 text-center">
+    <button
+      type="button"
+      class="btn btn-success btn-lg"
+      id="quizButton"
+      onclick="openQuizModal()"
+    >
+      Подобрать светильник
+    </button>
+  </div>
+</div>
+
+<!-- Модальное окно квиза -->
+<div id="quizModal" class="ee-modal" style="display: none">
+  <div class="ee-modal-dialog">
+    <div class="ee-modal-content">
+      <div class="ee-modal-header">
+        <h5 class="ee-modal-title" id="quizModalTitle">Подбор светильника</h5>
+        <button type="button" class="close" onclick="closeQuizModal()">
+          &times;
+        </button>
+      </div>
+      <div class="ee-modal-body" id="quizModalBody">
+        <!-- Содержимое будет генерироваться динамически -->
+      </div>
+
+      <!-- Мини-резюме выбранного -->
+      <div
+        id="quizSummary"
+        class="p-2 bg-light rounded"
+        style="display: none"
+      >
+        <h6 class="mb-2">Выбрано:</h6>
+        <div id="summaryContent" class="small text-muted"></div>
+      </div>
+
+      <div class="ee-modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="btnBack"
+          onclick="goToQuizStep(quizState.step - 1)"
+          style="display: none"
+        >
+          ←назад
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="btnNext"
+          onclick="goToQuizStep(quizState.step + 1)"
+        >
+          Далее…
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          id="btnSubmit"
+          onclick="submitQuiz()"
+          style="display: none"
+        >
+          Отправить!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  //Active Tab
+  $(document).ready(function () {
+    $(".block_ico:last").addClass("block_icolast");
+  });
+</script>
+
+<style>
+  /* === Стили для квиза === */
+  .ee-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ee-modal-dialog {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px;
+  }
+
+  .ee-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .ee-modal-header {
+    background: #f8f9fa;
+    padding: 20px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .ee-modal-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .ee-modal-header .close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ee-modal-header .close:hover {
+    color: #333;
+  }
+
+  .ee-modal-body {
+    padding: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+
+  .ee-modal-footer {
+    background: #f8f9fa;
+    padding: 20px;
+    border-top: 1px solid #dee2e6;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .quiz-step {
+    margin-bottom: 20px;
+  }
+
+  .quiz-step .form-check {
+    margin-bottom: 12px;
+  }
+
+  .quiz-step .form-check-input {
+    margin-right: 8px;
+  }
+
+  .quiz-step .form-check-label {
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .quiz-hint {
+    margin-top: 15px;
+    padding: 10px;
+    background: #e9ecef;
+    border-radius: 6px;
+    color: #495057;
+    font-size: 14px;
+  }
+
+  .quiz-hint.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+  }
+
+  .quiz-hint.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+  }
+
+  .ee-result-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .ee-result-card .result-photo {
+    flex-shrink: 0;
+    width: 120px;
+    text-align: center;
+  }
+
+  .ee-result-card .result-photo img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .ee-result-card .result-info {
+    flex: 1;
+  }
+
+  .ee-result-card .result-title1 {
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 4px;
+    font-size: 16px;
+  }
+
+  .ee-result-card .result-title2 {
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .ee-result-card .result-details {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .ee-result-card .result-price {
+    font-weight: bold;
+    color: #1a9f29;
+    font-size: 16px;
+    margin-top: 8px;
+  }
+
+  .ee-order-fields {
+    margin-top: 20px;
+  }
+
+  .ee-order-fields .form-label {
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+  }
+
+  .ee-order-fields .form-control {
+    height: 44px;
+    padding: 10px 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+  }
+
+  .ee-order-fields .form-control:focus {
+    border-color: #1a9f29;
+    box-shadow: 0 0 0 0.2rem rgba(26, 159, 41, 0.25);
+  }
+
+  .ee-order-fields .form-check {
+    margin-bottom: 12px;
+  }
+
+  .ee-order-fields .form-check-input {
+    margin-right: 8px;
+  }
+
+  .ee-order-fields .form-check-label {
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .ee-modal-dialog {
+      width: 95%;
+      margin: 10px;
+    }
+
+    .ee-modal-header,
+    .ee-modal-body,
+    .ee-modal-footer {
+      padding: 15px;
+    }
+
+    .ee-result-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .ee-result-card .result-photo {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+  }
+</style>
+
+<script>
+  // === Логика квиза ===
+
+  // Состояние квиза
+  var quizState = {
+    step: 1,
+    apply: null,
+    lampType: null,
+    complect: null,
+    name: "",
+    telephone: "",
+    email: "",
+    agree: false,
+  };
+
+  // Данные квиза (встроенные)
+  var quizData = {
+    ui: {
+      sectionTitle: "Подберите светильник за 3 простых шага:",
+      button: {
+        variant: "green",
+        textRed: "Рассчитать стоимость",
+        textGreen: "Подобрать светильник",
+      },
+      modalTitle: "Подбор светильника",
+    },
+    steps: [
+      {
+        id: "apply",
+        title: "Шаг 1",
+        type: "radio",
+        options: ["внутреннее освещение", "наружное освещение"],
+      },
+      {
+        id: "lampType",
+        title: "Шаг 2",
+        type: "radio",
+        options: ["светодиоды (максимальное энергосбережение)", "лампа"],
+      },
+      {
+        id: "complect",
+        title: "Шаг 3",
+        type: "radio",
+        variantsByApply: {
+          "внутреннее освещение": [
+            "с оптико-акустическим датчиком (максимальное энергосбережение)",
+            "без датчика",
+          ],
+          "наружное освещение": [
+            "с фотодатчиком (максимальное энергосбережение)",
+            "без датчика",
+          ],
+        },
+      },
+    ],
+    results: {
+      "внутреннее освещение|светодиоды (максимальное энергосбережение)|с оптико-акустическим датчиком (максимальное энергосбережение)":
+        {
+          title1: "Светодиодный антивандальный светильник",
+          title2: "с оптико-акустическим датчиком СББ 06-06",
+          power: "Потребление: 6 Вт",
+          size: "Размеры: диаметр 190 мм, высота 22 мм",
+          price: "Цена 599 р/шт",
+          image:
+            "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-s-optiko-akusticheskim-datchikom-sberenergo-sbb-06-06.jpg",
+          product_id: "sbb-06-06",
+        },
+      "внутреннее освещение|светодиоды (максимальное энергосбережение)|без датчика":
+        {
+          title1: "Светодиодный антивандальный светильник",
+          title2: "СБП 05-06",
+          power: "Потребление: 6 Вт",
+          size: "Размеры: диаметр 190 мм, высота 22 мм",
+          price: "Цена 559 р/шт",
+          image:
+            "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-antivandalnyj-led-sberenergo-sbp-05-06.jpg",
+          product_id: "sbp-05-06",
+        },
+      "внутреннее освещение|лампа|с оптико-акустическим датчиком (максимальное энергосбережение)":
+        {
+          title1: "Антивандальный светильник",
+          title2: "с оптико-акустическим датчиком НББ 03-75",
+          power: "Потребление: до 75 Вт",
+          size: "Размеры: диаметр 190 мм, высота 88 мм",
+          price: "Цена 299 р/шт",
+          image:
+            "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-s-akusticheskim-datchikom-sberenergo-nbb-03-75.jpg",
+          product_id: "nbb-03-75",
+        },
+      "внутреннее освещение|лампа|без датчика": {
+        title1: "Антивандальный светильник НБП 02-75",
+        title2: "",
+        power: "Потребление: до 75 Вт",
+        size: "Размеры: диаметр 190 мм, высота 88 мм",
+        price: "Цена 199 р/шт",
+        image:
+          "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-antivandalnyj-v-zhkkh-sberenergo-nbp-02-75.jpg",
+        product_id: "nbp-02-75",
+      },
+      "наружное освещение|светодиоды (максимальное энергосбережение)|с фотодатчиком (максимальное энергосбережение)":
+        {
+          title1: "Светодиодный антивандальный светильник",
+          title2: "с фотодатчиком СББ 06-06",
+          power: "Потребление: 6 Вт",
+          size: "Размеры: диаметр 190 мм, высота 22 мм",
+          price: "Цена 599 р/шт",
+          image:
+            "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-s-datchikom-osveshennosti-sberenergo-sbb-06-06.jpg",
+          product_id: "sbb-06-06-f",
+        },
+      "наружное освещение|светодиоды (максимальное энергосбережение)|без датчика":
+        {
+          title1: "Светодиодный антивандальный светильник",
+          title2: "СБП 05-06",
+          power: "Потребление: 6 Вт",
+          size: "Размеры: диаметр 190 мм, высота 22 мм",
+          price: "Цена 559 р/шт",
+          image:
+            "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-antivandalnyj-led-sberenergo-sbp-05-06.jpg",
+          product_id: "sbp-05-06",
+        },
+      "наружное освещение|лампа|с фотодатчиком (максимальное энергосбережение)":
+        {
+          title1: "Антивандальный светильник",
+          title2: "с фотодатчиком НББ 03-75",
+          power: "Потребление: до 75 Вт",
+          size: "Размеры: диаметр 190 мм, высота 88 мм",
+          price: "Цена 299 р/шт",
+          image:
+            "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-s-datchikom-optitsheskim-sberenergo-nbb-03-75.jpg",
+          product_id: "nbb-03-75-f",
+        },
+      "наружное освещение|лампа|без датчика": {
+        title1: "Антивандальный светильник НБП 02-75",
+        title2: "",
+        power: "Потребление: до 75 Вт",
+        size: "Размеры: диаметр 190 мм, высота 88 мм",
+        price: "Цена 199 р/шт",
+        image:
+          "https://economenergo.ru/catalog/view/theme/aurus/image/svetilnik-antivandalnyj-v-zhkkh-sberenergo-nbp-02-75.jpg",
+        product_id: "nbp-02-75",
+      },
+    },
+    finalForm: {
+      fields: [
+        {
+          id: "name",
+          label: "Ваше имя",
+          type: "text",
+          required: true,
+        },
+        {
+          id: "telephone",
+          label: "Телефон",
+          type: "tel",
+          required: true,
+        },
+        {
+          id: "email",
+          label: "Email",
+          type: "email",
+          required: true,
+        },
+        {
+          id: "agree",
+          label: "Я согласен на обработку персональных данных",
+          type: "checkbox",
+          required: true,
+        },
+      ],
+    },
+  };
+
+  // Функции управления модальным окном
+  function openQuizModal() {
+    document.getElementById("quizModal").style.display = "flex";
+    quizState.step = 1;
+    renderQuizStep();
+    renderQuizSummary();
+  }
+
+  function closeQuizModal() {
+    document.getElementById("quizModal").style.display = "none";
+    resetQuizState();
+  }
+
+  function resetQuizState() {
+    quizState = {
+      step: 1,
+      apply: null,
+      lampType: null,
+      complect: null,
+      name: "",
+      telephone: "",
+      email: "",
+      agree: false,
+    };
+  }
+
+  // Рендеринг шага квиза
+  function renderQuizStep() {
+    const modalBody = document.getElementById("quizModalBody");
+    const step = quizData.steps[quizState.step - 1];
+
+    if (quizState.step === 4) {
+      renderFinalForm();
+      return;
+    }
+
+    let options = step.options;
+    if (step.id === "complect" && step.variantsByApply) {
+      options = step.variantsByApply[quizState.apply] || [];
+    }
+
+    modalBody.innerHTML = `
+      <div class="quiz-step">
+        <div class="mb-2"><strong>${getStepDescription(step.id)}</strong></div>
+        <div class="mb-2">
+          ${options
+            .map(
+              (option, index) => `
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="${step.id}" 
+                     id="${step.id}${index}" value="${option}">
+              <label class="form-check-label" for="${step.id}${index}">${option}</label>
+            </div>
+          `
+            )
+            .join("")}
+        </div>
+        <div class="quiz-hint" id="hint${quizState.step}">
+          Выберите один из вариантов для продолжения
+        </div>
+      </div>
+    `;
+
+    // Добавляем обработчики
+    options.forEach((option, index) => {
+      const radio = document.getElementById(`${step.id}${index}`);
+      radio.addEventListener("change", function () {
+        quizState[step.id] = this.value;
+        renderQuizSummary();
+        clearAllHighlights();
+
+        // Если изменился выбор применения, сбрасываем последующие шаги
+        if (step.id === "apply") {
+          quizState.lampType = null;
+          quizState.complect = null;
+          if (quizState.step === 3) {
+            renderQuizStep();
+          }
+        }
+        // Если изменился тип лампы, сбрасываем комплектацию
+        if (step.id === "lampType") {
+          quizState.complect = null;
+        }
+      });
+    });
+  }
+
+  // Описания шагов
+  function getStepDescription(stepId) {
+    const descriptions = {
+      apply: "Где будет использоваться светильник?",
+      lampType: "Какой тип лампы предпочитаете?",
+      complect: "Какая комплектация нужна?",
+    };
+    return descriptions[stepId] || "Выберите вариант:";
+  }
+
+  // Переход к шагу
+  function goToQuizStep(step) {
+    if (step < 1 || step > 4) return;
+
+    // Проверяем валидацию при переходе вперед
+    if (step > quizState.step && !validateQuizStep(quizState.step)) {
+      return;
+    }
+
+    // Дополнительная проверка для шага 3
+    if (step === 3 && !quizState.lampType) {
+      console.log("Нельзя перейти к шагу 3 без выбора типа лампы");
+      return;
+    }
+
+    quizState.step = step;
+
+    // Обновляем кнопки
+    document.getElementById("btnBack").style.display =
+      step > 1 ? "inline-block" : "none";
+    document.getElementById("btnNext").style.display =
+      step < 4 ? "inline-block" : "none";
+    document.getElementById("btnSubmit").style.display =
+      step === 4 ? "inline-block" : "none";
+
+    // Обновляем заголовок
+    document.getElementById(
+      "quizModalTitle"
+    ).textContent = `Подбор светильника ${step === 4 ? "" : `Шаг ${step}`}`;
+
+    renderQuizStep();
+    renderQuizSummary();
+  }
+
+  // Валидация шага
+  function validateQuizStep(step) {
+    const stepData = quizData.steps[step - 1];
+    const value = quizState[stepData.id];
+
+    if (!value) {
+      showStepError(step, "Пожалуйста, выберите один из вариантов");
+      return false;
+    }
+
+    hideStepError(step);
+    return true;
+  }
+
+  // Показать ошибку шага
+  function showStepError(step, message) {
+    const hint = document.getElementById(`hint${step}`);
+    if (hint) {
+      hint.textContent = message;
+      hint.className = "quiz-hint error";
+    }
+  }
+
+  // Скрыть ошибку шага
+  function hideStepError(step) {
+    const hint = document.getElementById(`hint${step}`);
+    if (hint) {
+      hint.className = "quiz-hint";
+      hint.textContent = "Выберите один из вариантов для продолжения";
+    }
+  }
+
+  // Очистить все подсветки ошибок
+  function clearAllHighlights() {
+    for (let i = 1; i <= 4; i++) {
+      hideStepError(i);
+    }
+  }
+
+  // Рендеринг финальной формы
+  function renderFinalForm() {
+    const modalBody = document.getElementById("quizModalBody");
+    const result = getQuizResult();
+
+    if (!result) {
+      modalBody.innerHTML =
+        '<div class="quiz-hint error">Ошибка: не удалось определить результат</div>';
+      return;
+    }
+
+    modalBody.innerHTML = `
+      <div class="ee-result-card">
+        <div class="result-photo">
+          <img id="ee-result-img" src="${result.image}" alt="${result.title1}" 
+               onerror="this.src='https://via.placeholder.com/320x220?text=Фото+будет+здесь'">
+        </div>
+        <div class="result-info">
+          <div class="result-title1">${result.title1}</div>
+          <div class="result-title2">${result.title2}</div>
+          <div class="result-details">${result.power}</div>
+          <div class="result-details">${result.size}</div>
+          <div class="result-price">${result.price}</div>
+        </div>
+      </div>
+      
+      <form id="ee-quiz-form" action="index.php?route=information/contact|send" method="post">
+        <input type="hidden" name="name" value="Квиз лендинг" />
+        <input type="hidden" name="telephone" value="" />
+        <input type="hidden" name="email" id="quiz-email-hidden" />
+        <input type="hidden" name="enquiry" id="quiz-enquiry-hidden" />
+        
+        <div class="ee-order-fields">
+          ${quizData.finalForm.fields
+            .map((field) => {
+              if (field.type === "checkbox") {
+                return `
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="checkbox" id="${field.id}" required>
+                  <label class="form-check-label" for="${field.id}">${field.label}</label>
+                </div>
+              `;
+              } else {
+                return `
+                <div class="mb-2">
+                  <label for="${field.id}" class="form-label">${field.label}</label>
+                  <input type="${field.type}" class="form-control" id="${field.id}" required>
+                </div>
+              `;
+              }
+            })
+            .join("")}
+        </div>
+      </form>
+      
+      <div class="quiz-hint" id="hint4">
+        Заполните все поля для отправки заявки
+      </div>
+    `;
+
+    // Добавляем обработчики для полей
+    quizData.finalForm.fields.forEach((field) => {
+      const element = document.getElementById(field.id);
+      if (field.type === "checkbox") {
+        element.addEventListener("change", function () {
+          quizState[field.id] = this.checked;
+          this.closest(".form-check").classList.remove("is-invalid");
+        });
+      } else {
+        element.addEventListener("input", function () {
+          quizState[field.id] = this.value;
+          this.classList.remove("is-invalid");
+        });
+      }
+    });
+  }
+
+  // Получить результат квиза
+  function getQuizResult() {
+    const key = `${quizState.apply}|${quizState.lampType}|${quizState.complect}`;
+    return quizData.results[key];
+  }
+
+  // Обновить сводку выбранного
+  function renderQuizSummary() {
+    const summary = document.getElementById("quizSummary");
+    const content = document.getElementById("summaryContent");
+
+    if (quizState.step > 1) {
+      let summaryText = "";
+      if (quizState.apply)
+        summaryText += `Применение: ${quizState.apply}<br>`;
+      if (quizState.lampType) summaryText += `Тип: ${quizState.lampType}<br>`;
+      if (quizState.complect)
+        summaryText += `Комплектация: ${quizState.complect}`;
+
+      content.innerHTML = summaryText;
+      summary.style.display = "block";
+    } else {
+      summary.style.display = "none";
+    }
+  }
+
+  // Отправка квиза
+  function submitQuiz() {
+    // Валидация финальной формы
+    let isValid = true;
+
+    quizData.finalForm.fields.forEach((field) => {
+      const element = document.getElementById(field.id);
+      if (field.type === "checkbox") {
+        if (!element.checked) {
+          element.closest(".form-check").classList.add("is-invalid");
+          isValid = false;
+        }
+      } else {
+        if (!element.value.trim()) {
+          element.classList.add("is-invalid");
+          isValid = false;
+        }
+      }
+    });
+
+    if (!isValid) {
+      showStepError(4, "Пожалуйста, заполните все обязательные поля");
+      return;
+    }
+
+    // Собираем данные для отправки
+    const result = getQuizResult();
+    const enquiryText =
+      `Заявка с квиза\n` +
+      `Выбранный светильник: ${result.title1} ${result.title2}\n` +
+      `Применение: ${quizState.apply}\n` +
+      `Тип: ${quizState.lampType}\n` +
+      `Комплектация: ${quizState.complect}\n` +
+      `Имя: ${quizState.name}\n` +
+      `Телефон: ${quizState.telephone}\n` +
+      `Email: ${quizState.email}`;
+
+    // Заполняем скрытые поля
+    document.getElementById("quiz-email-hidden").value = quizState.email;
+    document.getElementById("quiz-enquiry-hidden").value = enquiryText;
+    document.querySelector('input[name="telephone"]').value =
+      quizState.telephone;
+
+    // Отправляем форму
+    document.getElementById("ee-quiz-form").submit();
+  }
+
+  // Инициализация при загрузке страницы
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("Квиз инициализирован");
+  });
+</script>

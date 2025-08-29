@@ -1,0 +1,46 @@
+{% if (ico_tabs ) %} 
+<div class = "ico_wall">
+{% for key, ico_tab  in ico_tabs %}
+{% if (aridius_icons_colico == 1) %} 
+<div class = "block_ico col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+{% else %} 
+<div class = "block_ico col-xs-4 col-sm-4 col-md-4 col-lg-2 col-xl-2">
+{% endif %} 
+{% if (aridius_icons_popup == 1) %} 
+<a href="#text-popup{{ key }}" class="popup-ico{{ key }}"><i class="{{ ico_tab.faicons_icons }}"></i>
+<span class = "ico_sz">{{ ico_tab.title[language_id] }}</span>
+</a>
+{% elseif (aridius_icons_link == 1) %} 
+<a href="{{ ico_tab.add_link }}" target="_blank" class="popup-ico{{ key }}"><i class="{{ ico_tab.faicons_icons }}"></i>
+<span class = "ico_sz">{{ ico_tab.title[language_id] }}</span>
+</a>
+{% else %} 
+<span class="popup-ico{{ key }}"><i class="{{ ico_tab.faicons_icons }}"></i>
+<span class = "ico_sz">{{ ico_tab.title[language_id] }}</span>
+</span>
+{% endif %} 
+{% if (aridius_icons_popup == 1) %} 
+<div id="text-popup{{ key }}" class="white-popup mfp-hide">
+{{ ico_tab.description }}
+</div>
+{% endif %} 
+</div>
+{% if (aridius_icons_popup == 1) %} 
+<script>
+$(document).ready(function() {
+    $('.popup-ico{{ key }}').magnificPopup({
+        type: 'inline'
+    });
+});
+</script>
+{% endif %} 
+{% endfor %}
+</div> 
+{% endif %} 
+<div class="clearfix"></div>
+<script>
+   //Active Tab
+   $(document).ready(function() {
+   $(".block_ico:last").addClass("block_icolast");
+   });
+</script>
